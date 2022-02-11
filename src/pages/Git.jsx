@@ -3,7 +3,7 @@ import { useState } from "react";
 
 let i = 0;
 const Git = () => {
-  let [git, setGit] = useState([
+  let [git] = useState([
     { id: i++, name: "Tutorial" },
     { id: i++, name: "Markdown" },
   ]);

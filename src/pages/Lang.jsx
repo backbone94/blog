@@ -3,7 +3,7 @@ import { useState } from "react";
 
 let i = 0;
 const Lang = () => {
-  let [lang, setLang] = useState([
+  let [lang] = useState([
     { id: i++, name: "HTML" },
     { id: i++, name: "CSS" },
     { id: i++, name: "SCSS" },

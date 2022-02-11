@@ -3,7 +3,7 @@ import { useState } from "react";
 
 let i = 0;
 const Lang = () => {
-  let [frame, setFrame] = useState([
+  let [frame] = useState([
     { id: i++, name: "Webpack" },
     { id: i++, name: "Node.js" },
     { id: i++, name: "Vue" },

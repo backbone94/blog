@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Header() {
-  let [category, setCategory] = useState([
+  let [category] = useState([
     { en: "Lang", ko: "언어" },
     { en: "Frame", ko: "프레임워크" },
     { en: "Git", ko: "git" },
