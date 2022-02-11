@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+}
+
+.category {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+}
+
+.btn {
+  display: block;
+  width: 115px;
+}
+
+.homeImg {
+  position: absolute;
+  left: 50%;
+  width: 50px;
+  top: 5%;
+  transform: translate(-50%, -50%);
+}
+
+.btn {
+  margin-right: 10px;
+}
