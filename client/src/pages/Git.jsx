@@ -1,4 +1,4 @@
-import Header from "../Header";
+import Header from "../components/Header";
 import { useState } from "react";
 
 let i = 0;

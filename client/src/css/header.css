@@ -1,27 +1,24 @@
 .header {
-  display: flex;
+  position: relative;
+  height: 200px;
 }
 
 .category {
   position: absolute;
   left: 50%;
-  top: 20%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
+  bottom: 5px;
 }
 
 .btn {
-  display: block;
   width: 115px;
+  margin-right: 10px;
 }
 
 .homeImg {
   position: absolute;
-  left: 50%;
   width: 50px;
-  top: 5%;
-  transform: translate(-50%, -50%);
-}
-
-.btn {
-  margin-right: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 20px;
 }

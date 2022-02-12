@@ -1,13 +1,15 @@
 .lang {
-  position: absolute;
+  position: relative;
+}
+
+.langElements {
   display: flex;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 30px;
+  justify-content: center;
+  margin-top: 100px;
 }
 
 .langElement {
+  position: relative;
   border-radius: 30%;
   transition: all 0.2s;
   margin-right: 50px;
@@ -21,8 +23,19 @@
 .langText {
   font-size: 18px;
   font-family: "Anton", sans-serif;
-  display: block;
   width: 128px;
+  display: block;
   text-align: center;
   margin-top: 10px;
+}
+
+.addLang {
+  width: 100px;
+  margin: 50px auto;
+}
+
+.addLangForm {
+  width: 250px;
+  margin: 50px auto;
+  transform: translateX(-50%);
 }
