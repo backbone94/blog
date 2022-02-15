@@ -1,3 +1,4 @@
+import "../../css/git.css";
 import { useState } from "react";
 
 let i = 0;
@@ -9,16 +10,16 @@ const Git = () => {
 
   return (
     <>
-      <div className="frame">
+      <div className="git">
         {git.map((g) => {
           return (
             <div key={g.id}>
               <img
-                className="frameElement"
+                className="gitElement"
                 alt={`${g.name}`}
                 src={`images/${g.name}.ico`}
               />
-              <text className="frameText">{`${g.name}`}</text>
+              <div className="gitText">{`${g.name}`}</div>
             </div>
           );
         })}

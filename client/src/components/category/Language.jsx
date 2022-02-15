@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Input, Button } from "antd";
+import { Input, Button, Alert } from "antd";
 import "../../css/language.css";
 
 export default function Language() {
@@ -20,8 +20,9 @@ export default function Language() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const lang = useSelector((state) => state.langReducer.lang);
   const loading = useSelector((state) => state.langReducer.loading);
+  const error = useSelector((state) => state.langReducer.error);
   const dispatch = useDispatch();
-
+  console.log(error);
   // 카테고리 불러오기
   useEffect(() => {
     dispatch(loadLangListRequest());
@@ -77,6 +78,17 @@ export default function Language() {
         <Loading />
       ) : (
         <div className="lang">
+          {/* error가 있다면 antd Alert 창 불러오기 */}
+          {error && (
+            <Alert
+              className="dupAlert"
+              closable
+              message="Error"
+              description={error}
+              type="error"
+              showIcon
+            />
+          )}
           <div className="langElements">
             {lang.map((l) => {
               return (
@@ -88,7 +100,7 @@ export default function Language() {
                       src={l.fileUrl}
                     />
                   </Link>
-                  <text className="langText">{l.title}</text>
+                  <div className="langText">{l.title}</div>
                 </div>
               );
             })}
@@ -108,7 +120,6 @@ export default function Language() {
           </div>
         </div>
       )}
-
       {/* Modal */}
       <Modal
         title="Add Category"

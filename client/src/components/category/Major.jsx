@@ -1,7 +1,17 @@
+import { Layout } from "antd";
+import Header from "../Header";
+import Footer from "../Footer";
+
 const Major = () => {
+  const { Content } = Layout;
+
   return (
     <>
-      <h1>Major</h1>
+      <Layout>
+        <Header>Header</Header>
+        <Content>Content</Content>
+        <Footer>Footer</Footer>
+      </Layout>
     </>
   );
 };

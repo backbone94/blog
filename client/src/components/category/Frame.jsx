@@ -1,3 +1,4 @@
+import "../../css/frame.css";
 import { useState } from "react";
 
 let i = 0;
@@ -22,7 +23,7 @@ const Frame = () => {
                 alt={`${f.name}`}
                 src={`images/${f.name}.ico`}
               />
-              <text className="frameText">{`${f.name}`}</text>
+              <div className="frameText">{`${f.name}`}</div>
             </div>
           );
         })}

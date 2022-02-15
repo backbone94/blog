@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-content: center;
+  border: 3px solid red;
 }
 
 .langElements {
@@ -62,4 +63,8 @@
   font-family: "Gamja Flower", cursive;
   text-align: center;
   margin-top: 8px;
+}
+
+.dupAlert {
+  font-family: "Gamja Flower", cursive;
 }

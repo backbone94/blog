@@ -54,27 +54,33 @@ router.get("/", async (req, res) => {
 router.post("/", uploadS3.none(), async (req, res, next) => {
   try {
     const { title, fileUrl } = req.body;
-    const newPost = await LangCategory.create({
-      title,
-      fileUrl,
-    });
-    res.json(newPost);
+    const result = await LangCategory.findOne({ title: title });
+    if (result !== null) {
+      console.log("이미 존재하는 카테고리입니다.");
+      res.json({ error: "이미 존재하는 카테고리입니다." });
+    } else {
+      const newPost = await LangCategory.create({
+        title,
+        fileUrl,
+      });
+      res.json(newPost);
+    }
   } catch (e) {
     console.log(e);
   }
 });
 
 // POST api/langCategory/addCollection
-router.post("/addCollection", uploadS3.none(), async (req, res, next) => {
-  try {
-    const title = req.body;
-    await LangCategory.create({
-      title,
-      fileUrl,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-});
+// router.post("/addCollection", uploadS3.none(), async (req, res, next) => {
+//   try {
+//     const title = req.body;
+//     await LangCategory.create({
+//       title,
+//       fileUrl,
+//     });
+//   } catch (e) {
+//     console.log(e);
+//   }
+// });
 
 export default router;

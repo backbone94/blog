@@ -18,13 +18,13 @@ const Footer = () => {
       <p>
         <span>
           <img alt="email" src="images/email.svg" />{" "}
-          <text
+          <span
             style={{ cursor: "pointer" }}
             onClick={onClick}
             title="복사하기"
           >
             backbone94@naver.com
-          </text>
+          </span>
         </span>
         <a
           style={{ textDecoration: "none", color: "black", marginLeft: "30px" }}

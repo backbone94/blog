@@ -2,6 +2,7 @@
 export const initialState = {
   lang: [],
   loading: false,
+  error: "",
 };
 
 // 액션 타입
@@ -72,11 +73,13 @@ export default function postReducer(state = initialState, action) {
           },
         ],
         loading: false,
+        error: "",
       };
     case ADD_LANG_FAILURE:
       return {
         ...state,
         loading: false,
+        error: action.data,
       };
 
     // 언어 카테고리 불러오기
@@ -95,6 +98,7 @@ export default function postReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+        error: action.data,
       };
 
     default:

@@ -15,10 +15,19 @@ const addLangAPI = (data) => {
 function* AddLang({ data }) {
   try {
     const result = yield call(addLangAPI, data);
-    result.data.title = result.data.title.toUpperCase();
-    yield put(addLangSuccess(result.data));
+    if (result.data.error) {
+      // 서버에서 데이터는 잘 가져왔지만 에러가 있다면
+      console.log("temp", result.data.error);
+      yield put(addLangFailure(result.data.error));
+    } else {
+      // 에러가 없다면
+      result.data.title = result.data.title.toUpperCase();
+      yield put(addLangSuccess(result.data));
+    }
   } catch (e) {
+    // 데이터 자체를 못 가져왔다면
     yield put(addLangFailure(e));
+    // alert(result.data.msg);
   }
 }
 
