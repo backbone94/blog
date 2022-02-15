@@ -1,5 +1,6 @@
 import { Toast } from "bootstrap";
 import { useRef } from "react";
+import "../css/footer.css";
 
 const Footer = () => {
   const textRef = useRef();

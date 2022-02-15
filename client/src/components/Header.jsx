@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import "../css/header.css";
 
 export default function Header() {
   let [category] = useState([

@@ -1,0 +1,65 @@
+.lang {
+  height: 720px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.langElements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.langElement {
+  transition: all 0.2s;
+  margin-right: 50px;
+}
+
+.langElement:hover {
+  transform: scale(1.3);
+}
+
+.langText {
+  font-size: 18px;
+  font-family: "Anton", sans-serif;
+  width: 128px;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.addLang {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addLangButton {
+  border: 1px dotted #808080;
+  width: 128px;
+  height: 128px;
+  transition: all 0.1s;
+  cursor: pointer;
+  position: relative;
+}
+.addLangButton:hover {
+  border: 1px dotted blue;
+}
+
+.plus {
+  position: absolute;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.plusIcon {
+  width: 100%;
+}
+.plusText {
+  font-family: "Gamja Flower", cursive;
+  text-align: center;
+  margin-top: 8px;
+}

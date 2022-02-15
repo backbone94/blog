@@ -1,8 +1,7 @@
-import Header from "../components/Header";
 import { useState } from "react";
 
 let i = 0;
-const Lang = () => {
+const Frame = () => {
   let [frame] = useState([
     { id: i++, name: "Webpack" },
     { id: i++, name: "Node.js" },
@@ -14,7 +13,6 @@ const Lang = () => {
 
   return (
     <>
-      <Header />
       <div className="frame">
         {frame.map((f) => {
           return (
@@ -33,4 +31,4 @@ const Lang = () => {
   );
 };
 
-export default Lang;
+export default Frame;

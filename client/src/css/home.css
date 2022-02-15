@@ -1,8 +1,11 @@
+.home {
+  height: 720px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #player {
   width: 640px;
   height: 360px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }

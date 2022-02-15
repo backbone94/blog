@@ -1,13 +1,10 @@
 .header {
-  position: relative;
-  height: 200px;
+  border-bottom: 1px solid black;
 }
 
 .category {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 5px;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 .btn {
@@ -16,9 +13,7 @@
 }
 
 .homeImg {
-  position: absolute;
+  display: block;
+  margin: 0 auto;
   width: 50px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  top: 20px;
 }

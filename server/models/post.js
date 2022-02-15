@@ -3,11 +3,15 @@ import moment from "moment";
 
 const PostSchema = new mongoose.Schema({
   title: {
-    type: String,
     required: true,
+    type: String,
     index: true,
   },
-  contents: {
+  content: {
+    type: String,
+    required: true,
+  },
+  category: {
     type: String,
     required: true,
   },
@@ -22,10 +26,6 @@ const PostSchema = new mongoose.Schema({
   date: {
     type: String,
     default: moment().format("YYYY-MM-DD hh:mm:ss"),
-  },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "category",
   },
   comments: [
     {

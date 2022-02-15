@@ -1,4 +1,3 @@
-import Header from "../components/Header";
 import { useState } from "react";
 
 let i = 0;
@@ -10,7 +9,6 @@ const Git = () => {
 
   return (
     <>
-      <Header />
       <div className="frame">
         {git.map((g) => {
           return (

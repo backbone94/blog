@@ -1,9 +1,8 @@
-import Header from "../components/Header";
+import "../css/home.css";
 
 const Home = () => {
   return (
     <div className="home">
-      <Header />
       <iframe
         id="player"
         src="https://www.youtube.com/embed/cbuZfY2S2UQ?rel=0"

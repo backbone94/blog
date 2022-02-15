@@ -3,71 +3,40 @@ import express from "express";
 // Model
 import Post from "../../models/post";
 
-import auth from "../../middleware/auth";
-
 const router = express.Router();
 
-import multer from "multer";
-import multerS3 from "multer-s3";
-import path from "path";
-import AWS from "aws-sdk";
-import dotenv from "dotenv";
-dotenv.config();
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_KEY,
-  secretAccessKey: process.env.AWS_PRIVATE_KEY,
-});
-
-const uploadS3 = multer({
-  storage: multerS3({
-    s3,
-    bucket: "my-blog1684/upload",
-    region: "ap-northeast-2",
-    key(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      const basename = path.basename(file.originalname, ext);
-      cb(null, basename + new Date().valueOf() + ext);
-    },
-  }),
-  limits: { fileSize: 100 * 1024 * 1024 },
-});
-
-// @route     POST api/post/image
-// @desc      Create a Post
-// @access    Private
-
-router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
+// GET api/post/:id
+router.get("/:id", async (req, res) => {
   try {
-    console.log(req.files.map((v) => v.location));
-    res.json({ upload: true, url: req.files.map((v) => v.location) });
+    console.log("req.params.id:        ", req.params.id);
+    const result = await Post.find({ category: req.params.id });
+    console.log(result, `All posts Get`);
+    res.json(result);
   } catch (e) {
-    console.error(e);
-    res.json({ upload: false, url: null });
+    console.log(e);
   }
 });
 
-// api/post
-router.get("/", async (req, res) => {
-  const result = await Post.find();
-  console.log(result, "All Post Get");
-  res.json(result);
-});
-
-router.post("/", auth, async (req, res, next) => {
+// POST api/post
+router.post("/", async (req, res, next) => {
   try {
-    console.log(req, "req");
-    const { title, contents, fileUrl, creator } = req.body;
+    const { title, content, category } = req.body;
     const newPost = await Post.create({
       title,
-      contents,
-      fileUrl,
-      creator,
+      content,
+      category,
     });
     res.json(newPost);
   } catch (e) {
     console.log(e);
   }
+});
+
+// DELETE api/post
+router.delete("/", async (req, res) => {
+  console.log("req.body: ", req.body);
+  await Post.deleteOne({ _id: req.body.postId });
+  return res.json({ success: true });
 });
 
 export default router;
