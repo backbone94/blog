@@ -115,7 +115,7 @@ export default function postReducer(state = initialState, action) {
     case LOAD_POST_LIST_SUCCESS:
       return {
         ...state,
-        posts: [...action.data],
+        posts: [...state.posts, ...action.data],
         loading: false,
       };
     case LOAD_POST_LIST_FAILURE:
@@ -133,7 +133,7 @@ export default function postReducer(state = initialState, action) {
     case REMOVE_POST_SUCCESS:
       return {
         ...state,
-        posts: state.posts.filter((v) => v._id !== action.data),
+        posts: state.posts.filter((v) => v.id !== action.data),
         loading: false,
       };
     case REMOVE_POST_FAILURE:

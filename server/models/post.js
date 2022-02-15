@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
 import moment from "moment";
 
+// 자동 증가 번호(id) 생성 패키지
+const autoIncrement = require("mongoose-auto-increment");
+autoIncrement.initialize(mongoose.connection);
+
 const PostSchema = new mongoose.Schema({
+  id: {
+    type: Number, // Number 여야만 한다.
+    default: 0,
+  },
   title: {
     required: true,
     type: String,
@@ -37,6 +45,13 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
+});
+
+PostSchema.plugin(autoIncrement.plugin, {
+  model: "post",
+  field: "id",
+  startAt: 1,
+  increment: 1,
 });
 
 const Post = mongoose.model("post", PostSchema);

@@ -35,8 +35,8 @@ router.post("/", async (req, res, next) => {
 // DELETE api/post
 router.delete("/", async (req, res) => {
   console.log("req.body: ", req.body);
-  await Post.deleteOne({ _id: req.body.postId });
-  return res.json({ success: true });
+  await Post.deleteOne({ id: req.body.id });
+  res.json({ success: true });
 });
 
 export default router;

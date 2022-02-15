@@ -70,17 +70,11 @@ router.post("/", uploadS3.none(), async (req, res, next) => {
   }
 });
 
-// POST api/langCategory/addCollection
-// router.post("/addCollection", uploadS3.none(), async (req, res, next) => {
-//   try {
-//     const title = req.body;
-//     await LangCategory.create({
-//       title,
-//       fileUrl,
-//     });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// });
+// DELETE api/langCategory
+router.delete("/", async (req, res) => {
+  console.log("req.body: ", req.body);
+  await LangCategory.deleteOne({ title: req.body.title });
+  res.json({ success: true });
+});
 
 export default router;

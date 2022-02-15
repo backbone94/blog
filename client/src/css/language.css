@@ -1,9 +1,9 @@
 .lang {
   height: 720px;
+  margin: 0 150px;
   display: flex;
   justify-content: center;
   align-content: center;
-  border: 3px solid red;
 }
 
 .langElements {
@@ -13,18 +13,15 @@
 }
 
 .langElement {
-  transition: all 0.2s;
   margin-right: 50px;
 }
 
-.langElement:hover {
-  transform: scale(1.3);
+.langImg {
 }
 
 .langText {
   font-size: 18px;
   font-family: "Anton", sans-serif;
-  width: 128px;
   display: block;
   text-align: center;
   margin-top: 10px;
@@ -67,4 +64,9 @@
 
 .dupAlert {
   font-family: "Gamja Flower", cursive;
+}
+
+.removeIcon {
+  font-size: 20px;
+  text-align: end;
 }

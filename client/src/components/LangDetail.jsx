@@ -24,8 +24,8 @@ export default function LangDetail() {
     dispatch(loadPostListRequest(parameter));
   }, [dispatch, parameter]);
 
-  const removePost = (postId) => {
-    dispatch(removePostRequest(postId));
+  const removePost = (id) => {
+    dispatch(removePostRequest(id)); // _id 와 id 다름
   };
 
   return (
@@ -49,7 +49,7 @@ export default function LangDetail() {
                         </div>
                       </div>
                       <CloseOutlined
-                        onClick={() => removePost(post._id)}
+                        onClick={() => removePost(post.id)}
                         className="closeIcon"
                       />
                     </div>

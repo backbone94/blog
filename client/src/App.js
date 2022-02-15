@@ -20,7 +20,7 @@ import store from "./store";
 const App = () => {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Provider store={store}>
         <Switch>
           <Route exact path="/Lang/:id/WritePost" component={WritePost} />
@@ -32,7 +32,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
         </Switch>
       </Provider>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

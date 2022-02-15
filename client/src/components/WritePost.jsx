@@ -16,11 +16,11 @@ function WritePost() {
   const params = useParams();
   const category = params.id;
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     console.log("title:", title, "content:", content);
     if (title !== "" && content !== "") {
-      await dispatch(writePostRequest({ title, content, category }));
-      history.goBack();
+      dispatch(writePostRequest({ title, content, category }));
+      history.push(`/Lang/${category}`);
     } else alert("제목 또는 내용을 입력하세요.");
   };
 

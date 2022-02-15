@@ -5,11 +5,11 @@ import Loading from "../Loading";
 import {
   loadLangListRequest,
   addLangRequest,
+  removeCategoryRequest,
 } from "../../redux/reducers/langReducer";
 import { Link } from "react-router-dom";
-import { Modal } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { Input, Button, Alert } from "antd";
+import { Modal, Alert, Button, Input } from "antd";
+import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import "../../css/language.css";
 
 export default function Language() {
@@ -19,10 +19,10 @@ export default function Language() {
   const [fileUrl, setFileUrl] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const lang = useSelector((state) => state.langReducer.lang);
-  const loading = useSelector((state) => state.langReducer.loading);
   const error = useSelector((state) => state.langReducer.error);
+  const loading = useSelector((state) => state.langReducer.loading);
   const dispatch = useDispatch();
-  console.log(error);
+
   // 카테고리 불러오기
   useEffect(() => {
     dispatch(loadLangListRequest());
@@ -71,31 +71,39 @@ export default function Language() {
     }
   }
 
+  // 카테고리 삭제
+  const removeCategory = (title) => {
+    console.log("title: ", title);
+    dispatch(removeCategoryRequest(title));
+  };
+
   return (
     <>
+      {/* error 값이 존재하면 Alert 창 띄우기 */}
+      {error && (
+        <Alert
+          className="dupAlert"
+          message="Error"
+          description={error}
+          type="error"
+          showIcon
+        />
+      )}
       {/* Lang List 불러오기 */}
       {loading ? (
         <Loading />
       ) : (
         <div className="lang">
-          {/* error가 있다면 antd Alert 창 불러오기 */}
-          {error && (
-            <Alert
-              className="dupAlert"
-              closable
-              message="Error"
-              description={error}
-              type="error"
-              showIcon
-            />
-          )}
           <div className="langElements">
             {lang.map((l) => {
               return (
-                <div key={l.title}>
+                <div key={l._id} className="langElement">
+                  <div className="removeIcon">
+                    <CloseOutlined onClick={() => removeCategory(l.title)} />
+                  </div>
                   <Link to={`/Lang/${l.title}`}>
                     <img
-                      className="langElement"
+                      className="langImg"
                       alt={`${l.title}`}
                       src={l.fileUrl}
                     />

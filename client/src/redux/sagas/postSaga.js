@@ -16,7 +16,7 @@ const WritePostAPI = (data) => {
 function* WritePost({ data }) {
   try {
     const result = yield call(WritePostAPI, data);
-    console.log(result);
+    console.log("@@@@@", result);
     yield put(writePostSuccess(result.data));
   } catch (e) {
     yield put(writePostFailure(e));
@@ -50,10 +50,10 @@ function* watchLoadPostList() {
 
 // 게시물 삭제하기
 const RemovePostAPI = (data) => {
-  console.log("postId:    ", data);
+  console.log("post id:    ", data);
   return axios.delete(`/api/post`, {
     data: {
-      postId: data,
+      id: data,
     },
     withCredentials: true,
   });
@@ -61,7 +61,7 @@ const RemovePostAPI = (data) => {
 
 function* RemovePost({ data }) {
   try {
-    // data == postId
+    // data == id
     const result = yield call(RemovePostAPI, data);
     console.log("remove result", result);
     yield put(removePostSuccess(data));

@@ -5,6 +5,8 @@ import {
   addLangSuccess,
   loadLangListSuccess,
   loadLangListFailure,
+  removeCategorySuccess,
+  removeCategoryFailure,
 } from "../reducers/langReducer";
 
 // 언어 카테고리 추가하기
@@ -21,7 +23,7 @@ function* AddLang({ data }) {
       yield put(addLangFailure(result.data.error));
     } else {
       // 에러가 없다면
-      result.data.title = result.data.title.toUpperCase();
+      console.log("result.data: ", result.data);
       yield put(addLangSuccess(result.data));
     }
   } catch (e) {
@@ -53,6 +55,35 @@ function* watchLoadLangList() {
   yield takeEvery("LOAD_LANG_LIST_REQUEST", LoadLangList);
 }
 
+// 언어 카테고리 삭제하기
+const RemoveCategoryAPI = (data) => {
+  return axios.delete("/api/langCategory", {
+    data: {
+      title: data,
+    },
+    withCredentials: true,
+  });
+};
+
+function* RemoveCategory({ data }) {
+  try {
+    console.log("action.data: ", data);
+    const result = yield call(RemoveCategoryAPI, data);
+    console.log("remove result", result);
+    yield put(removeCategorySuccess(data));
+  } catch (e) {
+    yield put(removeCategoryFailure(e));
+  }
+}
+
+function* watchRemoveCategory() {
+  yield takeEvery("REMOVE_CATEGORY_REQUEST", RemoveCategory);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchAddLang), fork(watchLoadLangList)]);
+  yield all([
+    fork(watchAddLang),
+    fork(watchLoadLangList),
+    fork(watchRemoveCategory),
+  ]);
 }
