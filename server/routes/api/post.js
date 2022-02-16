@@ -5,11 +5,15 @@ import Post from "../../models/post";
 
 const router = express.Router();
 
-// GET api/post/:id
-router.get("/:id", async (req, res) => {
+// GET api/post/
+router.get("/", async (req, res) => {
   try {
-    console.log("req.params.id:        ", req.params.id);
-    const result = await Post.find({ category: req.params.id });
+    const { category, folder } = req.query;
+    console.log("c", category, "f", folder);
+    const result = await Post.find({
+      category,
+      folder,
+    });
     console.log(result, `All posts Get`);
     res.json(result);
   } catch (e) {
@@ -20,11 +24,12 @@ router.get("/:id", async (req, res) => {
 // POST api/post
 router.post("/", async (req, res, next) => {
   try {
-    const { title, content, category } = req.body;
+    const { title, content, category, folder } = req.body;
     const newPost = await Post.create({
       title,
       content,
       category,
+      folder,
     });
     res.json(newPost);
   } catch (e) {

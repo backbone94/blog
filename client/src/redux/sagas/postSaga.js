@@ -29,14 +29,16 @@ function* watchWritePost() {
 
 // 게시물 불러오기
 const LoadPostListAPI = (data) => {
-  console.log("data:    ", data);
-  return axios.get(`/api/post/${data}`);
+  // console.log("c", data.category, "f", data.folder);
+  return axios.get("/api/post/", {
+    params: { category: data.category, folder: data.folder },
+  });
 };
 
 function* LoadPostList({ data }) {
   try {
     const result = yield call(LoadPostListAPI, data);
-    console.log("result", result);
+    console.log("result@@@@", result.data);
     yield put(loadPostListSuccess(result.data));
   } catch (e) {
     console.log(e);

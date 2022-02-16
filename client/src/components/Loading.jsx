@@ -1,3 +1,14 @@
 export default function Loading() {
-  return <span className="spinner-border text-secondary" role="status"></span>;
+  return (
+    <div
+      style={{
+        height: 720,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <span className="spinner-border text-secondary" role="status"></span>
+    </div>
+  );
 }

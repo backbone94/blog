@@ -45,8 +45,8 @@ router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
 
 // GET api/folder
 router.get("/", async (req, res) => {
-  console.log("req: ", req.query.category);
-  const result = await Folder.find();
+  console.log("req.query.category: ", req.query.category);
+  const result = await Folder.find({ category: req.query.category });
   console.log(result, "All Folder Get");
   res.json(result);
 });
@@ -78,8 +78,7 @@ router.post("/", uploadS3.none(), async (req, res, next) => {
 router.delete("/", async (req, res) => {
   console.log("req.body: ", req.body);
   await Folder.deleteOne({
-    title: req.body.title,
-    category: req.body.category,
+    id: req.body.id,
   });
   res.json({ success: true });
 });

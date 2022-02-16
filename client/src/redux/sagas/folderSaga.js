@@ -36,14 +36,12 @@ function* watchAddFolder() {
 
 // 폴더 불러오기
 const LoadFolderListAPI = (data) => {
-  console.log("data: ", data);
-  return axios.get("/api/folder");
+  return axios.get("/api/folder", { params: { category: data } });
 };
 
 function* LoadFolderList({ data }) {
   try {
     const result = yield call(LoadFolderListAPI, data);
-    console.log("result: ", result);
     yield put(loadFolderListSuccess(result.data));
   } catch (e) {
     yield put(loadFolderListFailure(e));
@@ -58,8 +56,7 @@ function* watchLoadFolderList() {
 const RemoveFolderAPI = (data) => {
   return axios.delete("/api/folder", {
     data: {
-      title: data.title,
-      category: data.category,
+      id: data,
     },
     withCredentials: true,
   });
@@ -67,8 +64,8 @@ const RemoveFolderAPI = (data) => {
 
 function* RemoveFolder({ data }) {
   try {
-    const result = yield call(RemoveFolderAPI, data);
-    console.log("remove result: ", result);
+    // data == 폴더 id
+    yield call(RemoveFolderAPI, data);
     yield put(removeFolderSuccess(data));
   } catch (e) {
     yield put(removeFolderFailure(e));

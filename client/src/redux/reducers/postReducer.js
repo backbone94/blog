@@ -1,6 +1,6 @@
 // 초기 state
 export const initialState = {
-  posts: [],
+  postList: [],
   loading: false,
   error: "",
 };
@@ -90,12 +90,14 @@ export default function postReducer(state = initialState, action) {
     case WRITE_POST_SUCCESS:
       return {
         ...state,
-        posts: [
-          ...state.posts,
+        postList: [
+          ...state.postList,
           {
             title: action.data.title,
             content: action.data.content,
             category: action.data.category,
+            folder: action.data.folder,
+            id: action.data.id,
           },
         ],
         loading: false,
@@ -115,7 +117,7 @@ export default function postReducer(state = initialState, action) {
     case LOAD_POST_LIST_SUCCESS:
       return {
         ...state,
-        posts: [...state.posts, ...action.data],
+        postList: action.data,
         loading: false,
       };
     case LOAD_POST_LIST_FAILURE:
@@ -133,7 +135,7 @@ export default function postReducer(state = initialState, action) {
     case REMOVE_POST_SUCCESS:
       return {
         ...state,
-        posts: state.posts.filter((v) => v.id !== action.data),
+        postList: state.postList.filter((v) => v.id !== action.data),
         loading: false,
       };
     case REMOVE_POST_FAILURE:

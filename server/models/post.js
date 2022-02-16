@@ -23,6 +23,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  folder: {
+    type: String,
+    required: true,
+  },
   views: {
     type: Number,
     default: -2,

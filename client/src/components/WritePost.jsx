@@ -14,13 +14,13 @@ function WritePost() {
 
   const dispatch = useDispatch();
   const params = useParams();
-  const category = params.id;
+  const { category, folder } = params;
 
   const onSubmit = () => {
-    console.log("title:", title, "content:", content);
     if (title !== "" && content !== "") {
-      dispatch(writePostRequest({ title, content, category }));
-      history.push(`/Lang/${category}`);
+      dispatch(writePostRequest({ title, content, category, folder }));
+      // history.push(`${category}/${folder}`);
+      history.goBack();
     } else alert("제목 또는 내용을 입력하세요.");
   };
 

@@ -5,7 +5,7 @@ import Frame from "./components/category/Frame";
 import Git from "./components/category/Git";
 import Major from "./components/category/Major";
 import Language from "./components/category/Language";
-import Category from "./components/category/Category";
+import Category from "./components/Category";
 
 // 컴포넌트
 import Home from "./components/Home";
@@ -27,7 +27,11 @@ const App = () => {
         <Switch>
           <Route exact path="/:category" component={Category} />
           <Route exact path="/:category/:folder" component={Folder} />
-          {/* <Route exact path="/Lang/:id/WritePost" component={WritePost} /> */}
+          <Route
+            exact
+            path="/:category/:folder/WritePost"
+            component={WritePost}
+          />
           {/* <Route exact path="/Lang" component={Language} /> */}
           {/* <Route exact path="/Frame" component={Frame} /> */}
           {/* <Route exact path="/Git" component={Git} /> */}

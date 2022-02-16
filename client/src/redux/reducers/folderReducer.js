@@ -94,6 +94,7 @@ const folderReducer = (state = initialState, action) => {
             title: action.data.title,
             fileUrl: action.data.fileUrl,
             category: action.data.category,
+            id: action.data.id,
           },
         ],
         loading: false,
@@ -115,7 +116,7 @@ const folderReducer = (state = initialState, action) => {
     case LOAD_FOLDER_LIST_SUCCESS:
       return {
         ...state,
-        folderList: [...state.folderList, ...action.data],
+        folderList: action.data,
         loading: false,
       };
     case LOAD_FOLDER_LIST_FAILURE:
@@ -135,9 +136,7 @@ const folderReducer = (state = initialState, action) => {
       return {
         ...state,
         folderList: state.folderList.filter((v) => {
-          return (
-            v.title !== action.data.title && v.category !== action.data.category
-          );
+          return v.id !== action.data;
         }),
         loading: false,
       };

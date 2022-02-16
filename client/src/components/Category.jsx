@@ -1,16 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "../Loading";
+import Loading from "./Loading";
 import {
   loadFolderListRequest,
   addFolderRequest,
   removeFolderRequest,
-} from "../../redux/reducers/folderReducer";
+} from "../redux/reducers/folderReducer";
 import { Link, useParams } from "react-router-dom";
 import { Modal, Alert, Button, Input } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
-import "../../css/category.css";
+import "../css/category.css";
 
 export default function Category() {
   const emptyUrl =
@@ -27,8 +27,8 @@ export default function Category() {
 
   // Folder List 불러오기
   useEffect(() => {
-    dispatch(loadFolderListRequest());
-  }, [dispatch]);
+    dispatch(loadFolderListRequest(category));
+  }, [dispatch, category]);
 
   // Modal Ok 버튼
   const handleOk = () => {
@@ -72,8 +72,8 @@ export default function Category() {
   };
 
   // Folder 삭제
-  const removeFolder = (title, category) => {
-    dispatch(removeFolderRequest({ title, category }));
+  const removeFolder = (id) => {
+    dispatch(removeFolderRequest(id));
   };
 
   return (
@@ -95,25 +95,21 @@ export default function Category() {
       ) : (
         <div className="category">
           <div className="folderList">
-            {folderList.map((f) => {
-              return f.category === category ? (
-                <div key={f.id} className="folderElement">
-                  <div className="removeIcon">
-                    <CloseOutlined
-                      onClick={() => removeFolder(f.title, f.category)}
-                    />
-                  </div>
-                  <Link to={`/${category}/${f.title}`}>
-                    <img
-                      className="folderImg"
-                      alt={`${f.title}`}
-                      src={f.fileUrl}
-                    />
-                  </Link>
-                  <div className="folderText">{f.title}</div>
+            {folderList.map((folder) => (
+              <div key={folder.id} className="folderElement">
+                <div className="removeIcon">
+                  <CloseOutlined onClick={() => removeFolder(folder.id)} />
                 </div>
-              ) : null;
-            })}
+                <Link to={`/${category}/${folder.title}`}>
+                  <img
+                    className="folderImg"
+                    alt={`${folder.title}`}
+                    src={folder.fileUrl}
+                  />
+                </Link>
+                <div className="folderText">{folder.title}</div>
+              </div>
+            ))}
           </div>
 
           {/* 카테고리 추가 버튼 */}
