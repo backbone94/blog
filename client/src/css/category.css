@@ -1,4 +1,4 @@
-.lang {
+.category {
   height: 720px;
   margin: 0 150px;
   display: flex;
@@ -7,22 +7,19 @@
   border: 3px solid red;
 }
 
-.langElements {
+.folderList {
   display: flex;
   justify-content: center;
   align-items: center;
   /* border: 3px solid red; */
 }
 
-.langElement {
+.folderElement {
   margin-right: 50px;
   border: 3px solid red;
 }
 
-.langImg {
-}
-
-.langText {
+.folderText {
   font-size: 18px;
   font-family: "Anton", sans-serif;
   display: block;
@@ -31,14 +28,14 @@
   border: 3px solid red;
 }
 
-.addLang {
+.addFolder {
   display: flex;
   justify-content: center;
   align-items: center;
   border: 3px solid red;
 }
 
-.addLangButton {
+.addFolderButton {
   border: 1px dotted #808080;
   width: 128px;
   height: 128px;
@@ -47,7 +44,7 @@
   position: relative;
   border: 3px solid red;
 }
-.addLangButton:hover {
+.addFolderButton:hover {
   border: 1px dotted blue;
 }
 

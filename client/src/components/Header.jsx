@@ -16,7 +16,7 @@ export default function Header() {
       <a href="/">
         <img src="images/house.svg" className="homeImg" alt="house" />
       </a>
-      <div className="category">
+      <div className="buttonGroup">
         {category.map((c) => (
           <Link key={c.en} to={`/${c.en}`}>
             <Button variant="outline-secondary" className="btn">

@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import langReducer from "./langReducer.js";
+import folderReducer from "./folderReducer.js";
 import postReducer from "./postReducer.js";
 
 const rootReducer = combineReducers({
-  langReducer,
+  folderReducer,
   postReducer,
 });
 

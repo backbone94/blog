@@ -1,171 +1,171 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Loading from "../Loading";
-import {
-  loadLangListRequest,
-  addLangRequest,
-  removeCategoryRequest,
-} from "../../redux/reducers/langReducer";
-import { Link } from "react-router-dom";
-import { Modal, Alert, Button, Input } from "antd";
-import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
-import "../../css/language.css";
+// import { useSelector, useDispatch } from "react-redux";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import Loading from "../Loading";
+// import {
+//   loadLangListRequest,
+//   addLangRequest,
+//   removeCategoryRequest,
+// } from "../../redux/reducers/langReducer";
+// import { Link } from "react-router-dom";
+// import { Modal, Alert, Button, Input } from "antd";
+// import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+// import "../../css/language.css";
 
-export default function Language() {
-  const emptyUrl =
-    "https://my-blog1684.s3.ap-northeast-2.amazonaws.com/upload/empty.ico";
-  const [title, setTitle] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const lang = useSelector((state) => state.langReducer.lang);
-  const error = useSelector((state) => state.langReducer.error);
-  const loading = useSelector((state) => state.langReducer.loading);
-  const dispatch = useDispatch();
+// export default function Language() {
+//   const emptyUrl =
+//     "https://my-blog1684.s3.ap-northeast-2.amazonaws.com/upload/empty.ico";
+//   const [title, setTitle] = useState("");
+//   const [fileUrl, setFileUrl] = useState("");
+//   const [isModalVisible, setIsModalVisible] = useState(false);
+//   const lang = useSelector((state) => state.langReducer.lang);
+//   const error = useSelector((state) => state.langReducer.error);
+//   const loading = useSelector((state) => state.langReducer.loading);
+//   const dispatch = useDispatch();
 
-  // 카테고리 불러오기
-  useEffect(() => {
-    dispatch(loadLangListRequest());
-  }, [dispatch]);
+//   // 카테고리 불러오기
+//   useEffect(() => {
+//     dispatch(loadLangListRequest());
+//   }, [dispatch]);
 
-  // Modal Ok 버튼
-  const handleOk = () => {
-    if (title !== "" && fileUrl !== "") {
-      dispatch(addLangRequest({ title, fileUrl }));
-      setTitle("");
-      setFileUrl("");
-      setIsModalVisible(false);
-    } else if (fileUrl === "") alert("Enter the Image!");
-    else if (title === "") alert("Enter the Category!");
-  };
+//   // Modal Ok 버튼
+//   const handleOk = () => {
+//     if (title !== "" && fileUrl !== "") {
+//       dispatch(addLangRequest({ title, fileUrl }));
+//       setTitle("");
+//       setFileUrl("");
+//       setIsModalVisible(false);
+//     } else if (fileUrl === "") alert("Enter the Image!");
+//     else if (title === "") alert("Enter the Category!");
+//   };
 
-  // Modal cancel 버튼
-  const handleCancel = () => {
-    setTitle("");
-    setFileUrl("");
-    setIsModalVisible(false);
-  };
+//   // Modal cancel 버튼
+//   const handleCancel = () => {
+//     setTitle("");
+//     setFileUrl("");
+//     setIsModalVisible(false);
+//   };
 
-  // 이미지를 s3에 저장하고 이미지 경로 가져오기
-  async function requestImg(e) {
-    const formData = new FormData();
-    formData.append("upload", e.target.files[0]);
-    try {
-      const result = await axios.post(
-        "http://localhost:7000/api/langCategory/image",
-        formData
-      );
-      setFileUrl(result.data.url[0]);
-      console.log(typeof result.data.url[0]);
+//   // 이미지를 s3에 저장하고 이미지 경로 가져오기
+//   async function requestImg(e) {
+//     const formData = new FormData();
+//     formData.append("upload", e.target.files[0]);
+//     try {
+//       const result = await axios.post(
+//         "http://localhost:7000/api/langCategory/image",
+//         formData
+//       );
+//       setFileUrl(result.data.url[0]);
+//       console.log(typeof result.data.url[0]);
 
-      // 이미지 경로에서 정규표현식을 활용하여 카테고리 제목 찾아내기
-      const temp = result.data.url[0]
-        .match(/(?<=upload\/).{1,}(?=.ico)/)[0]
-        .match(/[a-zA-Z]/g)
-        .join("");
-      console.log("temp: ", temp);
-      setTitle(temp);
-    } catch (e) {
-      console.log(e);
-      alert("server error");
-    }
-  }
+//       // 이미지 경로에서 정규표현식을 활용하여 카테고리 제목 찾아내기
+//       const temp = result.data.url[0]
+//         .match(/(?<=upload\/).{1,}(?=.ico)/)[0]
+//         .match(/[a-zA-Z]/g)
+//         .join("");
+//       console.log("temp: ", temp);
+//       setTitle(temp);
+//     } catch (e) {
+//       console.log(e);
+//       alert("server error");
+//     }
+//   }
 
-  // 카테고리 삭제
-  const removeCategory = (title) => {
-    console.log("title: ", title);
-    dispatch(removeCategoryRequest(title));
-  };
+//   // 카테고리 삭제
+//   const removeCategory = (title) => {
+//     console.log("title: ", title);
+//     dispatch(removeCategoryRequest(title));
+//   };
 
-  return (
-    <>
-      {/* error 값이 존재하면 Alert 창 띄우기 */}
-      {error && (
-        <Alert
-          className="dupAlert"
-          message="Error"
-          description={error}
-          type="error"
-          showIcon
-        />
-      )}
-      {/* Lang List 불러오기 */}
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="lang">
-          <div className="langElements">
-            {lang.map((l) => {
-              return (
-                <div key={l._id} className="langElement">
-                  <div className="removeIcon">
-                    <CloseOutlined onClick={() => removeCategory(l.title)} />
-                  </div>
-                  <Link to={`/Lang/${l.title}`}>
-                    <img
-                      className="langImg"
-                      alt={`${l.title}`}
-                      src={l.fileUrl}
-                    />
-                  </Link>
-                  <div className="langText">{l.title}</div>
-                </div>
-              );
-            })}
-          </div>
+//   return (
+//     <>
+//       {/* error 값이 존재하면 Alert 창 띄우기 */}
+//       {error && (
+//         <Alert
+//           className="dupAlert"
+//           message="Error"
+//           description={error}
+//           type="error"
+//           showIcon
+//         />
+//       )}
+//       {/* Lang List 불러오기 */}
+//       {loading ? (
+//         <Loading />
+//       ) : (
+//         <div className="lang">
+//           <div className="langElements">
+//             {lang.map((l) => {
+//               return (
+//                 <div key={l._id} className="langElement">
+//                   <div className="removeIcon">
+//                     <CloseOutlined onClick={() => removeCategory(l.title)} />
+//                   </div>
+//                   <Link to={`/Lang/${l.title}`}>
+//                     <img
+//                       className="langImg"
+//                       alt={`${l.title}`}
+//                       src={l.fileUrl}
+//                     />
+//                   </Link>
+//                   <div className="langText">{l.title}</div>
+//                 </div>
+//               );
+//             })}
+//           </div>
 
-          {/* Lang 카테고리 추가 버튼 */}
-          <div className="addLang">
-            <div
-              className="addLangButton"
-              onClick={() => setIsModalVisible(true)}
-            >
-              <div className="plus">
-                <PlusOutlined className="plusIcon" />
-                <div className="plusText">Add Category</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Modal */}
-      <Modal
-        title="Add Category"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <div className="addLangForm">
-          {/* Modal의 Image 부분 */}
-          {fileUrl ? (
-            <img src={fileUrl} alt="img" />
-          ) : (
-            <div>
-              <label className="mb-2">Image</label>
-              <input
-                onChange={requestImg}
-                accept="image/*"
-                className="form-control"
-                type="file"
-              />
-              <Button onClick={() => setFileUrl(emptyUrl)} className="mt-2">
-                기본 이미지로 설정
-              </Button>
-            </div>
-          )}
-          {/* Modal의 Category 부분 */}
-          <div>
-            <label className="mt-3 mb-2">Category</label>
-            <Input
-              placeholder="Enter the Category"
-              style={{ display: "block", width: "100%" }}
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              type="text"
-            />
-          </div>
-        </div>
-      </Modal>
-    </>
-  );
-}
+//           {/* Lang 카테고리 추가 버튼 */}
+//           <div className="addLang">
+//             <div
+//               className="addLangButton"
+//               onClick={() => setIsModalVisible(true)}
+//             >
+//               <div className="plus">
+//                 <PlusOutlined className="plusIcon" />
+//                 <div className="plusText">Add Category</div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//       {/* Modal */}
+//       <Modal
+//         title="Add Category"
+//         visible={isModalVisible}
+//         onOk={handleOk}
+//         onCancel={handleCancel}
+//       >
+//         <div className="addLangForm">
+//           {/* Modal의 Image 부분 */}
+//           {fileUrl ? (
+//             <img src={fileUrl} alt="img" />
+//           ) : (
+//             <div>
+//               <label className="mb-2">Image</label>
+//               <input
+//                 onChange={requestImg}
+//                 accept="image/*"
+//                 className="form-control"
+//                 type="file"
+//               />
+//               <Button onClick={() => setFileUrl(emptyUrl)} className="mt-2">
+//                 기본 이미지로 설정
+//               </Button>
+//             </div>
+//           )}
+//           {/* Modal의 Category 부분 */}
+//           <div>
+//             <label className="mt-3 mb-2">Category</label>
+//             <Input
+//               placeholder="Enter the Category"
+//               style={{ display: "block", width: "100%" }}
+//               onChange={(e) => setTitle(e.target.value)}
+//               value={title}
+//               type="text"
+//             />
+//           </div>
+//         </div>
+//       </Modal>
+//     </>
+//   );
+// }

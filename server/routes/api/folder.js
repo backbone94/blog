@@ -1,7 +1,7 @@
 import express from "express";
 
 // 몽고 DB 콜렉션
-import LangCategory from "../../models/langCategory";
+import Folder from "../../models/folder";
 
 const router = express.Router();
 
@@ -32,7 +32,7 @@ const uploadS3 = multer({
   limits: { fileSize: 100 * 1024 * 1024 },
 });
 
-// POST api/langCategory/image. S3에 이미지 저장
+// POST api/folder/image. S3에 이미지 저장
 router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
   try {
     console.log(req.files.map((v) => v.location));
@@ -43,37 +43,44 @@ router.post("/image", uploadS3.array("upload", 5), async (req, res, next) => {
   }
 });
 
-// GET api/langCategory
+// GET api/folder
 router.get("/", async (req, res) => {
-  const result = await LangCategory.find();
-  console.log(result, "All Category Get");
+  console.log("req: ", req.query.category);
+  const result = await Folder.find();
+  console.log(result, "All Folder Get");
   res.json(result);
 });
 
-// POST api/langCategory
+// POST api/folder
 router.post("/", uploadS3.none(), async (req, res, next) => {
   try {
-    const { title, fileUrl } = req.body;
-    const result = await LangCategory.findOne({ title: title });
+    const { title, fileUrl, category } = req.body;
+    console.log("title: ", title, "category:", category);
+    const result = await Folder.findOne({ title: title, category: category });
+    console.log("result", result);
     if (result !== null) {
-      console.log("이미 존재하는 카테고리입니다.");
-      res.json({ error: "이미 존재하는 카테고리입니다." });
+      console.log("이미 존재하는 폴더입니다.");
+      res.json({ error: "이미 존재하는 폴더입니다." });
     } else {
-      const newPost = await LangCategory.create({
+      const newFolder = await Folder.create({
         title,
         fileUrl,
+        category,
       });
-      res.json(newPost);
+      res.json(newFolder);
     }
   } catch (e) {
     console.log(e);
   }
 });
 
-// DELETE api/langCategory
+// DELETE api/folder
 router.delete("/", async (req, res) => {
   console.log("req.body: ", req.body);
-  await LangCategory.deleteOne({ title: req.body.title });
+  await Folder.deleteOne({
+    title: req.body.title,
+    category: req.body.category,
+  });
   res.json({ success: true });
 });
 
