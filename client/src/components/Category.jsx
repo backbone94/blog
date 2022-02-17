@@ -8,7 +8,7 @@ import {
   removeFolderRequest,
 } from "../redux/reducers/folderReducer";
 import { Link, useParams } from "react-router-dom";
-import { Modal, Alert, Button, Input } from "antd";
+import { Modal, notification, Button, Input, Popconfirm, message } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import "../css/category.css";
 
@@ -30,6 +30,12 @@ export default function Category() {
     dispatch(loadFolderListRequest(category));
   }, [dispatch, category]);
 
+  // 카테고리 삭제 confirm 창
+  const confirm = (id) => {
+    dispatch(removeFolderRequest(id));
+    message.success("삭제되었습니다.");
+  };
+
   // Modal Ok 버튼
   const handleOk = () => {
     if (title !== "" && fileUrl !== "") {
@@ -39,6 +45,16 @@ export default function Category() {
       setIsModalVisible(false);
     } else if (fileUrl === "") alert("Enter the Image!");
     else if (title === "") alert("Enter the Folder name!");
+
+    // error 값이 존재하면 Alert 창 띄우기
+    if (error) {
+      notification["error"]({
+        message: "에러",
+        description: `${error}`,
+      });
+
+      dispatch({ type: "CLEAR_ERROR_REQUEST" });
+    }
   };
 
   // Modal cancel 버튼
@@ -70,25 +86,8 @@ export default function Category() {
       alert("server error");
     }
   };
-
-  // Folder 삭제
-  const removeFolder = (id) => {
-    dispatch(removeFolderRequest(id));
-  };
-
   return (
     <>
-      {/* error 값이 존재하면 Alert 창 띄우기 */}
-      {error && (
-        <Alert
-          className="dupAlert"
-          message="Error"
-          description={error}
-          type="error"
-          showIcon
-          closable
-        />
-      )}
       {/* Folder List 불러오기 */}
       {loading ? (
         <Loading />
@@ -101,8 +100,17 @@ export default function Category() {
             <div className="folderList">
               {folderList.map((folder) => (
                 <div key={folder.id} className="folderElement">
-                  <div className="removeIcon">
-                    <CloseOutlined onClick={() => removeFolder(folder.id)} />
+                  <div>
+                    <Popconfirm
+                      title="정말 삭제하시겠습니까?"
+                      onConfirm={() => {
+                        confirm(folder.id);
+                      }}
+                      okText="네"
+                      cancelText="아니오"
+                    >
+                      <CloseOutlined className="folderCloseIcon" />
+                    </Popconfirm>
                   </div>
                   <Link to={`/${category}/${folder.title}`}>
                     <img

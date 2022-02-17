@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  border: 3px solid red;
+  /* border: 3px solid red; */
 }
 
 .addCategoryButton {
@@ -33,7 +33,7 @@
   padding-right: 20px;
   display: flex;
   position: relative;
-  border: 3px solid red;
+  /* border: 3px solid red; */
 }
 
 .categoryElement {
@@ -69,4 +69,13 @@
 input[name="category"]:checked + label {
   border-bottom: 2px solid #a0a0a0;
   color: #a0a0a0;
+}
+
+.headerCloseIcon {
+  margin: auto 0;
+  /* border: 3px solid red; */
+}
+.headerCloseIcon:hover {
+  cursor: pointer;
+  color: #efefef;
 }

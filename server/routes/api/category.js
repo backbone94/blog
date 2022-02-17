@@ -36,9 +36,9 @@ router.post("/", async (req, res, next) => {
 
 // DELETE api/category
 router.delete("/", async (req, res) => {
-  console.log("req.body: ", req.body);
+  console.log("req.query: ", req.query);
   await Category.deleteOne({
-    title: req.body.title,
+    id: req.query.id,
   });
   res.json({ success: true });
 });

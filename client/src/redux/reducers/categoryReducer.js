@@ -1,11 +1,6 @@
 // 초기 state
 export const initialState = {
-  categoryList: [
-    {
-      id: 0,
-      title: "Home",
-    },
-  ],
+  categoryList: [],
   loading: false,
   error: "",
 };
@@ -22,6 +17,10 @@ const LOAD_CATEGORY_LIST_FAILURE = "LOAD_CATEGORY_LIST_FAILURE";
 const REMOVE_CATEGORY_REQUEST = "REMOVE_CATEGORY_REQUEST";
 const REMOVE_CATEGORY_SUCCESS = "REMOVE_CATEGORY_SUCCESS";
 const REMOVE_CATEGORY_FAILURE = "REMOVE_CATEGORY_FAILURE";
+
+const CLEAR_ERROR_REQUEST = "CLEAR_ERROR_REQUEST";
+const CLEAR_ERROR_SUCCESS = "CLEAR_ERROR_SUCCESS";
+const CLEAR_ERROR_FAILURE = "CLEAR_ERROR_FAILURE";
 
 // 카테고리 추가하기
 export const addCategoryRequest = (data) => {
@@ -119,7 +118,13 @@ const categoryReducer = (state = initialState, action) => {
     case LOAD_CATEGORY_LIST_SUCCESS:
       return {
         ...state,
-        categoryList: [...state.categoryList, ...action.data],
+        categoryList: [
+          {
+            id: 0,
+            title: "Home",
+          },
+          ...action.data,
+        ],
         loading: false,
       };
     case LOAD_CATEGORY_LIST_FAILURE:
@@ -148,6 +153,22 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.data,
+      };
+
+    // 에러 메시지 clear
+    case CLEAR_ERROR_REQUEST:
+      return {
+        ...state,
+      };
+    case CLEAR_ERROR_SUCCESS:
+      return {
+        ...state,
+        error: "",
+      };
+    case CLEAR_ERROR_FAILURE:
+      return {
+        ...state,
+        error: "Clear Error Fail",
       };
 
     default:

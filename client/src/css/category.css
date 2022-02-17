@@ -83,7 +83,7 @@
   font-family: "Gamja Flower", cursive;
 }
 
-.removeIcon {
-  font-size: 20px;
-  text-align: end;
+.folderCloseIcon:hover {
+  cursor: pointer;
+  color: #efefef;
 }

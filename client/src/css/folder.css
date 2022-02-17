@@ -19,12 +19,10 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.postContent {
-}
-.closeIcon {
+.postCloseIcon {
   margin: auto 0;
 }
-.closeIcon:hover {
+.postCloseIcon:hover {
   cursor: pointer;
   color: #efefef;
 }

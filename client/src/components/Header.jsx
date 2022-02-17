@@ -1,12 +1,13 @@
 import "../css/header.css";
 import { useHistory } from "react-router-dom";
-import { Input, Button, Alert } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { Input, Button, Popconfirm, notification, message } from "antd";
+import { PlusCircleOutlined, CloseOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import {
   addCategoryRequest,
   loadCategoryListRequest,
+  removeCategoryRequest,
 } from "../redux/reducers/categoryReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -22,21 +23,38 @@ const Header = () => {
   const categoryList = useSelector(
     (state) => state.categoryReducer.categoryList
   );
+  const length = categoryList.length;
 
-  // Folder List 불러오기
+  // 카테고리 List 불러오기
   useEffect(() => {
     dispatch(loadCategoryListRequest());
   }, [dispatch]);
 
-  const length = categoryList.length;
-
+  // 검색 기능
   const onSearch = (e) => {
     console.log(e);
   };
 
+  // 카테고리 삭제 confirm 창
+  const confirm = (id) => {
+    dispatch(removeCategoryRequest(id));
+    message.success("삭제되었습니다.");
+  };
+
+  // 카테고리 추가
   const addCategory = () => {
-    console.log("title: ", title);
     dispatch(addCategoryRequest(title));
+
+    // error 값이 존재하면 Alert 창 띄우기
+    if (error) {
+      notification["error"]({
+        message: "에러",
+        description: `${error}`,
+      });
+
+      dispatch({ type: "CLEAR_ERROR_REQUEST" });
+    }
+
     setAdd(false);
     setTitle("");
   };
@@ -49,17 +67,6 @@ const Header = () => {
 
   return (
     <>
-      {/* error 값이 존재하면 Alert 창 띄우기 */}
-      {error && (
-        <Alert
-          className="dupAlert"
-          message="Error"
-          description={error}
-          type="error"
-          showIcon
-          closable
-        />
-      )}
       {/* category List 불러오기 */}
       {loading ? (
         <Loading />
@@ -80,6 +87,18 @@ const Header = () => {
                 <label className="categoryElement" htmlFor={`${category.id}`}>
                   {category.title}
                 </label>
+                {category.title !== "Home" ? (
+                  <Popconfirm
+                    title="정말 삭제하시겠습니까?"
+                    onConfirm={() => {
+                      confirm(category.id);
+                    }}
+                    okText="네"
+                    cancelText="아니오"
+                  >
+                    <CloseOutlined className="headerCloseIcon" />
+                  </Popconfirm>
+                ) : null}
                 {index !== length - 1 ? <div className="divider" /> : null}
               </div>
             ))}

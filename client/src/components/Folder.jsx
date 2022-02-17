@@ -7,6 +7,7 @@ import {
   removePostRequest,
 } from "../redux/reducers/postReducer";
 import ReactHtmlParser from "react-html-parser";
+import { Popconfirm, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../css/folder.css";
 import Loading from "./Loading";
@@ -22,8 +23,10 @@ const Folder = () => {
     dispatch(loadPostListRequest({ category, folder }));
   }, [dispatch, category, folder]);
 
-  const removePost = (id) => {
+  // 카테고리 삭제 confirm 창
+  const confirm = (id) => {
     dispatch(removePostRequest(id)); // _id 와 id 다름
+    message.success("삭제되었습니다.");
   };
 
   return (
@@ -46,10 +49,16 @@ const Folder = () => {
                           {ReactHtmlParser(post.content)}
                         </div>
                       </div>
-                      <CloseOutlined
-                        onClick={() => removePost(post.id)}
-                        className="closeIcon"
-                      />
+                      <Popconfirm
+                        title="정말 삭제하시겠습니까?"
+                        onConfirm={() => {
+                          confirm(post.id);
+                        }}
+                        okText="네"
+                        cancelText="아니오"
+                      >
+                        <CloseOutlined className="postCloseIcon" />
+                      </Popconfirm>
                     </div>
                   );
                 })
