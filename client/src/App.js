@@ -1,19 +1,13 @@
 import "./App.css";
 
 // 카테고리
-import Frame from "./components/category/Frame";
-import Git from "./components/category/Git";
-import Major from "./components/category/Major";
-import Language from "./components/category/Language";
-import Category from "./components/Category";
-
 // 컴포넌트
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import LangDetail from "./components/LangDetail";
-import WritePost from "./components/WritePost";
+import Category from "./components/Category";
 import Folder from "./components/Folder";
+import WritePost from "./components/WritePost";
 
 import { Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -25,18 +19,14 @@ const App = () => {
       <Header />
       <Provider store={store}>
         <Switch>
-          <Route exact path="/:category" component={Category} />
-          <Route exact path="/:category/:folder" component={Folder} />
+          <Route exact path="/" component={Home} />
           <Route
             exact
             path="/:category/:folder/WritePost"
             component={WritePost}
           />
-          {/* <Route exact path="/Lang" component={Language} /> */}
-          {/* <Route exact path="/Frame" component={Frame} /> */}
-          {/* <Route exact path="/Git" component={Git} /> */}
-          {/* <Route exact path="/Major" component={Major} /> */}
-          <Route exact path="/" component={Home} />
+          <Route exact path="/:category/:folder" component={Folder} />
+          <Route exact path="/:category" component={Category} />
         </Switch>
       </Provider>
       <Footer />

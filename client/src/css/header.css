@@ -1,19 +1,55 @@
-.header {
+.headerContainer {
   border-bottom: 1px solid black;
+  height: 100px;
 }
 
-.buttonGroup {
-  text-align: center;
-  margin-bottom: 5px;
+.categoryListContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.btn {
-  width: 115px;
-  margin-right: 10px;
+.categoryElementContainer {
+  font-family: "Gamja Flower", cursive;
+  margin-right: 20px;
+  padding-right: 20px;
+  display: flex;
+  position: relative;
+  transition: all 0.5s;
 }
 
-.homeImg {
-  display: block;
-  margin: 0 auto;
-  width: 50px;
+.categoryElement {
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.categoryElement:hover {
+  color: rgba(143, 145, 153, 0.5);
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #a0a0a0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto 0;
+}
+
+.selected {
+  border-bottom: 2px solid royalblue;
+  color: royalblue;
+}
+
+.radioCircle {
+  opacity: 0;
+}
+
+input[name="category"]:checked + label {
+  border-bottom: 2px solid #a0a0a0;
+  color: #a0a0a0;
 }
