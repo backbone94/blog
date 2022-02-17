@@ -6,6 +6,7 @@ import helmet from "helmet";
 import cors from "cors";
 
 // Routes
+import categoryRoutes from "./routes/api/category";
 import folderRoutes from "./routes/api/folder";
 import userRoutes from "./routes/api/user";
 import authRoutes from "./routes/api/auth";
@@ -34,6 +35,7 @@ mongoose
 
 // use routes
 app.get("/");
+app.use("/api/category", categoryRoutes);
 app.use("/api/folder", folderRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/user", userRoutes);

@@ -1,8 +1,21 @@
 .home {
   height: 720px;
+}
+
+.homeName {
+  font-size: 30px;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Gamja Flower", cursive;
+  /* border: 3px solid red; */
+}
+
+.video {
+  display: flex;
+  justify-content: center;
+  /* border: 3px solid red; */
 }
 
 #player {

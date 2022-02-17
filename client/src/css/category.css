@@ -1,9 +1,25 @@
 .category {
-  height: 720px;
+  height: 700px;
   margin: 0 150px;
+  /* border: 3px solid red; */
+}
+
+.categoryName {
+  font-size: 30px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Gamja Flower", cursive;
+  /* border: 3px solid red; */
+}
+
+.folderListAndAddButton {
   display: flex;
   justify-content: center;
   align-content: center;
+  height: 200px;
+  /* border: 3px solid red; */
 }
 
 .folderList {
@@ -19,7 +35,8 @@
 
 .folderText {
   font-size: 18px;
-  font-family: "Anton", sans-serif;
+  /* font-family: "Anton", sans-serif; */
+  font-family: "Gamja Flower", cursive;
   display: block;
   text-align: center;
   margin-top: 10px;
@@ -29,6 +46,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border: 3px solid red; */
 }
 
 .addFolderButton {
@@ -40,7 +58,8 @@
   position: relative;
 }
 .addFolderButton:hover {
-  border: 1px dotted blue;
+  border: 1px dotted #177ddc;
+  color: #177ddc;
 }
 
 .plus {

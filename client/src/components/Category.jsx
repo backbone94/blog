@@ -94,33 +94,37 @@ export default function Category() {
         <Loading />
       ) : (
         <div className="category">
-          <div className="folderList">
-            {folderList.map((folder) => (
-              <div key={folder.id} className="folderElement">
-                <div className="removeIcon">
-                  <CloseOutlined onClick={() => removeFolder(folder.id)} />
-                </div>
-                <Link to={`/${category}/${folder.title}`}>
-                  <img
-                    className="folderImg"
-                    alt={`${folder.title}`}
-                    src={folder.fileUrl}
-                  />
-                </Link>
-                <div className="folderText">{folder.title}</div>
-              </div>
-            ))}
-          </div>
+          <div className="categoryName">{category}</div>
 
-          {/* 카테고리 추가 버튼 */}
-          <div className="addFolder">
-            <div
-              className="addFolderButton"
-              onClick={() => setIsModalVisible(true)}
-            >
-              <div className="plus">
-                <PlusOutlined className="plusIcon" />
-                <div className="plusText">Add Folder</div>
+          <div className="folderListAndAddButton">
+            {/* 폴더 리스트 */}
+            <div className="folderList">
+              {folderList.map((folder) => (
+                <div key={folder.id} className="folderElement">
+                  <div className="removeIcon">
+                    <CloseOutlined onClick={() => removeFolder(folder.id)} />
+                  </div>
+                  <Link to={`/${category}/${folder.title}`}>
+                    <img
+                      className="folderImg"
+                      alt={`${folder.title}`}
+                      src={folder.fileUrl}
+                    />
+                  </Link>
+                  <div className="folderText">{folder.title}</div>
+                </div>
+              ))}
+            </div>
+            {/* 카테고리 추가 버튼 */}
+            <div className="addFolder">
+              <div
+                className="addFolderButton"
+                onClick={() => setIsModalVisible(true)}
+              >
+                <div className="plus">
+                  <PlusOutlined className="plusIcon" />
+                  <div className="plusText">Add Folder</div>
+                </div>
               </div>
             </div>
           </div>

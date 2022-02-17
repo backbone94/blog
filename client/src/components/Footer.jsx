@@ -32,7 +32,7 @@ const Footer = () => {
           href="https://github.com/backbone94?tab=repositories"
           rel="noreferrer"
         >
-          <img alt="github" src="images/github.svg" /> Github
+          <img alt="github" src="images/github.svg" /> <span>Github</span>
         </a>
       </p>
 

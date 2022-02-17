@@ -1,7 +1,8 @@
 import axios from "axios";
 import { put, takeEvery, all, fork, call } from "redux-saga/effects";
-import { writePostSuccess, writePostFailure } from "../reducers/postReducer";
 import {
+  writePostSuccess,
+  writePostFailure,
   loadPostListSuccess,
   loadPostListFailure,
   removePostFailure,

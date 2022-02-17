@@ -1,6 +1,5 @@
 import "./App.css";
 
-// 카테고리
 // 컴포넌트
 import Home from "./components/Home";
 import Header from "./components/Header";
@@ -16,8 +15,8 @@ import store from "./store";
 const App = () => {
   return (
     <>
-      <Header />
       <Provider store={store}>
+        <Header />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route
