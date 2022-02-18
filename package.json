@@ -24,7 +24,8 @@
     "redux-devtools-extension": "^2.13.9"
   },
   "scripts": {
-    "dev": "nodemon ./server/server.js --exec babel-node"
+    "dev": "nodemon ./server/server.js --exec babel-node",
+    "build:server": "babel server --out-dir build"
   },
   "eslintConfig": {
     "extends": [
