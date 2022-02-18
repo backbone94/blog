@@ -1,15 +1,17 @@
-import { Toast } from "bootstrap";
-import { useRef } from "react";
+import { Tooltip, message } from "antd";
 import "../css/footer.css";
 
 const Footer = () => {
-  const textRef = useRef();
   const year = new Date().getFullYear();
 
   function onClick(e) {
     navigator.clipboard.writeText(e.target.textContent);
-    let toast = new Toast(textRef.current);
-    toast.show();
+    message.success({
+      content: "복사되었습니다.",
+      style: {
+        marginTop: "10vh",
+      },
+    });
   }
 
   return (
@@ -18,13 +20,9 @@ const Footer = () => {
       <p>
         <span>
           <img alt="email" src="images/email.svg" />{" "}
-          <span
-            style={{ cursor: "pointer" }}
-            onClick={onClick}
-            title="복사하기"
-          >
-            backbone94@naver.com
-          </span>
+          <Tooltip onClick={onClick} title="복사하기">
+            <span style={{ cursor: "pointer" }}>backbone94@naver.com</span>
+          </Tooltip>
         </span>
         <a
           style={{ textDecoration: "none", color: "black", marginLeft: "30px" }}
@@ -39,21 +37,6 @@ const Footer = () => {
       <p>
         <span>Copyright {year}. All Rights Reserved. </span>
       </p>
-
-      {/* toast 창 */}
-      <div
-        className="position-fixed bottom-0 end-0 p-3 "
-        style={{ zIndex: 11 }}
-      >
-        <div
-          ref={textRef}
-          className="toast"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
-          <div className="toast-body">복사 완료!</div>
-        </div>
-      </div>
     </div>
   );
 };

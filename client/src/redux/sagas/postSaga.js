@@ -7,6 +7,8 @@ import {
   loadPostListFailure,
   removePostFailure,
   removePostSuccess,
+  searchPostSuccess,
+  searchPostFailure,
 } from "../reducers/postReducer";
 
 // 글쓰기
@@ -17,7 +19,6 @@ const WritePostAPI = (data) => {
 function* WritePost({ data }) {
   try {
     const result = yield call(WritePostAPI, data);
-    console.log("@@@@@", result);
     yield put(writePostSuccess(result.data));
   } catch (e) {
     yield put(writePostFailure(e));
@@ -39,7 +40,7 @@ const LoadPostListAPI = (data) => {
 function* LoadPostList({ data }) {
   try {
     const result = yield call(LoadPostListAPI, data);
-    console.log("result@@@@", result.data);
+    // console.log("result: ", result.data);
     yield put(loadPostListSuccess(result.data));
   } catch (e) {
     console.log(e);
@@ -49,6 +50,28 @@ function* LoadPostList({ data }) {
 
 function* watchLoadPostList() {
   yield takeEvery("LOAD_POST_LIST_REQUEST", LoadPostList);
+}
+
+// 게시물 검색하기
+const SearchPostAPI = (data) => {
+  return axios.get("/api/post/writePost", {
+    params: { title: data },
+  });
+};
+
+function* SearchPost({ data }) {
+  try {
+    const result = yield call(SearchPostAPI, data);
+    console.log("검색한 게시물: ", result.data);
+    yield put(searchPostSuccess(result.data));
+  } catch (e) {
+    console.log(e);
+    yield put(searchPostFailure(e));
+  }
+}
+
+function* watchSearchPost() {
+  yield takeEvery("SEARCH_POST_REQUEST", SearchPost);
 }
 
 // 게시물 삭제하기
@@ -82,6 +105,7 @@ export default function* postSaga() {
   yield all([
     fork(watchWritePost),
     fork(watchLoadPostList),
+    fork(watchSearchPost),
     fork(watchRemovePost),
   ]);
 }

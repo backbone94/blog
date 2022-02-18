@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "./Loading";
+import CategoryLoading from "./loading/CategoryLoading";
 import {
   loadFolderListRequest,
   addFolderRequest,
@@ -33,8 +33,25 @@ export default function Category() {
   // 카테고리 삭제 confirm 창
   const confirm = (id) => {
     dispatch(removeFolderRequest(id));
-    message.success("삭제되었습니다.");
+    message.success({
+      content: "폴더를 삭제하였습니다.",
+      style: {
+        marginTop: "12vh",
+      },
+    });
   };
+
+  // error 값이 존재하면 Alert 창 띄우기
+  useEffect(() => {
+    if (error) {
+      notification["error"]({
+        message: "에러",
+        description: `${error}`,
+      });
+      setIsModalVisible(true);
+      dispatch({ type: "CLEAR_ERROR_REQUEST" });
+    }
+  }, [dispatch, error]);
 
   // Modal Ok 버튼
   const handleOk = () => {
@@ -45,16 +62,6 @@ export default function Category() {
       setIsModalVisible(false);
     } else if (fileUrl === "") alert("Enter the Image!");
     else if (title === "") alert("Enter the Folder name!");
-
-    // error 값이 존재하면 Alert 창 띄우기
-    if (error) {
-      notification["error"]({
-        message: "에러",
-        description: `${error}`,
-      });
-
-      dispatch({ type: "CLEAR_ERROR_REQUEST" });
-    }
   };
 
   // Modal cancel 버튼
@@ -90,7 +97,7 @@ export default function Category() {
     <>
       {/* Folder List 불러오기 */}
       {loading ? (
-        <Loading />
+        <CategoryLoading />
       ) : (
         <div className="category">
           <div className="categoryName">{category}</div>

@@ -1,8 +1,8 @@
-export default function Loading() {
+export default function CategoryLoading() {
   return (
     <div
       style={{
-        height: 720,
+        height: 700,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

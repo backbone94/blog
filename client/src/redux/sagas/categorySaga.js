@@ -8,6 +8,7 @@ import {
   removeCategorySuccess,
   removeCategoryFailure,
 } from "../reducers/categoryReducer";
+import { message } from "antd";
 
 // clear Error
 
@@ -41,7 +42,13 @@ function* AddCategory({ data }) {
       // 서버에서 데이터는 잘 가져왔지만 에러가 있다면
       yield put(addCategoryFailure(result.data.error));
     } else {
-      // 에러가 없다면
+      // 에러가 없다면 카테고리를 추가했다는 메시지와 함께 액션 dispatch
+      message.success({
+        content: "카테고리를 추가하였습니다.",
+        style: {
+          marginTop: "12vh",
+        },
+      });
       yield put(addCategorySuccess(result.data));
     }
   } catch (e) {

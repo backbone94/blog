@@ -9,10 +9,25 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const { category, folder } = req.query;
-    console.log("c", category, "f", folder);
+    // console.log("c", category, "f", folder);
     const result = await Post.find({
       category,
       folder,
+    });
+    console.log(result, `All posts Get`);
+    res.json(result);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// GET api/post/write
+router.get("/writePost", async (req, res) => {
+  try {
+    const { title } = req.query;
+    // console.log("c", category, "f", folder);
+    const result = await Post.find({
+      title,
     });
     console.log(result, `All posts Get`);
     res.json(result);

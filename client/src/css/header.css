@@ -27,6 +27,19 @@
   /* border: 3px solid red; */
 }
 
+.inputContainer {
+  position: relative;
+  margin-right: 10px;
+}
+.clearInputIcon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1;
+}
+
 .categoryElementContainer {
   font-family: "Gamja Flower", cursive;
   margin-right: 20px;

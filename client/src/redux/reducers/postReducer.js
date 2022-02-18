@@ -18,6 +18,10 @@ const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
 const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
 const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
 
+const SEARCH_POST_REQUEST = "SEARCH_POST_REQUEST";
+const SEARCH_POST_SUCCESS = "SEARCH_POST_SUCCESS";
+const SEARCH_POST_FAILURE = "SEARCH_POST_FAILURE";
+
 // 게시글 작성하기
 export const writePostRequest = (data) => {
   return {
@@ -74,6 +78,26 @@ export function removePostSuccess(data) {
 export function removePostFailure(data) {
   return {
     type: REMOVE_POST_FAILURE,
+    data,
+  };
+}
+
+// 게시글 검색하기
+export function searchPostRequest(data) {
+  return {
+    type: SEARCH_POST_REQUEST,
+    data,
+  };
+}
+export function searchPostSuccess(data) {
+  return {
+    type: SEARCH_POST_SUCCESS,
+    data,
+  };
+}
+export function searchPostFailure(data) {
+  return {
+    type: SEARCH_POST_FAILURE,
     data,
   };
 }
@@ -139,6 +163,24 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
     case REMOVE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    // 게시글 검색하기
+    case SEARCH_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SEARCH_POST_SUCCESS:
+      return {
+        ...state,
+        postList: action.data,
+        loading: false,
+      };
+    case SEARCH_POST_FAILURE:
       return {
         ...state,
         loading: false,

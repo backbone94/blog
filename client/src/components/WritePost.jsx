@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { writePostRequest } from "../redux/reducers/postReducer";
+import { message } from "antd";
 
 function WritePost() {
   const history = useHistory();
@@ -20,6 +21,8 @@ function WritePost() {
       dispatch(writePostRequest({ title, content, category, folder }));
       history.goBack();
     } else alert("제목 또는 내용을 입력하세요.");
+
+    message.success("게시글을 추가하였습니다.");
   };
 
   return (

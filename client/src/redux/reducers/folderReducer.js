@@ -18,6 +18,10 @@ const REMOVE_FOLDER_REQUEST = "REMOVE_FOLDER_REQUEST";
 const REMOVE_FOLDER_SUCCESS = "REMOVE_FOLDER_SUCCESS";
 const REMOVE_FOLDER_FAILURE = "REMOVE_FOLDER_FAILURE";
 
+const CLEAR_ERROR_REQUEST = "CLEAR_ERROR_REQUEST";
+const CLEAR_ERROR_SUCCESS = "CLEAR_ERROR_SUCCESS";
+const CLEAR_ERROR_FAILURE = "CLEAR_ERROR_FAILURE";
+
 // 폴더 추가하기
 export const addFolderRequest = (data) => {
   return {
@@ -145,6 +149,22 @@ const folderReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.data,
+      };
+
+    // 에러 메시지 clear
+    case CLEAR_ERROR_REQUEST:
+      return {
+        ...state,
+      };
+    case CLEAR_ERROR_SUCCESS:
+      return {
+        ...state,
+        error: "",
+      };
+    case CLEAR_ERROR_FAILURE:
+      return {
+        ...state,
+        error: "Clear Error Fail",
       };
 
     default:

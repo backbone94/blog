@@ -1,7 +1,6 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import {
   loadPostListRequest,
   removePostRequest,
@@ -10,7 +9,7 @@ import ReactHtmlParser from "react-html-parser";
 import { Popconfirm, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../css/folder.css";
-import Loading from "./Loading";
+import CategoryLoading from "./loading/CategoryLoading";
 
 const Folder = () => {
   const loading = useSelector((state) => state.postReducer.loading);
@@ -23,16 +22,16 @@ const Folder = () => {
     dispatch(loadPostListRequest({ category, folder }));
   }, [dispatch, category, folder]);
 
-  // 카테고리 삭제 confirm 창
+  // post 삭제 알림창
   const confirm = (id) => {
     dispatch(removePostRequest(id)); // _id 와 id 다름
-    message.success("삭제되었습니다.");
+    message.success("게시글을 삭제하였습니다.");
   };
 
   return (
     <div>
       {loading ? (
-        <Loading />
+        <CategoryLoading />
       ) : (
         <div className="realEntire">
           <div className="entireContainer">
