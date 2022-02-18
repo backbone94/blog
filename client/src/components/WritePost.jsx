@@ -22,7 +22,12 @@ function WritePost() {
       history.goBack();
     } else alert("제목 또는 내용을 입력하세요.");
 
-    message.success("게시글을 추가하였습니다.");
+    message.success({
+      content: "게시물을 추가하였습니다.",
+      style: {
+        marginTop: "9vh",
+      },
+    });
   };
 
   return (

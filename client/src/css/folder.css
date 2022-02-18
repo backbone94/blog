@@ -1,28 +1,25 @@
 .entireContainer {
-  border: 3px solid red;
-  /* position: absolute; */
-  /* bottom: 0; */
+  /* border: 3px solid red; */
 }
 
-.postContainer {
-  margin-bottom: 10px;
-  /* border: 3px solid red; */
+.folderName {
+  font-size: 30px;
   display: flex;
   justify-content: center;
-}
-.post {
-  width: 50%;
-  margin: 10px;
+  align-items: center;
+  font-family: "Gamja Flower", cursive;
   /* border: 3px solid red; */
 }
-.postTitle {
-  text-overflow: ellipsis;
-  overflow: hidden;
+
+.addPost {
+  display: flex;
+  height: 10%;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+  /* border: 3px solid blue; */
 }
-.postCloseIcon {
-  margin: auto 0;
-}
-.postCloseIcon:hover {
-  cursor: pointer;
-  color: #efefef;
+
+.postListContainer {
+  /* border: 3px solid #808080; */
 }
