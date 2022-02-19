@@ -2,7 +2,7 @@ import "../css/home.css";
 
 const Home = () => {
   return (
-    <div className="home">
+    <div className="homeContainer">
       <div className="homeName">Home</div>
       <div className="video">
         <iframe

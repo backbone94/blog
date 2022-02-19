@@ -1,4 +1,5 @@
 import { Tooltip, message } from "antd";
+import { GithubFilled, MailFilled } from "@ant-design/icons";
 import "../css/footer.css";
 
 const Footer = () => {
@@ -19,18 +20,19 @@ const Footer = () => {
       <p>이정준</p>
       <p>
         <span>
-          <img alt="email" src="images/email.svg" />{" "}
-          <Tooltip onClick={onClick} title="복사하기">
+          <MailFilled style={{ fontSize: 20, marginRight: 5 }} />
+          <Tooltip color={"#2db7f5"} onClick={onClick} title="복사하기">
             <span style={{ cursor: "pointer" }}>backbone94@naver.com</span>
           </Tooltip>
         </span>
         <a
-          style={{ textDecoration: "none", color: "black", marginLeft: "30px" }}
+          style={{ marginLeft: 30 }}
           target="_blank"
           href="https://github.com/backbone94?tab=repositories"
           rel="noreferrer"
         >
-          <img alt="github" src="images/github.svg" /> <span>Github</span>
+          <GithubFilled style={{ fontSize: 20 }} />{" "}
+          <span className="github">Github</span>
         </a>
       </p>
 

@@ -12,7 +12,13 @@ const PostCard = ({ post }) => {
   // post 삭제 알림창
   const confirm = (id) => {
     dispatch(removePostRequest(id)); // _id 와 id 다름
-    message.success("게시글을 삭제하였습니다.");
+    message.success({
+      content: "게시물을 삭제하였습니다.",
+      style: {
+        marginTop: "9vh",
+        fontFamily: '"Gamja Flower", cursive',
+      },
+    });
   };
 
   return (
@@ -20,7 +26,7 @@ const PostCard = ({ post }) => {
       <div className="postContainer" key={post.id}>
         <div className="post">
           <div className="notFileUrl">
-            <h2 className="postTitle">{post.title}</h2>
+            <div className="postTitle">{post.title}</div>
             <div className="postContent">{ReactHtmlParser(post.content)}</div>
             <div className="commentsAndDate">
               {post.comments ? (
@@ -32,9 +38,9 @@ const PostCard = ({ post }) => {
               <Space className="postDate">{post.date}</Space>
             </div>
           </div>
-          <div className="fileUrl">
+          {/* <div className="fileUrl">
             <img src={`${post.fileUrl}`} alt="" />
-          </div>
+          </div> */}
         </div>
         <Popconfirm
           title="정말 삭제하시겠습니까?"

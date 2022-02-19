@@ -27,6 +27,7 @@ function* AddFolder({ data }) {
         content: "폴더를 추가하였습니다.",
         style: {
           marginTop: "12vh",
+          fontFamily: '"Gamja Flower", cursive',
         },
       });
       yield put(addFolderSuccess(result.data));

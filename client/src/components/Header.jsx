@@ -1,11 +1,7 @@
 import "../css/header.css";
 import { useHistory } from "react-router-dom";
 import { Button, Popconfirm, notification, message } from "antd";
-import {
-  PlusCircleOutlined,
-  CloseOutlined,
-  CloseCircleOutlined,
-} from "@ant-design/icons";
+import { PlusCircleOutlined, CloseOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import HeaderLoading from "./loading/HeaderLoading";
 import {
@@ -35,6 +31,7 @@ const Header = () => {
 
   // 카테고리 List 불러오기
   useEffect(() => {
+    setSearchWord("");
     dispatch(loadCategoryListRequest());
   }, [dispatch]);
 
@@ -64,7 +61,8 @@ const Header = () => {
   // error 값이 존재하면 Alert 창 띄우기
   useEffect(() => {
     if (error) {
-      notification["error"]({
+      notification.error({
+        style: { fontFamily: '"Gamja Flower", cursive' },
         message: "에러",
         description: `${error}`,
       });
@@ -80,6 +78,7 @@ const Header = () => {
       content: "카테고리를 삭제하였습니다.",
       style: {
         marginTop: "12vh",
+        fontFamily: '"Gamja Flower", cursive',
       },
     });
     history.push("/");
@@ -92,6 +91,7 @@ const Header = () => {
         content: "카테고리 이름을 입력하세요.",
         style: {
           marginTop: "12vh",
+          fontFamily: '"Gamja Flower", cursive',
         },
       });
     } else {
@@ -159,6 +159,7 @@ const Header = () => {
             ) : (
               <div>
                 <input
+                  style={{ color: "black" }}
                   autoFocus
                   type="text"
                   value={title}
@@ -181,7 +182,7 @@ const Header = () => {
                 placeholder="게시글 제목으로 검색"
                 onChange={onSearch}
                 value={searchWord}
-                style={{ width: 200 }}
+                style={{ width: 150, fontFamily: "Gamja Flower, cursive" }}
               />
               {searchWord ? (
                 <CloseOutlined

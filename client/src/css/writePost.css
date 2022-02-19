@@ -1,5 +1,6 @@
 .writePostContainer {
   width: 50%;
+  height: 733px;
   margin: 50px auto;
   /* border: 3px solid red; */
 }
@@ -8,8 +9,16 @@
   display: block;
   margin: 0 auto;
   margin-bottom: 20px;
+  color: black;
 }
 .writePostButton {
   display: block;
-  margin: 0 auto;
+  margin: 10px auto;
+  color: black;
+  background-color: white;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 500px;
+  color: black;
 }

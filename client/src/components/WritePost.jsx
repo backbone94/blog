@@ -20,19 +20,21 @@ function WritePost() {
     if (title !== "" && content !== "") {
       dispatch(writePostRequest({ title, content, category, folder }));
       history.goBack();
-    } else alert("제목 또는 내용을 입력하세요.");
 
-    message.success({
-      content: "게시물을 추가하였습니다.",
-      style: {
-        marginTop: "9vh",
-      },
-    });
+      message.success({
+        content: "게시물을 추가하였습니다.",
+        style: {
+          marginTop: "9vh",
+          fontFamily: '"Gamja Flower", cursive',
+        },
+      });
+    } else alert("제목 또는 내용을 입력하세요.");
   };
 
   return (
     <div className="writePostContainer">
       <input
+        autoFocus
         className="writePostTitle"
         onChange={(e) => {
           setTitle(e.target.value);

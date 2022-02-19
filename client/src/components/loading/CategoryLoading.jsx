@@ -2,7 +2,7 @@ export default function CategoryLoading() {
   return (
     <div
       style={{
-        height: 700,
+        height: 733,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

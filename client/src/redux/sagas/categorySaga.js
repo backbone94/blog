@@ -47,6 +47,7 @@ function* AddCategory({ data }) {
         content: "카테고리를 추가하였습니다.",
         style: {
           marginTop: "12vh",
+          fontFamily: '"Gamja Flower", cursive',
         },
       });
       yield put(addCategorySuccess(result.data));

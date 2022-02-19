@@ -27,8 +27,9 @@ export default function Category() {
 
   // Folder List 불러오기
   useEffect(() => {
+    if (folderList) return;
     dispatch(loadFolderListRequest(category));
-  }, [dispatch, category]);
+  }, [dispatch, category, folderList]);
 
   // 카테고리 삭제 confirm 창
   const confirm = (id) => {
@@ -37,6 +38,7 @@ export default function Category() {
       content: "폴더를 삭제하였습니다.",
       style: {
         marginTop: "12vh",
+        fontFamily: '"Gamja Flower", cursive',
       },
     });
   };
@@ -44,7 +46,8 @@ export default function Category() {
   // error 값이 존재하면 Alert 창 띄우기
   useEffect(() => {
     if (error) {
-      notification["error"]({
+      notification.error({
+        style: { fontFamily: '"Gamja Flower", cursive' },
         message: "에러",
         description: `${error}`,
       });
@@ -99,7 +102,7 @@ export default function Category() {
       {loading ? (
         <CategoryLoading />
       ) : (
-        <div className="category">
+        <div className="categoryContainer">
           <div className="categoryName">{category}</div>
 
           <div className="folderListAndAddButton">
@@ -148,6 +151,7 @@ export default function Category() {
 
       {/* Modal */}
       <Modal
+        style={{ fontFamily: '"Gamja Flower", cursive' }}
         title="Add Folder"
         visible={isModalVisible}
         onOk={handleOk}

@@ -2,8 +2,8 @@
   font-family: "Gamja Flower", cursive;
   font-size: 20px;
   height: 50px;
-  /* border: 1px solid red; */
   position: relative;
+  /* border: 1px solid red; */
 }
 
 .navigation {
@@ -16,10 +16,8 @@
 
 .linkNavi {
   opacity: 0.5;
-  color: black;
 }
 
 .linkNavi:hover {
   opacity: 1;
-  color: black;
 }

@@ -16,7 +16,6 @@
 
 .addCategoryButton {
   font-size: 15px;
-  font-family: "Gamja Flower", cursive;
 }
 
 .searchAndLogin {
@@ -30,6 +29,7 @@
 .inputContainer {
   position: relative;
   margin-right: 10px;
+  color: black;
 }
 .clearInputIcon {
   position: absolute;
@@ -41,7 +41,6 @@
 }
 
 .categoryElementContainer {
-  font-family: "Gamja Flower", cursive;
   margin-right: 20px;
   padding-right: 20px;
   display: flex;
@@ -50,7 +49,7 @@
 }
 
 .categoryElement {
-  color: black;
+  /* color: black; */
   font-size: 25px;
   cursor: pointer;
 }
@@ -68,11 +67,6 @@
   bottom: 0;
   right: 0;
   margin: auto 0;
-}
-
-.selected {
-  border-bottom: 2px solid royalblue;
-  color: royalblue;
 }
 
 .radioCircle {

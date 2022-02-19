@@ -33,11 +33,11 @@ const PostSchema = new mongoose.Schema({
   },
   fileUrl: {
     type: String,
-    default: "https://source.unsplash.com/random/301x201",
+    default: `https://source.unsplash.com/random/300x200`,
   },
   date: {
     type: String,
-    default: moment().format("YY-MM-DD hh:mm:ss"),
+    default: moment().format("YY.MM.DD HH:mm"),
   },
   comments: [
     {
