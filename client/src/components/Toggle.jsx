@@ -1,9 +1,6 @@
-import { Switch } from "antd";
 import styled from "styled-components";
 
 export default function Toggle({ toggle, mode }) {
-  console.log("mode: ", mode);
-
   return (
     <ToggleWrapper onClick={toggle} mode={mode}>
       {mode === "dark" ? "🌞" : "🌛"}

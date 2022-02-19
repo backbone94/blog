@@ -8,6 +8,7 @@ import "../css/folder.css";
 import CategoryLoading from "./loading/CategoryLoading";
 import FolderNavi from "./navigation/FolderNavi";
 import PostCard from "./PostCard";
+import MyButton from "./MyButton";
 
 const Folder = () => {
   const loading = useSelector((state) => state.postReducer.loading);
@@ -17,9 +18,9 @@ const Folder = () => {
   const { category, folder } = params;
 
   useEffect(() => {
-    if (postList) return;
+    // if (postList) return;
     dispatch(loadPostListRequest({ category, folder }));
-  }, [dispatch, category, folder, postList]);
+  }, [dispatch, category, folder]);
 
   return (
     <div>
@@ -32,9 +33,9 @@ const Folder = () => {
           {/* post 추가 버튼 */}
           <div className="addPost">
             <Link to={`/${category}/${folder}/WritePost`}>
-              <Button icon={<PlusCircleOutlined />} type="dashed">
-                Add Post
-              </Button>
+              {/* <Button icon={<PlusCircleOutlined />} type="dashed"> */}
+              <MyButton text={"Add Post"} />
+              {/* </Button> */}
             </Link>
           </div>
           <div className="postListContainer">

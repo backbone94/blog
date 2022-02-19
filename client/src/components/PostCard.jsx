@@ -38,9 +38,9 @@ const PostCard = ({ post }) => {
               <Space className="postDate">{post.date}</Space>
             </div>
           </div>
-          {/* <div className="fileUrl">
+          <div className="fileUrl">
             <img src={`${post.fileUrl}`} alt="" />
-          </div> */}
+          </div>
         </div>
         <Popconfirm
           title="정말 삭제하시겠습니까?"

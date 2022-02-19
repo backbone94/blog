@@ -17,7 +17,6 @@ h2 {
 }
 a {
 	color: ${(props) => props.theme.textColor};
-	transition: all 0.3s;
 }
 a:hover {
   color: ${(props) => props.theme.textColor};

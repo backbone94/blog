@@ -27,9 +27,9 @@ export default function Category() {
 
   // Folder List 불러오기
   useEffect(() => {
-    if (folderList) return;
+    // if (folderList) return;
     dispatch(loadFolderListRequest(category));
-  }, [dispatch, category, folderList]);
+  }, [dispatch, category]);
 
   // 카테고리 삭제 confirm 창
   const confirm = (id) => {
