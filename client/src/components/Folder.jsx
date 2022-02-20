@@ -16,7 +16,6 @@ const Folder = () => {
   const { category, folder } = params;
 
   useEffect(() => {
-    // if (postList) return;
     dispatch(loadPostListRequest({ category, folder }));
   }, [dispatch, category, folder]);
 
@@ -51,7 +50,7 @@ const Folder = () => {
                   .slice("")
                   .reverse()
                   .map((post) => (
-                    <PostCard key={post.id} post={post} />
+                    <PostCard post={post} />
                   ))}
               </>
             )}

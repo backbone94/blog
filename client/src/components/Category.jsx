@@ -27,7 +27,6 @@ export default function Category() {
 
   // Folder List 불러오기
   useEffect(() => {
-    // if (folderList) return;
     dispatch(loadFolderListRequest(category));
   }, [dispatch, category]);
 

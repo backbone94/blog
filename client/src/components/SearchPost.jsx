@@ -38,7 +38,7 @@ const SearchPost = () => {
           </div>
           <div className="yesSearchPost">
             {postList.map((post) => {
-              return <PostCard key={post.id} post={post} />;
+              return <PostCard post={post} />;
             })}
           </div>
         </>

@@ -24,7 +24,7 @@ function WritePost() {
       message.success({
         content: "게시물을 추가하였습니다.",
         style: {
-          marginTop: "9vh",
+          marginTop: "10vh",
           fontFamily: '"Gamja Flower", cursive',
         },
       });
