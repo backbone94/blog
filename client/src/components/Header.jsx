@@ -9,6 +9,7 @@ import {
   loadCategoryListRequest,
   removeCategoryRequest,
 } from "../redux/reducers/categoryReducer";
+import { loadFolderListRequest } from "../redux/reducers/folderReducer";
 import {
   clearPostListSuccess,
   clearPostListFailure,
@@ -80,8 +81,11 @@ const Header = () => {
 
   const movePage = (category) => {
     // Home 으로 이동할 때는 Home 카테고리가 아닌, "/" 경로로 이동한다.
-    if (category !== "Home") history.push(`/${category}`);
-    else if (category === "Home") history.push("/");
+    if (category !== "Home") {
+      // 카테고리 이동하기 전에 미리 folder list 불러오기
+      dispatch(loadFolderListRequest(category));
+      history.replace(`/${category}`);
+    } else if (category === "Home") history.push("/");
   };
 
   // 검색 페이지로 이동하기 전에 postList clear

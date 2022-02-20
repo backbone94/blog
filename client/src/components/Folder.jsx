@@ -1,7 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { loadPostListRequest } from "../redux/reducers/postReducer";
 import "../css/folder.css";
 import CategoryLoading from "./loading/CategoryLoading";
 import FolderNavi from "./navigation/FolderNavi";
@@ -11,13 +9,10 @@ import MyButton from "./MyButton";
 const Folder = () => {
   const loading = useSelector((state) => state.postReducer.loading);
   const postList = useSelector((state) => state.postReducer.postList);
-  const dispatch = useDispatch();
   const params = useParams();
   const { category, folder } = params;
 
-  useEffect(() => {
-    dispatch(loadPostListRequest({ category, folder }));
-  }, [dispatch, category, folder]);
+  console.log("post list: ", postList);
 
   return (
     <div>

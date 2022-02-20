@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryLoading from "./loading/CategoryLoading";
 import {
-  loadFolderListRequest,
   addFolderRequest,
   removeFolderRequest,
 } from "../redux/reducers/folderReducer";
+import { loadPostListRequest } from "../redux/reducers/postReducer";
 import { Link, useParams } from "react-router-dom";
 import { Modal, notification, Button, Input, Popconfirm, message } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
@@ -24,11 +24,6 @@ export default function Category() {
   const dispatch = useDispatch();
   const params = useParams();
   const category = params.category;
-
-  // Folder List 불러오기
-  useEffect(() => {
-    dispatch(loadFolderListRequest(category));
-  }, [dispatch, category]);
 
   // 카테고리 삭제 confirm 창
   const confirm = (id) => {
@@ -121,7 +116,15 @@ export default function Category() {
                       <CloseOutlined className="folderCloseIcon" />
                     </Popconfirm>
                   </div>
-                  <Link to={`/${category}/${folder.title}`}>
+                  {/* 폴더 내부로 들어가기 전에 post list 미리 불러오기 */}
+                  <Link
+                    onClick={() => {
+                      dispatch(
+                        loadPostListRequest({ category, folder: folder.title })
+                      );
+                    }}
+                    to={`/${category}/${folder.title}`}
+                  >
                     <img
                       className="folderImg"
                       alt={`${folder.title}`}
