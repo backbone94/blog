@@ -1,7 +1,7 @@
 import "../css/header.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Button, Popconfirm, notification, message } from "antd";
-import { PlusCircleOutlined, CloseOutlined } from "@ant-design/icons";
+import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import HeaderLoading from "./loading/HeaderLoading";
 import {
@@ -9,16 +9,16 @@ import {
   loadCategoryListRequest,
   removeCategoryRequest,
 } from "../redux/reducers/categoryReducer";
-import { searchPostRequest } from "../redux/reducers/postReducer";
+import {
+  clearPostListSuccess,
+  clearPostListFailure,
+} from "../redux/reducers/postReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
-let historyIndex = 0;
-
+import MyButton from "./MyButton";
 const Header = () => {
   const [add, setAdd] = useState(false);
   const [title, setTitle] = useState("");
-  const [searchWord, setSearchWord] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const error = useSelector((state) => state.categoryReducer.error);
@@ -31,32 +31,8 @@ const Header = () => {
 
   // 카테고리 List 불러오기
   useEffect(() => {
-    setSearchWord("");
     dispatch(loadCategoryListRequest());
   }, [dispatch]);
-
-  // 검색 기능
-  const onSearch = (e) => {
-    setSearchWord(e.target.value);
-    // 검색어를 썼다가 clear 아이콘 안 쓰고 지웠을 때,
-    // 이전 컴포넌트로 돌아가기
-    if (e.target.value === "") {
-      history.go(-historyIndex);
-      historyIndex = 0;
-    } else {
-      historyIndex++;
-      history.push("/searchPost");
-      dispatch(searchPostRequest(e.target.value));
-    }
-  };
-
-  // 써진 검색어 clear 아이콘으로 한번에 지우고
-  // 검색어의 길이만큼 뒤로 가기(=검색하기 전 컴포넌트로 돌아가기)
-  const clearSearch = () => {
-    history.go(-historyIndex);
-    setSearchWord("");
-    historyIndex = 0;
-  };
 
   // error 값이 존재하면 Alert 창 띄우기
   useEffect(() => {
@@ -90,7 +66,7 @@ const Header = () => {
       message.error({
         content: "카테고리 이름을 입력하세요.",
         style: {
-          marginTop: "12vh",
+          marginTop: "10vh",
           fontFamily: '"Gamja Flower", cursive',
         },
       });
@@ -106,6 +82,17 @@ const Header = () => {
     // Home 으로 이동할 때는 Home 카테고리가 아닌, "/" 경로로 이동한다.
     if (category !== "Home") history.push(`/${category}`);
     else if (category === "Home") history.push("/");
+  };
+
+  // 검색 페이지로 이동하기 전에 postList clear
+  const goSearchPage = () => {
+    try {
+      dispatch(clearPostListSuccess());
+    } catch (e) {
+      console.log(e);
+      dispatch(clearPostListFailure(e));
+    }
+    history.push("/searchPost");
   };
 
   return (
@@ -148,14 +135,10 @@ const Header = () => {
 
             {/* 카테고리 추가 버튼 */}
             {!add ? (
-              <Button
-                icon={<PlusCircleOutlined />}
-                className="addCategoryButton"
-                type="dashed"
+              <MyButton
+                text={"Add Category"}
                 onClick={() => setAdd(true)}
-              >
-                Add Category
-              </Button>
+              ></MyButton>
             ) : (
               <div>
                 <input
@@ -165,34 +148,25 @@ const Header = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <Button style={{ marginLeft: 5 }} onClick={addCategory}>
-                  추가
-                </Button>
-                <Button style={{ marginLeft: 5 }} onClick={() => setAdd(false)}>
-                  취소
-                </Button>
+                <MyButton text={"추가"} marginLeft={5} onClick={addCategory} />
+                <MyButton
+                  text={"취소"}
+                  marginLeft={5}
+                  onClick={() => setAdd(false)}
+                />
               </div>
             )}
           </div>
 
           {/* 검색, 로그인, 회원가입 부분*/}
           <div className="searchAndLogin">
-            <div className="inputContainer">
-              <input
-                placeholder="게시글 제목으로 검색"
-                onChange={onSearch}
-                value={searchWord}
-                style={{ width: 150, fontFamily: "Gamja Flower, cursive" }}
-              />
-              {searchWord ? (
-                <CloseOutlined
-                  onClick={clearSearch}
-                  className="clearInputIcon"
-                />
-              ) : null}
+            <div onClick={goSearchPage} className="searchIcon">
+              <SearchOutlined />
             </div>
-            <Button style={{ marginRight: 10 }}>로그인</Button>
-            <Button type="primary">회원가입</Button>
+            <MyButton text={"로그인"} marginRight={10} />
+            <Button style={{ borderRadius: "10%" }} type="primary">
+              회원가입
+            </Button>
           </div>
         </div>
       )}

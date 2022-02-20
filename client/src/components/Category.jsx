@@ -133,7 +133,7 @@ export default function Category() {
                 </div>
               ))}
             </div>
-            {/* 카테고리 추가 버튼 */}
+            {/* 폴더 추가 버튼 */}
             <div className="addFolder">
               <div
                 className="addFolderButton"

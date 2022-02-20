@@ -1,7 +1,8 @@
 .noSearchPost {
-  min-height: 733px;
+  min-height: 633px;
   margin: 0 150px;
   position: relative;
+  /* border: 3px solid red; */
 }
 
 .noSearchPostText {
@@ -14,5 +15,29 @@
 
 .yesSearchPost {
   min-height: 626px;
-  /* border: 1px solid red; */
+  /* border: 3px solid red; */
+}
+
+.clearInputIcon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.searchInputContainer {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  /* border: 3px solid blue; */
+}
+
+.searchInput {
+  width: 50%;
+  height: 50%;
+  font-size: 32px;
 }

@@ -22,6 +22,10 @@ const SEARCH_POST_REQUEST = "SEARCH_POST_REQUEST";
 const SEARCH_POST_SUCCESS = "SEARCH_POST_SUCCESS";
 const SEARCH_POST_FAILURE = "SEARCH_POST_FAILURE";
 
+const CLEAR_POST_LIST_REQUEST = "CLEAR_POST_LIST_REQUEST";
+const CLEAR_POST_LIST_SUCCESS = "CLEAR_POST_LIST_SUCCESS";
+const CLEAR_POST_LIST_FAILURE = "CLEAR_POST_LIST_FAILURE";
+
 // 게시글 작성하기
 export const writePostRequest = (data) => {
   return {
@@ -98,6 +102,26 @@ export function searchPostSuccess(data) {
 export function searchPostFailure(data) {
   return {
     type: SEARCH_POST_FAILURE,
+    data,
+  };
+}
+
+// 게시글 리스트 clear
+export function clearPostListRequest(data) {
+  return {
+    type: CLEAR_POST_LIST_REQUEST,
+    data,
+  };
+}
+export function clearPostListSuccess(data) {
+  return {
+    type: CLEAR_POST_LIST_SUCCESS,
+    data,
+  };
+}
+export function clearPostListFailure(data) {
+  return {
+    type: CLEAR_POST_LIST_FAILURE,
     data,
   };
 }
@@ -181,6 +205,24 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
     case SEARCH_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    // 게시글 리스트 clear
+    case CLEAR_POST_LIST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CLEAR_POST_LIST_SUCCESS:
+      return {
+        ...state,
+        postList: [],
+        loading: false,
+      };
+    case CLEAR_POST_LIST_FAILURE:
       return {
         ...state,
         loading: false,

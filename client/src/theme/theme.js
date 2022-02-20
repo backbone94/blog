@@ -1,7 +1,7 @@
 export const lightTheme = {
   bgColor: "white",
   textColor: "black",
-  borderColor: "1px solid black",
+  borderColor: "1px solid rgba(145, 133, 99, 0.5)",
 };
 
 export const darkTheme = {

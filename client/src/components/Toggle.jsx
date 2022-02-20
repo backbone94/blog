@@ -22,7 +22,7 @@ const ToggleWrapper = styled.span`
   font-size: 25px;
   transition: all 0.3s;
   &:hover {
-    background-color: #a39e9e;
+    background-color: #a0a0a090;
     cursor: pointer;
   }
 `;

@@ -70,7 +70,7 @@ const LoadCategoryListAPI = () => {
 function* LoadCategoryList() {
   try {
     const result = yield call(LoadCategoryListAPI);
-    console.log("카테고리 불러오기 result: ", result.data);
+    console.log("카테고리 불러오기: ", result.data);
     yield put(loadCategoryListSuccess(result.data));
   } catch (e) {
     console.log(e);

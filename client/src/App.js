@@ -22,10 +22,10 @@ import { lightTheme, darkTheme } from "./theme/theme";
 import { ThemeProvider } from "styled-components";
 
 const App = () => {
+  // 다크모드 관련 코드
   const LocalTheme = window.localStorage.getItem("theme") || "light";
   const [ThemeMode, setThemeMode] = useState(LocalTheme);
   const themeObject = ThemeMode === "light" ? lightTheme : darkTheme;
-  console.log("themeObject: ", themeObject);
   const toggleTheme = useCallback(() => {
     if (ThemeMode === "light") {
       setThemeMode("dark");
