@@ -6,7 +6,10 @@ import {
   addFolderRequest,
   removeFolderRequest,
 } from "../redux/reducers/folderReducer";
-import { loadPostListRequest } from "../redux/reducers/postReducer";
+import {
+  loadPostListRequest,
+  removePostListRequest,
+} from "../redux/reducers/postReducer";
 import { Link, useParams } from "react-router-dom";
 import { Modal, notification, Button, Input, Popconfirm, message } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
@@ -26,8 +29,9 @@ export default function Category() {
   const category = params.category;
 
   // 카테고리 삭제 confirm 창
-  const confirm = (id) => {
+  const removeConfirm = (id, folderTitle) => {
     dispatch(removeFolderRequest(id));
+    dispatch(removePostListRequest(folderTitle));
     message.success({
       content: "폴더를 삭제하였습니다.",
       style: {
@@ -108,7 +112,7 @@ export default function Category() {
                     <Popconfirm
                       title="정말 삭제하시겠습니까?"
                       onConfirm={() => {
-                        confirm(folder.id);
+                        removeConfirm(folder.id, folder.title);
                       }}
                       okText="네"
                       cancelText="아니오"

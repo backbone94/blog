@@ -1,8 +1,18 @@
 import styled from "styled-components";
 
-export default function MyButton({ text, onClick, marginLeft, marginRight }) {
+export default function MyButton({
+  text,
+  onClick,
+  marginLeft,
+  marginRight,
+  className,
+}) {
   return (
-    <Button style={{ marginLeft, marginRight }} onClick={onClick}>
+    <Button
+      className={className}
+      style={{ marginLeft, marginRight }}
+      onClick={onClick}
+    >
       {text}
     </Button>
   );

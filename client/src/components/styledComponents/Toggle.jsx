@@ -10,8 +10,8 @@ export default function Toggle({ toggle, mode }) {
 
 const ToggleWrapper = styled.span`
   position: fixed;
-  left: 90%;
-  top: 15%;
+  left: 95%;
+  top: 12%;
   border-radius: 50%;
   width: 40px;
   height: 40px;

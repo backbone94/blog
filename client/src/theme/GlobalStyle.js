@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-h2 {
+h1, h2 {
 	color: ${(props) => props.theme.textColor};
 }
 .headerContainer {

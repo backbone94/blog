@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { writePostRequest } from "../redux/reducers/postReducer";
 import { message } from "antd";
+import MyButton from "./styledComponents/MyButton";
 
 function WritePost() {
   const history = useHistory();
@@ -24,7 +25,7 @@ function WritePost() {
       message.success({
         content: "게시물을 추가하였습니다.",
         style: {
-          marginTop: "10vh",
+          marginTop: "9vh",
           fontFamily: '"Gamja Flower", cursive',
         },
       });
@@ -48,9 +49,11 @@ function WritePost() {
           setContent(editor.getData());
         }}
       />
-      <button className="writePostButton" onClick={onSubmit}>
-        글쓰기
-      </button>
+      <MyButton
+        className="writePostButton"
+        text={"글쓰기"}
+        onClick={onSubmit}
+      />
     </div>
   );
 }

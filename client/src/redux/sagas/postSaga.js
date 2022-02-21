@@ -3,12 +3,16 @@ import { put, takeEvery, all, fork, call } from "redux-saga/effects";
 import {
   writePostSuccess,
   writePostFailure,
+  updatePostSuccess,
+  updatePostFailure,
   loadPostListSuccess,
   loadPostListFailure,
   loadDetailPostSuccess,
   loadDetailPostFailure,
   removePostFailure,
   removePostSuccess,
+  removePostListFailure,
+  removePostListSuccess,
   searchPostSuccess,
   searchPostFailure,
 } from "../reducers/postReducer";
@@ -31,6 +35,25 @@ function* watchWritePost() {
   yield takeEvery("WRITE_POST_REQUEST", WritePost);
 }
 
+// 글 수정하기
+const updatePostAPI = (data) => {
+  return axios.post("/api/post/updatePost", data);
+};
+
+function* updatePost({ data }) {
+  try {
+    const result = yield call(updatePostAPI, data);
+    console.log("update result: ", result.data);
+    yield put(updatePostSuccess(result.data));
+  } catch (e) {
+    yield put(updatePostFailure(e));
+  }
+}
+
+function* watchUpdatePost() {
+  yield takeEvery("UPDATE_POST_REQUEST", updatePost);
+}
+
 // 게시글 list 불러오기
 const LoadPostListAPI = (data) => {
   return axios.get("/api/post/", {
@@ -41,7 +64,7 @@ const LoadPostListAPI = (data) => {
 function* LoadPostList({ data }) {
   try {
     const result = yield call(LoadPostListAPI, data);
-    // console.log("result: ", result.data);
+    console.log("load post result: ", result.data);
     yield put(loadPostListSuccess(result.data));
   } catch (e) {
     console.log(e);
@@ -124,12 +147,40 @@ function* watchRemovePost() {
   yield takeEvery("REMOVE_POST_REQUEST", RemovePost);
 }
 
+// 삭제된 category 내부에 있었던 모든 post 삭제하기
+const RemovePostListAPI = (data) => {
+  return axios.delete(`/api/post/postList`, {
+    data: {
+      folder: data,
+    },
+    withCredentials: true,
+  });
+};
+
+function* RemovePostList({ data }) {
+  try {
+    // data == folder
+    const result = yield call(RemovePostListAPI, data);
+    console.log("remove post List result", result);
+    yield put(removePostListSuccess());
+  } catch (e) {
+    console.log(e);
+    yield put(removePostListFailure(e));
+  }
+}
+
+function* watchRemovePostList() {
+  yield takeEvery("REMOVE_POST_LIST_REQUEST", RemovePostList);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchWritePost),
+    fork(watchUpdatePost),
     fork(watchLoadPostList),
     fork(watchLoadDetailPost),
     fork(watchSearchPost),
     fork(watchRemovePost),
+    fork(watchRemovePostList),
   ]);
 }

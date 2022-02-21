@@ -2,6 +2,7 @@
 export const initialState = {
   postList: [],
   post: {},
+  newPostId: 10,
   loading: false,
   error: "",
 };
@@ -10,6 +11,10 @@ export const initialState = {
 const WRITE_POST_REQUEST = "WRITE_POST_REQUEST";
 const WRITE_POST_SUCCESS = "WRITE_POST_SUCCESS";
 const WRITE_POST_FAILURE = "WRITE_POST_FAILURE";
+
+const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
+const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+const UPDATE_POST_FAILURE = "UPDATE_POST_FAILURE";
 
 const LOAD_POST_LIST_REQUEST = "LOAD_POST_LIST_REQUEST";
 const LOAD_POST_LIST_SUCCESS = "LOAD_POST_LIST_SUCCESS";
@@ -22,6 +27,10 @@ const LOAD_DETAIL_POST_FAILURE = "LOAD_DETAIL_POST_FAILURE";
 const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
 const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
 const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+
+const REMOVE_POST_LIST_REQUEST = "REMOVE_POST_LIST_REQUEST";
+const REMOVE_POST_LIST_SUCCESS = "REMOVE_POST_LIST_SUCCESS";
+const REMOVE_POST_LIST_FAILURE = "REMOVE_POST_LIST_FAILURE";
 
 const SEARCH_POST_REQUEST = "SEARCH_POST_REQUEST";
 const SEARCH_POST_SUCCESS = "SEARCH_POST_SUCCESS";
@@ -47,6 +56,26 @@ export const writePostSuccess = (data) => {
 export const writePostFailure = (data) => {
   return {
     type: WRITE_POST_FAILURE,
+    data,
+  };
+};
+
+// 게시글 수정하기
+export const updatePostRequest = (data) => {
+  return {
+    type: UPDATE_POST_REQUEST,
+    data,
+  };
+};
+export const updatePostSuccess = (data) => {
+  return {
+    type: UPDATE_POST_SUCCESS,
+    data,
+  };
+};
+export const updatePostFailure = (data) => {
+  return {
+    type: UPDATE_POST_FAILURE,
     data,
   };
 };
@@ -111,6 +140,25 @@ export function removePostFailure(data) {
   };
 }
 
+// 삭제된 category 내부에 있었던 모든 게시글 삭제하기
+export function removePostListRequest(data) {
+  return {
+    type: REMOVE_POST_LIST_REQUEST,
+    data,
+  };
+}
+export function removePostListSuccess() {
+  return {
+    type: REMOVE_POST_LIST_SUCCESS,
+  };
+}
+export function removePostListFailure(data) {
+  return {
+    type: REMOVE_POST_LIST_FAILURE,
+    data,
+  };
+}
+
 // 게시글 검색하기
 export function searchPostRequest(data) {
   return {
@@ -161,6 +209,7 @@ export default function postReducer(state = initialState, action) {
         loading: true,
       };
     case WRITE_POST_SUCCESS:
+      state.newPostId = action.data.id;
       return {
         ...state,
         postList: [
@@ -178,6 +227,28 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
     case WRITE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    // 게시글 수정하기
+    case UPDATE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_POST_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          title: action.data.title,
+          content: action.data.content,
+        },
+        loading: false,
+      };
+    case UPDATE_POST_FAILURE:
       return {
         ...state,
         loading: false,
@@ -232,6 +303,23 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
     case REMOVE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    // 삭제된 category 내부에 있었던 모든 게시글 삭제하기
+    case REMOVE_POST_LIST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case REMOVE_POST_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case REMOVE_POST_LIST_FAILURE:
       return {
         ...state,
         loading: false,

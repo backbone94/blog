@@ -1,6 +1,6 @@
 .writePostContainer {
   width: 50%;
-  height: 733px;
+  min-height: 733px;
   margin: 50px auto;
   /* border: 3px solid red; */
 }

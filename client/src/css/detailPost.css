@@ -1,4 +1,51 @@
 .detailPostContainer {
-  height: 733px;
-  border: 3px solid red;
+  min-height: 733px;
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* border: 3px solid red; */
+}
+
+.detailPostTitle {
+  font-size: 50px;
+  margin-top: 50px;
+  /* border: 1px solid yellowgreen; */
+}
+
+.dateAndUpdate {
+  display: flex;
+  /* border: 1px solid gray; */
+}
+
+.detailPostDate {
+  font-size: 15px;
+}
+
+.detailPostUpdate {
+  margin-left: auto;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.detailPostRemove {
+  margin: 0 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.detailPostUpdate:hover {
+  transform: scale(1.1);
+}
+
+.detailPostRemove:hover {
+  transform: scale(1.1);
+}
+
+.detailPostContent {
+  font-size: 20px;
+  /* min-height: 550px; */
+  margin-top: 150px;
+  /* border: 1px solid blue; */
 }
