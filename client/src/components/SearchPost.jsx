@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchPostRequest } from "../redux/reducers/postReducer";
 import PostCard from "./PostCard";
 import "../css/searchPost.css";
+import { CloseOutlined } from "@ant-design/icons";
 
 const SearchPost = () => {
-  let postList = useSelector((state) => state.postReducer.postList);
+  const inputRef = useRef();
+  const postList = useSelector((state) => state.postReducer.postList);
   const [searchWord, setSearchWord] = useState("");
   const dispatch = useDispatch();
 
@@ -14,18 +16,25 @@ const SearchPost = () => {
     dispatch(searchPostRequest(e.target.value));
   };
 
-  const clearSearch = () => {};
+  const clearSearch = () => {
+    setSearchWord("");
+    inputRef.current.focus();
+  };
 
   return (
     <>
       <div className="searchInputContainer">
         <input
+          ref={inputRef}
           autoFocus
           className="searchInput"
           placeholder="게시글 제목으로 검색"
           onChange={onSearch}
           value={searchWord}
         />
+        {searchWord ? (
+          <CloseOutlined onClick={clearSearch} className="clearInputIcon" />
+        ) : null}
       </div>
       {postList.length === 0 ? (
         <div className="noSearchPost">

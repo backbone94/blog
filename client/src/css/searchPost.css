@@ -19,12 +19,9 @@
 }
 
 .clearInputIcon {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-left: -30px;
+  font-size: 25px;
   cursor: pointer;
-  z-index: 1;
 }
 
 .searchInputContainer {
@@ -40,4 +37,5 @@
   width: 50%;
   height: 50%;
   font-size: 32px;
+  /* border: 3px solid red; */
 }

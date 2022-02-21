@@ -16,7 +16,7 @@ import {
 } from "../redux/reducers/postReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import MyButton from "./MyButton";
+import MyButton from "./styledComponents/MyButton";
 const Header = () => {
   const [add, setAdd] = useState(false);
   const [title, setTitle] = useState("");
@@ -58,7 +58,7 @@ const Header = () => {
         fontFamily: '"Gamja Flower", cursive',
       },
     });
-    history.push("/");
+    history.replace("/");
   };
 
   // 카테고리 추가
@@ -73,9 +73,10 @@ const Header = () => {
       });
     } else {
       dispatch(addCategoryRequest(title));
+      dispatch(loadFolderListRequest(title));
       setAdd(false);
       setTitle("");
-      history.push(`/${title}`);
+      history.replace(`/${title}`);
     }
   };
 
@@ -85,7 +86,7 @@ const Header = () => {
       // 카테고리 이동하기 전에 미리 folder list 불러오기
       dispatch(loadFolderListRequest(category));
       history.replace(`/${category}`);
-    } else if (category === "Home") history.push("/");
+    } else if (category === "Home") history.replace("/");
   };
 
   // 검색 페이지로 이동하기 전에 postList clear

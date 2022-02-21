@@ -5,6 +5,8 @@ import {
   writePostFailure,
   loadPostListSuccess,
   loadPostListFailure,
+  loadDetailPostSuccess,
+  loadDetailPostFailure,
   removePostFailure,
   removePostSuccess,
   searchPostSuccess,
@@ -29,9 +31,8 @@ function* watchWritePost() {
   yield takeEvery("WRITE_POST_REQUEST", WritePost);
 }
 
-// 게시물 불러오기
+// 게시글 list 불러오기
 const LoadPostListAPI = (data) => {
-  // console.log("c", data.category, "f", data.folder);
   return axios.get("/api/post/", {
     params: { category: data.category, folder: data.folder },
   });
@@ -52,9 +53,31 @@ function* watchLoadPostList() {
   yield takeEvery("LOAD_POST_LIST_REQUEST", LoadPostList);
 }
 
+// 클릭한 게시글 불러오기
+const LoadDetailPostAPI = (data) => {
+  return axios.get("/api/post/detailPost", {
+    params: { postId: data },
+  });
+};
+
+function* LoadDetailPost({ data }) {
+  try {
+    const result = yield call(LoadDetailPostAPI, data);
+    // console.log("detailPost result: ", result.data[0]);
+    yield put(loadDetailPostSuccess(result.data[0]));
+  } catch (e) {
+    console.log(e);
+    yield put(loadDetailPostFailure(e));
+  }
+}
+
+function* watchLoadDetailPost() {
+  yield takeEvery("LOAD_DETAIL_POST_REQUEST", LoadDetailPost);
+}
+
 // 게시물 검색하기
 const SearchPostAPI = (data) => {
-  return axios.get("/api/post/writePost", {
+  return axios.get("/api/post/searchPost", {
     params: { title: data },
   });
 };
@@ -105,6 +128,7 @@ export default function* postSaga() {
   yield all([
     fork(watchWritePost),
     fork(watchLoadPostList),
+    fork(watchLoadDetailPost),
     fork(watchSearchPost),
     fork(watchRemovePost),
   ]);

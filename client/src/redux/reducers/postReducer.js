@@ -1,6 +1,7 @@
 // 초기 state
 export const initialState = {
   postList: [],
+  post: {},
   loading: false,
   error: "",
 };
@@ -13,6 +14,10 @@ const WRITE_POST_FAILURE = "WRITE_POST_FAILURE";
 const LOAD_POST_LIST_REQUEST = "LOAD_POST_LIST_REQUEST";
 const LOAD_POST_LIST_SUCCESS = "LOAD_POST_LIST_SUCCESS";
 const LOAD_POST_LIST_FAILURE = "LOAD_POST_LIST_FAILURE";
+
+const LOAD_DETAIL_POST_REQUEST = "LOAD_DETAIL_POST_REQUEST";
+const LOAD_DETAIL_POST_SUCCESS = "LOAD_DETAIL_POST_SUCCESS";
+const LOAD_DETAIL_POST_FAILURE = "LOAD_DETAIL_POST_FAILURE";
 
 const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
 const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
@@ -46,7 +51,7 @@ export const writePostFailure = (data) => {
   };
 };
 
-// 게시글 불러오기
+// 게시글 list 불러오기
 export function loadPostListRequest(data) {
   return {
     type: LOAD_POST_LIST_REQUEST,
@@ -62,6 +67,26 @@ export function loadPostListSuccess(data) {
 export function loadPostListFailure(data) {
   return {
     type: LOAD_POST_LIST_FAILURE,
+    data,
+  };
+}
+
+// 클릭한 게시글 불러오기
+export function loadDetailPostRequest(data) {
+  return {
+    type: LOAD_DETAIL_POST_REQUEST,
+    data,
+  };
+}
+export function loadDetailPostSuccess(data) {
+  return {
+    type: LOAD_DETAIL_POST_SUCCESS,
+    data,
+  };
+}
+export function loadDetailPostFailure(data) {
+  return {
+    type: LOAD_DETAIL_POST_FAILURE,
     data,
   };
 }
@@ -145,6 +170,8 @@ export default function postReducer(state = initialState, action) {
             content: action.data.content,
             category: action.data.category,
             folder: action.data.folder,
+            fileUrl: action.data.fileUrl,
+            comments: action.data.comments,
             id: action.data.id,
           },
         ],
@@ -156,7 +183,7 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
 
-    // 게시글 불러오기
+    // 게시글 list 불러오기
     case LOAD_POST_LIST_REQUEST:
       return {
         ...state,
@@ -169,6 +196,24 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
     case LOAD_POST_LIST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    // 클릭한 게시글 불러오기
+    case LOAD_DETAIL_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOAD_DETAIL_POST_SUCCESS:
+      return {
+        ...state,
+        post: action.data,
+        loading: false,
+      };
+    case LOAD_DETAIL_POST_FAILURE:
       return {
         ...state,
         loading: false,

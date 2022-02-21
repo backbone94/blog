@@ -4,15 +4,13 @@ import "../css/folder.css";
 import CategoryLoading from "./loading/CategoryLoading";
 import FolderNavi from "./navigation/FolderNavi";
 import PostCard from "./PostCard";
-import MyButton from "./MyButton";
+import MyButton from "./styledComponents/MyButton";
 
 const Folder = () => {
   const loading = useSelector((state) => state.postReducer.loading);
   const postList = useSelector((state) => state.postReducer.postList);
   const params = useParams();
   const { category, folder } = params;
-
-  console.log("post list: ", postList);
 
   return (
     <div>
@@ -45,7 +43,7 @@ const Folder = () => {
                   .slice("")
                   .reverse()
                   .map((post) => (
-                    <PostCard post={post} />
+                    <PostCard key={post.id} post={post} />
                   ))}
               </>
             )}

@@ -8,6 +8,7 @@ import Category from "./components/Category";
 import Folder from "./components/Folder";
 import WritePost from "./components/WritePost";
 import SearchPost from "./components/SearchPost";
+import DetailPost from "./components/DetailPost";
 
 import { Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -16,7 +17,7 @@ import store from "./store";
 // ThemeMode(다크모드) Context API
 import { useCallback, useState } from "react";
 import ThemeContext from "./context/ThemeContext";
-import Toggle from "./components/Toggle";
+import Toggle from "./components/styledComponents/Toggle";
 import GlobalStyle from "./theme/GlobalStyle";
 import { lightTheme, darkTheme } from "./theme/theme";
 import { ThemeProvider } from "styled-components";
@@ -51,6 +52,11 @@ const App = () => {
                 exact
                 path="/:category/:folder/WritePost"
                 component={WritePost}
+              />
+              <Route
+                exact
+                path="/:category/:folder/:postId"
+                component={DetailPost}
               />
               <Route exact path="/:category/:folder" component={Folder} />
               <Route exact path="/:category" component={Category} />
