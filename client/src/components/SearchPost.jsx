@@ -36,7 +36,7 @@ const SearchPost = () => {
           <CloseOutlined onClick={clearSearch} className="clearInputIcon" />
         ) : null}
       </div>
-      {postList.length === 0 ? (
+      {postList.length === 0 || !searchWord ? (
         <div className="noSearchPost">
           <h2 className="noSearchPostText">검색 결과가 없습니다.</h2>
         </div>

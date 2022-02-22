@@ -28,6 +28,10 @@ const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
 const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
 const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
 
+const MOVE_POST_REQUEST = "MOVE_POST_REQUEST";
+const MOVE_POST_SUCCESS = "MOVE_POST_SUCCESS";
+const MOVE_POST_FAILURE = "MOVE_POST_FAILURE";
+
 const REMOVE_POST_LIST_REQUEST = "REMOVE_POST_LIST_REQUEST";
 const REMOVE_POST_LIST_SUCCESS = "REMOVE_POST_LIST_SUCCESS";
 const REMOVE_POST_LIST_FAILURE = "REMOVE_POST_LIST_FAILURE";
@@ -140,11 +144,31 @@ export function removePostFailure(data) {
   };
 }
 
-// 삭제된 category 내부에 있었던 모든 게시글 삭제하기
-export function removePostListRequest(data) {
+// 게시글 이동하기
+export function movePostRequest(data) {
+  return {
+    type: MOVE_POST_REQUEST,
+    data,
+  };
+}
+export function movePostSuccess(data) {
+  return {
+    type: MOVE_POST_SUCCESS,
+    data,
+  };
+}
+export function movePostFailure(data) {
+  return {
+    type: MOVE_POST_FAILURE,
+    data,
+  };
+}
+
+// 삭제된 카테고리 또는 폴더 내부에 있었던 모든 게시글 삭제하기
+export function removePostListRequest(payload) {
   return {
     type: REMOVE_POST_LIST_REQUEST,
-    data,
+    data: { category: payload.category, folder: payload.folder },
   };
 }
 export function removePostListSuccess() {
@@ -245,6 +269,7 @@ export default function postReducer(state = initialState, action) {
           ...state.post,
           title: action.data.title,
           content: action.data.content,
+          date: action.data.date,
         },
         loading: false,
       };
@@ -308,7 +333,24 @@ export default function postReducer(state = initialState, action) {
         loading: false,
       };
 
-    // 삭제된 category 내부에 있었던 모든 게시글 삭제하기
+    // 게시글 이동하기
+    case MOVE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case MOVE_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case MOVE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    // 삭제된 폴더 내부에 있었던 모든 게시글 삭제하기
     case REMOVE_POST_LIST_REQUEST:
       return {
         ...state,

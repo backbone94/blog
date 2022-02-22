@@ -14,6 +14,10 @@ const LOAD_CATEGORY_LIST_REQUEST = "LOAD_CATEGORY_LIST_REQUEST";
 const LOAD_CATEGORY_LIST_SUCCESS = "LOAD_CATEGORY_LIST_SUCCESS";
 const LOAD_CATEGORY_LIST_FAILURE = "LOAD_CATEGORY_LIST_FAILURE";
 
+const UPDATE_CATEGORY_REQUEST = "UPDATE_CATEGORY_REQUEST";
+const UPDATE_CATEGORY_SUCCESS = "UPDATE_CATEGORY_SUCCESS";
+const UPDATE_CATEGORY_FAILURE = "UPDATE_CATEGORY_FAILURE";
+
 const REMOVE_CATEGORY_REQUEST = "REMOVE_CATEGORY_REQUEST";
 const REMOVE_CATEGORY_SUCCESS = "REMOVE_CATEGORY_SUCCESS";
 const REMOVE_CATEGORY_FAILURE = "REMOVE_CATEGORY_FAILURE";
@@ -60,6 +64,27 @@ export const loadCategoryListFailure = (data) => {
     data,
   };
 };
+
+// 카테고리 수정하기
+export const updateCategoryRequest = (data) => {
+  return {
+    type: UPDATE_CATEGORY_REQUEST,
+    data,
+  };
+};
+export const updateCategorySuccess = (data) => {
+  return {
+    type: UPDATE_CATEGORY_SUCCESS,
+    data,
+  };
+};
+export const updateCategoryFailure = (data) => {
+  return {
+    type: UPDATE_CATEGORY_FAILURE,
+    data,
+  };
+};
+
 // 카테고리 삭제하기
 export const removeCategoryRequest = (data) => {
   return {
@@ -128,6 +153,28 @@ const categoryReducer = (state = initialState, action) => {
         loading: false,
       };
     case LOAD_CATEGORY_LIST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.data,
+      };
+
+    // 카테고리 수정하기
+    case UPDATE_CATEGORY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        categoryList: state.categoryList.map((v) => {
+          if (v.id === action.data.id) v.title = action.data.title;
+          return v;
+        }),
+        loading: false,
+      };
+    case UPDATE_CATEGORY_FAILURE:
       return {
         ...state,
         loading: false,

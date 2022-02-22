@@ -5,6 +5,8 @@ import {
   addCategoryFailure,
   loadCategoryListSuccess,
   loadCategoryListFailure,
+  updateCategorySuccess,
+  updateCategoryFailure,
   removeCategorySuccess,
   removeCategoryFailure,
 } from "../reducers/categoryReducer";
@@ -82,6 +84,38 @@ function* watchLoadCategoryList() {
   yield takeEvery("LOAD_CATEGORY_LIST_REQUEST", LoadCategoryList);
 }
 
+// 카테고리 수정하기
+const updateCategoryAPI = (data) => {
+  return axios.post("/api/category/updateCategory", data);
+};
+
+function* updateCategory({ data }) {
+  try {
+    const result = yield call(updateCategoryAPI, data);
+    // console.log("update category result: ", result);
+    if (result.data.error) {
+      // 서버에서 데이터는 잘 가져왔지만 에러가 있다면
+      yield put(updateCategoryFailure(result.data.error));
+    } else {
+      // 에러가 없다면 카테고리를 수정했다는 메시지와 함께 액션 dispatch
+      message.success({
+        content: "카테고리를 수정하였습니다.",
+        style: {
+          marginTop: "12vh",
+          fontFamily: '"Gamja Flower", cursive',
+        },
+      });
+      yield put(updateCategorySuccess(result.data));
+    }
+  } catch (e) {
+    yield put(updateCategoryFailure(e));
+  }
+}
+
+function* watchUpdateCategory() {
+  yield takeEvery("UPDATE_CATEGORY_REQUEST", updateCategory);
+}
+
 // 카테고리 삭제하기
 const RemoveCategoryAPI = (data) => {
   return axios.delete(`/api/category`, { params: { id: data } });
@@ -107,6 +141,7 @@ export default function* categorySaga() {
     fork(watchclearError),
     fork(watchAddCategory),
     fork(watchLoadCategoryList),
+    fork(watchUpdateCategory),
     fork(watchRemoveCategory),
   ]);
 }

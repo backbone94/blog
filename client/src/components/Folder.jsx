@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import "../css/folder.css";
 import CategoryLoading from "./loading/CategoryLoading";
 import FolderNavi from "./navigation/FolderNavi";
 import PostCard from "./PostCard";
 import MyButton from "./styledComponents/MyButton";
+import "../css/folder.css";
 
 const Folder = () => {
   const loading = useSelector((state) => state.postReducer.loading);
@@ -25,6 +25,7 @@ const Folder = () => {
             {postList.length === 0 ? (
               <div className="noPostContainer">
                 <div className="addPost">
+                  {/* post 추가 */}
                   <Link to={`/${category}/${folder}/WritePost`}>
                     <MyButton text={"Add Post"} />
                   </Link>

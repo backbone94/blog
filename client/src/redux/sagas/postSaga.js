@@ -15,6 +15,8 @@ import {
   removePostListSuccess,
   searchPostSuccess,
   searchPostFailure,
+  movePostSuccess,
+  movePostFailure,
 } from "../reducers/postReducer";
 
 // 글쓰기
@@ -25,6 +27,7 @@ const WritePostAPI = (data) => {
 function* WritePost({ data }) {
   try {
     const result = yield call(WritePostAPI, data);
+    console.log("result: ", result);
     yield put(writePostSuccess(result.data));
   } catch (e) {
     yield put(writePostFailure(e));
@@ -147,14 +150,34 @@ function* watchRemovePost() {
   yield takeEvery("REMOVE_POST_REQUEST", RemovePost);
 }
 
-// 삭제된 category 내부에 있었던 모든 post 삭제하기
-const RemovePostListAPI = (data) => {
-  return axios.delete(`/api/post/postList`, {
-    data: {
-      folder: data,
-    },
-    withCredentials: true,
-  });
+// 게시물 이동하기
+const movePostAPI = (data) => {
+  return axios.post(`/api/post/movePost`, data);
+};
+
+function* movePost({ data }) {
+  try {
+    // data == prevCategory, newCategory
+    const result = yield call(movePostAPI, data);
+    console.log("move post result", result);
+    yield put(movePostSuccess(data));
+  } catch (e) {
+    console.log(e);
+    yield put(movePostFailure(e));
+  }
+}
+
+function* watchmovePost() {
+  yield takeEvery("MOVE_POST_REQUEST", movePost);
+}
+
+// 삭제된 폴더 내부에 있었던 모든 post 삭제하기
+const RemovePostListAPI = ({ category, folder }) => {
+  // console.log("category: ", category, "folder: ", folder);
+  return axios.delete(
+    `/api/post/postList`,
+    category ? { data: { category: category } } : { data: { folder: folder } }
+  );
 };
 
 function* RemovePostList({ data }) {
@@ -182,5 +205,6 @@ export default function* postSaga() {
     fork(watchSearchPost),
     fork(watchRemovePost),
     fork(watchRemovePostList),
+    fork(watchmovePost),
   ]);
 }

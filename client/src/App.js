@@ -45,37 +45,37 @@ const App = () => {
   return (
     <>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <ThemeContext.Provider value={{ ThemeMode, setThemeMode }}>
-            <ThemeProvider theme={themeObject}>
-              <GlobalStyle />
-              <Toggle toggle={toggleTheme} mode={ThemeMode} />
-              <Header />
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/searchPost" component={SearchPost} />
-                <Route
-                  exact
-                  path="/:category/:folder/WritePost"
-                  component={WritePost}
-                />
-                <Route
-                  exact
-                  path="/:category/:folder/UpdatePost"
-                  component={UpdatePost}
-                />
-                <Route
-                  exact
-                  path="/:category/:folder/:postId"
-                  component={DetailPost}
-                />
-                <Route exact path="/:category/:folder" component={Folder} />
-                <Route exact path="/:category" component={Category} />
-              </Switch>
-              <Footer />
-            </ThemeProvider>
-          </ThemeContext.Provider>
-        </PersistGate>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
+        <ThemeContext.Provider value={{ ThemeMode, setThemeMode }}>
+          <ThemeProvider theme={themeObject}>
+            <GlobalStyle />
+            <Toggle toggle={toggleTheme} mode={ThemeMode} />
+            <Header />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/searchPost" component={SearchPost} />
+              <Route
+                exact
+                path="/:category/:folder/WritePost"
+                component={WritePost}
+              />
+              <Route
+                exact
+                path="/:category/:folder/UpdatePost"
+                component={UpdatePost}
+              />
+              <Route
+                exact
+                path="/:category/:folder/:postId"
+                component={DetailPost}
+              />
+              <Route exact path="/:category/:folder" component={Folder} />
+              <Route exact path="/:category" component={Category} />
+            </Switch>
+            <Footer />
+          </ThemeProvider>
+        </ThemeContext.Provider>
+        {/* </PersistGate> */}
       </Provider>
     </>
   );

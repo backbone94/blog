@@ -1,22 +1,16 @@
 import "../css/header.css";
 import { useHistory } from "react-router-dom";
-import { Button, Popconfirm, notification, message } from "antd";
-import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
+import { notification } from "antd";
 import { useState, useEffect } from "react";
 import HeaderLoading from "./loading/HeaderLoading";
-import {
-  addCategoryRequest,
-  loadCategoryListRequest,
-  removeCategoryRequest,
-} from "../redux/reducers/categoryReducer";
+import { loadCategoryListRequest } from "../redux/reducers/categoryReducer";
 import { loadFolderListRequest } from "../redux/reducers/folderReducer";
-import {
-  clearPostListSuccess,
-  clearPostListFailure,
-} from "../redux/reducers/postReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import MyButton from "./styledComponents/MyButton";
+import RightClick from "./RightClick";
+import AddCategory from "./AddCategory";
+import HeaderRight from "./HeaderRight";
+
 const Header = () => {
   const [add, setAdd] = useState(false);
   const [title, setTitle] = useState("");
@@ -43,42 +37,9 @@ const Header = () => {
         message: "에러",
         description: `${error}`,
       });
-      setAdd(true);
       dispatch({ type: "CLEAR_ERROR_REQUEST" });
     }
   }, [dispatch, error]);
-
-  // 카테고리 삭제 confirm 창
-  const confirm = (id) => {
-    dispatch(removeCategoryRequest(id));
-    message.success({
-      content: "카테고리를 삭제하였습니다.",
-      style: {
-        marginTop: "12vh",
-        fontFamily: '"Gamja Flower", cursive',
-      },
-    });
-    history.replace("/");
-  };
-
-  // 카테고리 추가
-  const addCategory = () => {
-    if (!title) {
-      message.error({
-        content: "카테고리 이름을 입력하세요.",
-        style: {
-          marginTop: "10vh",
-          fontFamily: '"Gamja Flower", cursive',
-        },
-      });
-    } else {
-      dispatch(addCategoryRequest(title));
-      dispatch(loadFolderListRequest(title));
-      setAdd(false);
-      setTitle("");
-      history.replace(`/${title}`);
-    }
-  };
 
   const movePage = (category) => {
     // Home 으로 이동할 때는 Home 카테고리가 아닌, "/" 경로로 이동한다.
@@ -87,17 +48,6 @@ const Header = () => {
       dispatch(loadFolderListRequest(category));
       history.replace(`/${category}`);
     } else if (category === "Home") history.replace("/");
-  };
-
-  // 검색 페이지로 이동하기 전에 postList clear
-  const goSearchPage = () => {
-    try {
-      dispatch(clearPostListSuccess());
-    } catch (e) {
-      console.log(e);
-      dispatch(clearPostListFailure(e));
-    }
-    history.push("/searchPost");
   };
 
   return (
@@ -119,60 +69,45 @@ const Header = () => {
                   className="radioCircle"
                   value={`${category.title}`}
                 />
-                <label className="categoryElement" htmlFor={`${category.id}`}>
-                  {category.title}
-                </label>
-                {category.title !== "Home" ? (
-                  <Popconfirm
-                    title="정말 삭제하시겠습니까?"
-                    onConfirm={() => {
-                      confirm(category.id);
-                    }}
-                    okText="네"
-                    cancelText="아니오"
-                  >
-                    <CloseOutlined className="headerCloseIcon" />
-                  </Popconfirm>
-                ) : null}
+                {/* 우클릭 */}
+                <RightClick
+                  tag={
+                    <label
+                      className="categoryElement"
+                      htmlFor={`${category.id}`}
+                    >
+                      {category.title}
+                    </label>
+                  }
+                  setTitle={setTitle}
+                  title={title}
+                  category={category}
+                />
                 {index !== length - 1 ? <div className="divider" /> : null}
+
+                {/* 카테고리 이름 수정 Modal */}
+                {/* <ModalOfUpdate
+                  selectedObject={selectedObject}
+                  title={title}
+                  category={category}
+                  setTitle={setTitle}
+                  isModalVisible={isModalVisible}
+                  setIsModalVisible={setIsModalVisible}
+                /> */}
               </div>
             ))}
 
             {/* 카테고리 추가 버튼 */}
-            {!add ? (
-              <MyButton
-                text={"Add Category"}
-                onClick={() => setAdd(true)}
-              ></MyButton>
-            ) : (
-              <div>
-                <input
-                  style={{ color: "black" }}
-                  autoFocus
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <MyButton text={"추가"} marginLeft={5} onClick={addCategory} />
-                <MyButton
-                  text={"취소"}
-                  marginLeft={5}
-                  onClick={() => setAdd(false)}
-                />
-              </div>
-            )}
+            <AddCategory
+              add={add}
+              setAdd={setAdd}
+              title={title}
+              setTitle={setTitle}
+            />
           </div>
 
           {/* 검색, 로그인, 회원가입 부분*/}
-          <div className="searchAndLogin">
-            <div onClick={goSearchPage} className="searchIcon">
-              <SearchOutlined />
-            </div>
-            <MyButton text={"로그인"} marginRight={10} />
-            <Button style={{ borderRadius: "10%" }} type="primary">
-              회원가입
-            </Button>
-          </div>
+          <HeaderRight />
         </div>
       )}
     </>

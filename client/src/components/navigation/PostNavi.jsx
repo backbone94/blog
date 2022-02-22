@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../../css/navigation.css";
 
 const PostNavi = ({ navi }) => {
-  const { category, folder, title } = navi;
+  const { category, folder, post } = navi;
 
   return (
     <div className="navigationContainer">
@@ -11,11 +11,11 @@ const PostNavi = ({ navi }) => {
           {category}
         </Link>
         <span> / </span>
-        <Link className="linkNavi" to={`/${category}`}>
+        <Link className="linkNavi" to={`/${category}/${folder}`}>
           {folder}
         </Link>
         <span> / </span>
-        <span>{title}</span>
+        <span>{post}</span>
       </div>
     </div>
   );

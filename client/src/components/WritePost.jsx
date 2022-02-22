@@ -20,7 +20,7 @@ function WritePost() {
   const onSubmit = () => {
     if (title !== "" && content !== "") {
       dispatch(writePostRequest({ title, content, category, folder }));
-      history.goBack();
+      history.replace(`/${category}/${folder}`);
 
       message.success({
         content: "게시물을 추가하였습니다.",

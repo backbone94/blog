@@ -7,6 +7,10 @@ import {
   loadFolderListFailure,
   removeFolderSuccess,
   removeFolderFailure,
+  removeFolderListSuccess,
+  removeFolderListFailure,
+  moveFolderSuccess,
+  moveFolderFailure,
 } from "../reducers/folderReducer";
 import { message } from "antd";
 
@@ -84,10 +88,58 @@ function* watchRemoveFolder() {
   yield takeEvery("REMOVE_FOLDER_REQUEST", RemoveFolder);
 }
 
+// 폴더 이동하기
+const moveFolderAPI = (data) => {
+  return axios.post("/api/folder/moveFolder", data);
+};
+
+function* moveFolder({ data }) {
+  try {
+    // data == prevCategory, newCategory
+    const result = yield call(moveFolderAPI, data);
+    console.log("move folder result: ", result);
+    yield put(moveFolderSuccess(data));
+  } catch (e) {
+    yield put(moveFolderFailure(e));
+  }
+}
+
+function* watchmoveFolder() {
+  yield takeEvery("MOVE_FOLDER_REQUEST", moveFolder);
+}
+
+// 삭제된 카테고리 내부에 있었던 모든 폴더 삭제하기
+const RemoveFolderListAPI = (data) => {
+  return axios.delete(`/api/folder/folderList`, {
+    data: {
+      category: data,
+    },
+    withCredentials: true,
+  });
+};
+
+function* RemoveFolderList({ data }) {
+  try {
+    // data == category
+    const result = yield call(RemoveFolderListAPI, data);
+    console.log("remove folder List result", result);
+    yield put(removeFolderListSuccess());
+  } catch (e) {
+    console.log(e);
+    yield put(removeFolderListFailure(e));
+  }
+}
+
+function* watchRemoveFolderList() {
+  yield takeEvery("REMOVE_FOLDER_LIST_REQUEST", RemoveFolderList);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchAddFolder),
     fork(watchLoadFolderList),
     fork(watchRemoveFolder),
+    fork(watchRemoveFolderList),
+    fork(watchmoveFolder),
   ]);
 }
