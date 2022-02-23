@@ -118,12 +118,26 @@ const updateFolderAPI = (data) => {
 
 function* updateFolder({ data }) {
   try {
-    // data == id, newCategory, newTitle
+    // data == id, newCategory, newTitle, prevCategory(옵션)
     const result = yield call(updateFolderAPI, data);
     console.log("update folder result: ", result);
-    yield put(updateFolderSuccess(result.data));
-    // 폴더 update 이후에 folder list 불러오기
-    yield put(loadFolderListRequest(data.newCategory));
+    if (result.data.error) {
+      // 서버에서 데이터는 잘 가져왔지만 에러가 있다면
+      yield put(updateFolderFailure(result.data.error));
+    } else {
+      // 에러가 없다면 폴더를 추가했다는 메시지와 함께 액션 dispatch
+      message.success({
+        content: "폴더를 수정하였습니다.",
+        style: {
+          marginTop: "12vh",
+          fontFamily: '"Gamja Flower", cursive',
+        },
+      });
+      yield put(updateFolderSuccess(result.data));
+      // 폴더 update 이후에 folder list 불러오기
+      if (data.newCategory) yield put(loadFolderListRequest(data.newCategory));
+      else yield put(loadFolderListRequest(data.prevCategory));
+    }
   } catch (e) {
     yield put(updateFolderFailure(e));
   }

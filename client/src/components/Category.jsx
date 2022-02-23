@@ -15,8 +15,8 @@ export default function Category() {
     (state) => state.categoryReducer.categoryList
   );
   const folderList = useSelector((state) => state.folderReducer.folderList);
-  const error = useSelector((state) => state.folderReducer.error);
-  const loading = useSelector((state) => state.folderReducer.loading);
+  const { error, loading } = useSelector((state) => state.folderReducer);
+  const account = useSelector((state) => state.authReducer.account);
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
@@ -41,6 +41,15 @@ export default function Category() {
     }
   }, [dispatch, error]);
 
+  const folderImg = (folder) => (
+    <img
+      onClick={() => goFolder(folder.title)}
+      style={{ cursor: "pointer" }}
+      alt={`${folder.title}`}
+      src={folder.fileUrl}
+    />
+  );
+
   return (
     <>
       {/* Folder List 불러오기 */}
@@ -50,40 +59,44 @@ export default function Category() {
         <div className="categoryContainer">
           <div className="categoryName">{category}</div>
           <div className="folderListAndAddButton">
+            {/* 폴더가 없다면 */}
+            {folderList.length === 0 ? (
+              <div className="noFolder">폴더가 없습니다.</div>
+            ) : null}
             {/* 폴더 리스트 */}
             <div className="folderList">
               {folderList.map((folder) => (
                 <div key={folder.id} className="folderElement">
                   {/* 우클릭 */}
-                  <RightClick
-                    tag={
-                      <img
-                        onClick={() => goFolder(folder.title)}
-                        style={{ cursor: "pointer" }}
-                        alt={`${folder.title}`}
-                        src={folder.fileUrl}
-                      />
-                    }
-                    categoryList={categoryList}
-                    folder={folder}
-                  />
+                  {account && account.role === "host" ? (
+                    <RightClick
+                      tag={folderImg(folder)}
+                      categoryList={categoryList}
+                      folder={folder}
+                    />
+                  ) : (
+                    folderImg(folder)
+                  )}
                   <div className="folderText">{folder.title}</div>
                 </div>
               ))}
             </div>
 
             {/* 폴더 추가 버튼 */}
-            <div className="addFolder">
-              <div
-                className="addFolderButton"
-                onClick={() => setIsModalVisible(true)}
-              >
-                <div className="plus">
-                  <PlusOutlined className="plusIcon" />
-                  <div className="plusText">Add Folder</div>
+            {/* host 계정이라면 보임 */}
+            {account && account.role === "host" ? (
+              <div className="addFolder">
+                <div
+                  className="addFolderButton"
+                  onClick={() => setIsModalVisible(true)}
+                >
+                  <div className="plus">
+                    <PlusOutlined className="plusIcon" />
+                    <div className="plusText">Add Folder</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       )}

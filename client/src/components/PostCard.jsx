@@ -3,7 +3,7 @@ import ReactHtmlParser from "react-html-parser";
 import { Popconfirm, Space, message } from "antd";
 import { CloseOutlined, MessageOutlined } from "@ant-design/icons";
 import "../css/folder.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   removePostRequest,
   loadDetailPostRequest,
@@ -13,10 +13,10 @@ import dateCalc from "../util/dateCalc";
 import moment from "moment";
 
 const PostCard = ({ post }) => {
+  const account = useSelector((state) => state.authReducer.account);
   const history = useHistory();
   const dispatch = useDispatch();
-  const params = useParams();
-  const { category, folder } = params;
+  const { category, folder } = useParams();
 
   // post 삭제 알림창
   const confirm = (id) => {
@@ -59,16 +59,18 @@ const PostCard = ({ post }) => {
             <img src={post.fileUrl} alt="" />
           </div>
         </div>
-        <Popconfirm
-          title="정말 삭제하시겠습니까?"
-          onConfirm={() => {
-            confirm(post.id);
-          }}
-          okText="네"
-          cancelText="아니오"
-        >
-          <CloseOutlined className="postCloseIcon" />
-        </Popconfirm>
+        {account && account.role === "host" ? (
+          <Popconfirm
+            title="정말 삭제하시겠습니까?"
+            onConfirm={() => {
+              confirm(post.id);
+            }}
+            okText="네"
+            cancelText="아니오"
+          >
+            <CloseOutlined className="postCloseIcon" />
+          </Popconfirm>
+        ) : null}
       </div>
     </>
   );

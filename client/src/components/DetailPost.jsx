@@ -9,8 +9,8 @@ import { message, Popconfirm } from "antd";
 import PostNavi from "./navigation/PostNavi";
 
 const DetailPost = () => {
-  const post = useSelector((state) => state.postReducer.post);
-  const loading = useSelector((state) => state.postReducer.loading);
+  const { post, loading } = useSelector((state) => state.postReducer);
+  const account = useSelector((state) => state.authReducer.account);
   console.log("post.date: ", post.date);
   const date = tz(post.date, "Asia/Seoul").format("YY.MM.DD. HH:mm");
   const history = useHistory();
@@ -45,19 +45,24 @@ const DetailPost = () => {
             <div className="detailPostTitle">{post.title}</div>
             <div className="dateAndUpdate">
               <span className="detailPostDate">{date}</span>
-              <span className="detailPostUpdate" onClick={update}>
-                수정
-              </span>
-              <Popconfirm
-                title="정말 삭제하시겠습니까?"
-                onConfirm={() => {
-                  remove(folder.id, folder.title);
-                }}
-                okText="네"
-                cancelText="아니오"
-              >
-                <span className="detailPostRemove">삭제</span>
-              </Popconfirm>
+              {/* post 수정 삭제는 host 계정만 보임 */}
+              {account && account.role === "host" ? (
+                <>
+                  <span className="detailPostUpdate" onClick={update}>
+                    수정
+                  </span>
+                  <Popconfirm
+                    title="정말 삭제하시겠습니까?"
+                    onConfirm={() => {
+                      remove(folder.id, folder.title);
+                    }}
+                    okText="네"
+                    cancelText="아니오"
+                  >
+                    <span className="detailPostRemove">삭제</span>
+                  </Popconfirm>
+                </>
+              ) : null}
             </div>
             <div className="detailPostContent">
               {ReactHtmlParser(post.content)}

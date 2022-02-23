@@ -29,6 +29,12 @@
   /* border: 3px solid yellow; */
 }
 
+.noFolder {
+  font-size: 32px;
+  margin: auto 0;
+  /* border: 3px solid yellow; */
+}
+
 .folderElement {
   margin-right: 50px;
 }

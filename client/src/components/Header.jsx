@@ -5,8 +5,7 @@ import { useState, useEffect } from "react";
 import HeaderLoading from "./loading/HeaderLoading";
 import { loadCategoryListRequest } from "../redux/reducers/categoryReducer";
 import { loadFolderListRequest } from "../redux/reducers/folderReducer";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import RightClick from "./RightClick";
 import AddCategory from "./AddCategory";
 import HeaderRight from "./HeaderRight";
@@ -16,8 +15,10 @@ const Header = () => {
   const [title, setTitle] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.categoryReducer.error);
-  const loading = useSelector((state) => state.categoryReducer.loading);
+  const { error, loading } = useSelector(
+    (state) => state.categoryReducer.error
+  );
+  const account = useSelector((state) => state.authReducer.account);
   const categoryList = useSelector(
     (state) => state.categoryReducer.categoryList
   );
@@ -49,6 +50,13 @@ const Header = () => {
     } else if (category === "Home") history.replace("/");
   };
 
+  // header 카테고리 label
+  const categoryLabel = (category) => (
+    <label className="categoryElement" htmlFor={`${category.id}`}>
+      {category.title}
+    </label>
+  );
+
   return (
     <>
       {/* category List 불러오기 */}
@@ -69,30 +77,29 @@ const Header = () => {
                   value={`${category.title}`}
                 />
                 {/* 우클릭 */}
-                <RightClick
-                  tag={
-                    <label
-                      className="categoryElement"
-                      htmlFor={`${category.id}`}
-                    >
-                      {category.title}
-                    </label>
-                  }
-                  setTitle={setTitle}
-                  title={title}
-                  category={category}
-                />
+                {account && account.role === "host" ? (
+                  <RightClick
+                    tag={categoryLabel(category)}
+                    setTitle={setTitle}
+                    title={title}
+                    category={category}
+                  />
+                ) : (
+                  categoryLabel(category)
+                )}
                 {index !== length - 1 ? <div className="divider" /> : null}
               </div>
             ))}
 
             {/* 카테고리 추가 버튼 */}
-            <AddCategory
-              add={add}
-              setAdd={setAdd}
-              title={title}
-              setTitle={setTitle}
-            />
+            {account && account.role === "host" ? (
+              <AddCategory
+                add={add}
+                setAdd={setAdd}
+                title={title}
+                setTitle={setTitle}
+              />
+            ) : null}
           </div>
 
           {/* 검색, 로그인, 회원가입 부분*/}

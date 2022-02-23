@@ -7,10 +7,9 @@ import MyButton from "./styledComponents/MyButton";
 import "../css/folder.css";
 
 const Folder = () => {
-  const loading = useSelector((state) => state.postReducer.loading);
-  const postList = useSelector((state) => state.postReducer.postList);
-  const params = useParams();
-  const { category, folder } = params;
+  const { loading, postList } = useSelector((state) => state.postReducer);
+  const account = useSelector((state) => state.authReducer.account);
+  const { category, folder } = useParams();
 
   return (
     <div>
@@ -26,9 +25,11 @@ const Folder = () => {
               <div className="noPostContainer">
                 <div className="addPost">
                   {/* post 추가 */}
-                  <Link to={`/${category}/${folder}/WritePost`}>
-                    <MyButton text={"Add Post"} />
-                  </Link>
+                  {account && account.role === "host" ? (
+                    <Link to={`/${category}/${folder}/WritePost`}>
+                      <MyButton text={"Add Post"} />
+                    </Link>
+                  ) : null}
                 </div>
                 <h2 className="noPost">글이 없습니다.</h2>
               </div>
@@ -36,9 +37,11 @@ const Folder = () => {
               <>
                 {/* post가 있는 경우 */}
                 <div className="addPost">
-                  <Link to={`/${category}/${folder}/WritePost`}>
-                    <MyButton text={"Add Post"} />
-                  </Link>
+                  {account && account.role === "host" ? (
+                    <Link to={`/${category}/${folder}/WritePost`}>
+                      <MyButton text={"Add Post"} />
+                    </Link>
+                  ) : null}
                 </div>
                 {postList
                   .slice("")

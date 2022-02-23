@@ -9,7 +9,7 @@ import {
 } from "antd";
 import { EditOutlined, DeleteOutlined, DownOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   removePostListRequest,
   movePostRequest,
@@ -24,12 +24,11 @@ import {
   removeCategoryRequest,
   updateCategoryRequest,
 } from "../redux/reducers/categoryReducer";
-
 import { useDispatch } from "react-redux";
 
 const RightClick = ({ tag, category, folder, categoryList }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [title, setTitle] = useState(folder && folder.title);
+  const [title, setTitle] = useState(folder ? folder.title : null);
   const [categoryOfFolder, setCategoryOfFolder] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -92,6 +91,7 @@ const RightClick = ({ tag, category, folder, categoryList }) => {
           id: folder.id,
           newCategory: categoryOfFolder,
           newTitle: title,
+          prevCategory: folder.category,
         })
       );
       dispatch(
@@ -101,7 +101,8 @@ const RightClick = ({ tag, category, folder, categoryList }) => {
           newFolder: title,
         })
       );
-      history.push(`/${categoryOfFolder}`);
+      if (categoryOfFolder) history.push(`/${categoryOfFolder}`);
+      else history.push(`/${folder.category}`);
     }
 
     setCategoryOfFolder("");
@@ -142,7 +143,7 @@ const RightClick = ({ tag, category, folder, categoryList }) => {
   );
 
   const categoryDropdown = (
-    <Menu>
+    <Menu style={{ fontFamily: '"Gamja Flower", cursive' }}>
       {categoryList &&
         categoryList.map((category) => (
           <Menu.Item
@@ -163,11 +164,14 @@ const RightClick = ({ tag, category, folder, categoryList }) => {
 
       {/* 수정 Modal */}
       <Modal
+        style={{ fontFamily: '"Gamja Flower", cursive' }}
         title={
           <>
-            <EditOutlined /> update
+            <EditOutlined style={{ marginRight: 5 }} />
+            update
           </>
         }
+        autoFocus={false}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -180,7 +184,7 @@ const RightClick = ({ tag, category, folder, categoryList }) => {
                 style={{ display: "block", width: "30%" }}
                 className="mb-2"
               >
-                {categoryOfFolder ? categoryOfFolder : "Select Category"}
+                {categoryOfFolder ? categoryOfFolder : folder.category}
                 <DownOutlined />
               </Button>
             </Dropdown>
@@ -191,6 +195,7 @@ const RightClick = ({ tag, category, folder, categoryList }) => {
         <div>
           <label className="mb-2">Title</label>
           <Input
+            autoFocus={true}
             placeholder="Enter the Title"
             style={{ display: "block", width: "100%" }}
             onChange={(e) => setTitle(e.target.value)}
