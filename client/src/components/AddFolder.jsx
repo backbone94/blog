@@ -1,17 +1,12 @@
 import { addFolderRequest } from "../redux/reducers/folderReducer";
 import { Modal, Button, Input, message } from "antd";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import requestImg from "./requestImg";
 
-const AddFolder = ({
-  setIsModalVisible,
-  isModalVisible,
-  fileUrl,
-  setTitle,
-  setFileUrl,
-  title,
-  category,
-}) => {
+const AddFolder = ({ setIsModalVisible, isModalVisible, category }) => {
+  const [title, setTitle] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   const emptyUrl =
     "https://my-blog1684.s3.ap-northeast-2.amazonaws.com/upload/empty.ico";
   const dispatch = useDispatch();

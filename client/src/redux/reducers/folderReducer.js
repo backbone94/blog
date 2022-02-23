@@ -22,6 +22,10 @@ const MOVE_FOLDER_REQUEST = "MOVE_FOLDER_REQUEST";
 const MOVE_FOLDER_SUCCESS = "MOVE_FOLDER_SUCCESS";
 const MOVE_FOLDER_FAILURE = "MOVE_FOLDER_FAILURE";
 
+const UPDATE_FOLDER_REQUEST = "UPDATE_FOLDER_REQUEST";
+const UPDATE_FOLDER_SUCCESS = "UPDATE_FOLDER_SUCCESS";
+const UPDATE_FOLDER_FAILURE = "UPDATE_FOLDER_FAILURE";
+
 const REMOVE_FOLDER_LIST_REQUEST = "REMOVE_FOLDER_LIST_REQUEST";
 const REMOVE_FOLDER_LIST_SUCCESS = "REMOVE_FOLDER_LIST_SUCCESS";
 const REMOVE_FOLDER_LIST_FAILURE = "REMOVE_FOLDER_LIST_FAILURE";
@@ -105,6 +109,26 @@ export const moveFolderSuccess = (data) => {
 export const moveFolderFailure = (data) => {
   return {
     type: MOVE_FOLDER_FAILURE,
+    data,
+  };
+};
+
+// 폴더 수정하고 카테고리 이동하기
+export const updateFolderRequest = (data) => {
+  return {
+    type: UPDATE_FOLDER_REQUEST,
+    data,
+  };
+};
+export const updateFolderSuccess = (data) => {
+  return {
+    type: UPDATE_FOLDER_SUCCESS,
+    data,
+  };
+};
+export const updateFolderFailure = (data) => {
+  return {
+    type: UPDATE_FOLDER_FAILURE,
     data,
   };
 };
@@ -212,6 +236,28 @@ const folderReducer = (state = initialState, action) => {
         loading: false,
       };
     case MOVE_FOLDER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.data,
+      };
+
+    // 폴더 수정하고 카테고리 이동하기
+    case UPDATE_FOLDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_FOLDER_SUCCESS:
+      return {
+        ...state,
+        folderList: state.folderList.map((v) => {
+          if (v.id === action.data.id) v.title = action.data.title;
+          return v;
+        }),
+        loading: false,
+      };
+    case UPDATE_FOLDER_FAILURE:
       return {
         ...state,
         loading: false,

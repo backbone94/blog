@@ -157,7 +157,7 @@ const movePostAPI = (data) => {
 
 function* movePost({ data }) {
   try {
-    // data == prevCategory, newCategory
+    // data == prevCategory, newCategory, newFolder
     const result = yield call(movePostAPI, data);
     console.log("move post result", result);
     yield put(movePostSuccess(data));

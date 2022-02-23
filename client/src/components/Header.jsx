@@ -21,7 +21,6 @@ const Header = () => {
   const categoryList = useSelector(
     (state) => state.categoryReducer.categoryList
   );
-
   const length = categoryList.length;
 
   // 카테고리 List 불러오기
@@ -84,16 +83,6 @@ const Header = () => {
                   category={category}
                 />
                 {index !== length - 1 ? <div className="divider" /> : null}
-
-                {/* 카테고리 이름 수정 Modal */}
-                {/* <ModalOfUpdate
-                  selectedObject={selectedObject}
-                  title={title}
-                  category={category}
-                  setTitle={setTitle}
-                  isModalVisible={isModalVisible}
-                  setIsModalVisible={setIsModalVisible}
-                /> */}
               </div>
             ))}
 

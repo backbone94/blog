@@ -1,7 +1,15 @@
-import { Popconfirm, Dropdown, Menu, message, Modal, Input } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  Popconfirm,
+  Dropdown,
+  Menu,
+  message,
+  Modal,
+  Input,
+  Button,
+} from "antd";
+import { EditOutlined, DeleteOutlined, DownOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   removePostListRequest,
   movePostRequest,
@@ -10,7 +18,7 @@ import {
   removeFolderRequest,
   removeFolderListRequest,
   moveFolderRequest,
-  loadFolderListRequest,
+  updateFolderRequest,
 } from "../redux/reducers/folderReducer";
 import {
   removeCategoryRequest,
@@ -19,8 +27,10 @@ import {
 
 import { useDispatch } from "react-redux";
 
-const RightClick = ({ tag, setTitle, title, category, folder }) => {
+const RightClick = ({ tag, category, folder, categoryList }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [title, setTitle] = useState(folder && folder.title);
+  const [categoryOfFolder, setCategoryOfFolder] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -57,10 +67,9 @@ const RightClick = ({ tag, setTitle, title, category, folder }) => {
 
   // Modal Ok 버튼
   const handleOk = () => {
+    // category 수정
     if (category) {
       dispatch(updateCategoryRequest({ id: category.id, title }));
-      console.log("이전 카테고리 타이틀: ", category.title);
-      console.log("바뀔 카테고리 타이틀: ", title);
       dispatch(
         moveFolderRequest({
           prevCategory: category.title,
@@ -73,49 +82,82 @@ const RightClick = ({ tag, setTitle, title, category, folder }) => {
           newCategory: title,
         })
       );
-      dispatch(loadFolderListRequest(title));
       history.push(`/${title}`);
+
+      // folder 수정
     } else {
+      console.log("categoryOfFolder: ", categoryOfFolder, "title: ", title);
+      dispatch(
+        updateFolderRequest({
+          id: folder.id,
+          newCategory: categoryOfFolder,
+          newTitle: title,
+        })
+      );
+      dispatch(
+        movePostRequest({
+          prevCategory: folder.category,
+          newCategory: categoryOfFolder,
+          newFolder: title,
+        })
+      );
+      history.push(`/${categoryOfFolder}`);
     }
 
+    setCategoryOfFolder("");
     setTitle("");
     setIsModalVisible(false);
   };
 
   // Modal cancel 버튼
   const handleCancel = () => {
+    setCategoryOfFolder("");
     setTitle("");
     setIsModalVisible(false);
   };
 
+  // 우클릭 메뉴
+  const contextMenu = (
+    <Menu>
+      <Menu.Item onClick={() => setIsModalVisible(true)} key="1">
+        <EditOutlined />
+        <span style={menuStyle}>수정</span>
+      </Menu.Item>
+      <Popconfirm
+        title="정말 삭제하시겠습니까?"
+        onConfirm={() => {
+          category
+            ? removeCategory(category)
+            : removeFolder(folder.id, folder.title);
+        }}
+        okText="네"
+        cancelText="아니오"
+      >
+        <Menu.Item key="2">
+          <DeleteOutlined />
+          <span style={menuStyle}>삭제</span>
+        </Menu.Item>
+      </Popconfirm>
+    </Menu>
+  );
+
+  const categoryDropdown = (
+    <Menu>
+      {categoryList &&
+        categoryList.map((category) => (
+          <Menu.Item
+            onClick={() => setCategoryOfFolder(category.title)}
+            key={category.id}
+          >
+            {category.title !== "Home" && category.title}
+          </Menu.Item>
+        ))}
+    </Menu>
+  );
+
   return (
     <>
-      <Dropdown
-        overlay={() => (
-          <Menu>
-            <Menu.Item onClick={() => setIsModalVisible(true)} key="1">
-              <EditOutlined />
-              <span style={menuStyle}>수정</span>
-            </Menu.Item>
-            <Popconfirm
-              title="정말 삭제하시겠습니까?"
-              onConfirm={() => {
-                category
-                  ? removeCategory(category)
-                  : removeFolder(folder.id, folder.title);
-              }}
-              okText="네"
-              cancelText="아니오"
-            >
-              <Menu.Item key="2">
-                <DeleteOutlined />
-                <span style={menuStyle}>삭제</span>
-              </Menu.Item>
-            </Popconfirm>
-          </Menu>
-        )}
-        trigger={["contextMenu"]}
-      >
+      <Dropdown overlay={contextMenu} trigger={["contextMenu"]}>
         {tag}
       </Dropdown>
 
@@ -130,6 +172,21 @@ const RightClick = ({ tag, setTitle, title, category, folder }) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
+        {/* category 부분 */}
+        {folder ? (
+          <div>
+            <Dropdown overlay={categoryDropdown} trigger={["click"]}>
+              <Button
+                style={{ display: "block", width: "30%" }}
+                className="mb-2"
+              >
+                {categoryOfFolder ? categoryOfFolder : "Select Category"}
+                <DownOutlined />
+              </Button>
+            </Dropdown>
+          </div>
+        ) : null}
+
         {/* title 부분 */}
         <div>
           <label className="mb-2">Title</label>

@@ -77,8 +77,8 @@
 }
 
 input[name="category"]:checked + label {
-  border-bottom: 2px solid #a0a0a0;
-  color: #a0a0a0;
+  /* border-bottom: 2px solid #a0a0a0;
+  color: #a0a0a0; */
 }
 
 .headerCloseIcon {

@@ -11,6 +11,9 @@ import {
   removeFolderListFailure,
   moveFolderSuccess,
   moveFolderFailure,
+  updateFolderSuccess,
+  updateFolderFailure,
+  loadFolderListRequest,
 } from "../reducers/folderReducer";
 import { message } from "antd";
 
@@ -108,6 +111,28 @@ function* watchmoveFolder() {
   yield takeEvery("MOVE_FOLDER_REQUEST", moveFolder);
 }
 
+// 폴더 수정하고 카테고리 이동하기
+const updateFolderAPI = (data) => {
+  return axios.post("/api/folder/updateFolder", data);
+};
+
+function* updateFolder({ data }) {
+  try {
+    // data == id, newCategory, newTitle
+    const result = yield call(updateFolderAPI, data);
+    console.log("update folder result: ", result);
+    yield put(updateFolderSuccess(result.data));
+    // 폴더 update 이후에 folder list 불러오기
+    yield put(loadFolderListRequest(data.newCategory));
+  } catch (e) {
+    yield put(updateFolderFailure(e));
+  }
+}
+
+function* watchUpdateFolder() {
+  yield takeEvery("UPDATE_FOLDER_REQUEST", updateFolder);
+}
+
 // 삭제된 카테고리 내부에 있었던 모든 폴더 삭제하기
 const RemoveFolderListAPI = (data) => {
   return axios.delete(`/api/folder/folderList`, {
@@ -141,5 +166,6 @@ export default function* postSaga() {
     fork(watchRemoveFolder),
     fork(watchRemoveFolderList),
     fork(watchmoveFolder),
+    fork(watchUpdateFolder),
   ]);
 }
