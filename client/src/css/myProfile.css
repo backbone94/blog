@@ -1,0 +1,114 @@
+.myProfileContainer {
+  min-height: 733px;
+  box-sizing: border-box;
+  width: 30%;
+  margin: 0 auto;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid slategrey;
+}
+
+.profileImageContainer {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid blue; */
+}
+
+.profileImage {
+  margin: 0 auto 10px;
+  /* border: 1px solid gray; */
+}
+
+.imageUpdateDelete {
+  display: flex;
+  font-size: 25px;
+  cursor: pointer;
+  color: slategrey;
+  margin: auto;
+  /* border: 1px solid violet; */
+}
+
+.imageUpdate {
+  margin-right: 10px;
+  cursor: pointer;
+
+  /* border: 1px solid violet; */
+}
+.imageUpdate:hover {
+  opacity: 0.5;
+}
+
+.imageDelete {
+  margin-left: 10px;
+  /* border: 1px solid violet; */
+}
+.imageDelete:hover {
+  opacity: 0.5;
+}
+
+.nameAndPassword {
+  width: 80%;
+  margin: 30px auto;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid violet; */
+}
+
+.profileName {
+  display: flex;
+  /* margin: 0 auto; */
+  /* border: 1px solid violet; */
+}
+
+.nameUpdate {
+  margin-left: auto;
+  margin-right: 5px;
+  color: slategrey;
+  cursor: pointer;
+}
+.nameUpdate:hover {
+  opacity: 0.5;
+}
+
+.profilePassword {
+  display: flex;
+  margin: 20px 0 0 auto;
+  /* border: 3px solid green; */
+}
+
+.passwordUpdate {
+  margin-left: auto;
+  margin-right: 5px;
+  color: slategrey;
+  cursor: pointer;
+}
+.passwordUpdate:hover {
+  opacity: 0.5;
+}
+
+.saveOrDelete {
+  margin-top: auto;
+  display: flex;
+  /* border: 1px solid springgreen; */
+}
+
+.deleteAccount:hover {
+  opacity: 0.5;
+}
+
+.saveUpdate {
+  margin-left: auto;
+}
+
+/* 파일 필드 숨기기 */
+input[type="file"] {
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  opacity: 0;
+}

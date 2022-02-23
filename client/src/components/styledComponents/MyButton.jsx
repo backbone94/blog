@@ -6,11 +6,13 @@ export default function MyButton({
   marginLeft,
   marginRight,
   className,
+  backgroundColor,
+  color,
 }) {
   return (
     <Button
       className={className}
-      style={{ marginLeft, marginRight }}
+      style={{ backgroundColor, color, marginLeft, marginRight }}
       onClick={onClick}
     >
       {text}

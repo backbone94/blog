@@ -10,6 +10,7 @@ import WritePost from "./components/WritePost";
 import SearchPost from "./components/SearchPost";
 import DetailPost from "./components/DetailPost";
 import UpdatePost from "./components/UpdatePost";
+import MyProfile from "./components/MyProfile";
 
 import { Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -53,6 +54,7 @@ const App = () => {
             <Header />
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/myProfile" component={MyProfile} />
               <Route exact path="/searchPost" component={SearchPost} />
               <Route
                 exact

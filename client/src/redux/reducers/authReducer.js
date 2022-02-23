@@ -8,6 +8,10 @@ const CREATE_ACCOUNT_REQUEST = "CREATE_ACCOUNT_REQUEST";
 const CREATE_ACCOUNT_SUCCESS = "CREATE_ACCOUNT_SUCCESS";
 const CREATE_ACCOUNT_FAILURE = "CREATE_ACCOUNT_FAILURE";
 
+const UPDATE_ACCOUNT_REQUEST = "UPDATE_ACCOUNT_REQUEST";
+const UPDATE_ACCOUNT_SUCCESS = "UPDATE_ACCOUNT_SUCCESS";
+const UPDATE_ACCOUNT_FAILURE = "UPDATE_ACCOUNT_FAILURE";
+
 const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 const LOG_IN_FAILURE = "LOG_IN_FAILURE";
@@ -36,6 +40,26 @@ export const createAccountSuccess = (data) => {
 export const createAccountFailure = (data) => {
   return {
     type: CREATE_ACCOUNT_FAILURE,
+    data,
+  };
+};
+
+// 계정 수정하기
+export const updateAccountRequest = (data) => {
+  return {
+    type: UPDATE_ACCOUNT_REQUEST,
+    data,
+  };
+};
+export const updateAccountSuccess = (data) => {
+  return {
+    type: UPDATE_ACCOUNT_SUCCESS,
+    data,
+  };
+};
+export const updateAccountFailure = (data) => {
+  return {
+    type: UPDATE_ACCOUNT_FAILURE,
     data,
   };
 };
@@ -95,6 +119,25 @@ export default function authReducer(state = initialState, action) {
         loading: false,
       };
     case CREATE_ACCOUNT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.data,
+      };
+
+    // 계정 수정하기
+    case UPDATE_ACCOUNT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        account: action.data,
+        loading: false,
+      };
+    case UPDATE_ACCOUNT_FAILURE:
       return {
         ...state,
         loading: false,

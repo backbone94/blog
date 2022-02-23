@@ -4,6 +4,8 @@ import { put, takeEvery, all, fork, call } from "redux-saga/effects";
 import {
   createAccountSuccess,
   createAccountFailure,
+  updateAccountSuccess,
+  updateAccountFailure,
   logInSuccess,
   logInFailure,
 } from "../reducers/authReducer";
@@ -41,6 +43,33 @@ function* watchCreateAccount() {
   yield takeEvery("CREATE_ACCOUNT_REQUEST", CreateAccount);
 }
 
+// 계정 수정
+const UpdateAccountAPI = (data) => {
+  return axios.post(`/api/auth/updateAccount`, data);
+};
+
+function* UpdateAccount({ data }) {
+  try {
+    const result = yield call(UpdateAccountAPI, data);
+    message.success({
+      content: "계정을 수정하였습니다.",
+      style: {
+        marginTop: "12vh",
+        fontFamily: '"Gamja Flower", cursive',
+      },
+    });
+    console.log("계정 수정 result: ", result.data);
+    yield put(updateAccountSuccess(result.data));
+  } catch (e) {
+    // 데이터 자체를 못 가져왔다면
+    yield put(updateAccountFailure(e));
+  }
+}
+
+function* watchUpdateAccount() {
+  yield takeEvery("UPDATE_ACCOUNT_REQUEST", UpdateAccount);
+}
+
 // 로그인
 const LogInAPI = (data) => {
   return axios.get(`/api/auth`, { params: data });
@@ -75,5 +104,9 @@ function* watchLogIn() {
 }
 
 export default function* authSaga() {
-  yield all([fork(watchCreateAccount), fork(watchLogIn)]);
+  yield all([
+    fork(watchCreateAccount),
+    fork(watchLogIn),
+    fork(watchUpdateAccount),
+  ]);
 }

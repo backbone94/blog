@@ -61,10 +61,17 @@ const HeaderRight = () => {
     }
   };
 
+  // 프로필로 이동
+  const myProfile = () => {
+    history.push("/myProfile");
+  };
+
   // 프로필 dropdown
   const profile = (
-    <Menu>
-      <Menu.Item key="0">내 프로필</Menu.Item>
+    <Menu style={{ fontFamily: '"Gamja Flower", cursive' }}>
+      <Menu.Item onClick={myProfile} key="0">
+        내 프로필
+      </Menu.Item>
       <Menu.Item onClick={logOut} key="1">
         <span style={{ color: "red" }}>로그아웃</span>
       </Menu.Item>
@@ -76,13 +83,13 @@ const HeaderRight = () => {
       <div onClick={goSearchPage} className="searchIcon">
         <SearchOutlined />
       </div>
-      {account ? (
-        <Dropdown overlay={profile} trigger={["click"]}>
-          <Avatar
-            className="avatar"
-            src={"https://joeschmoe.io/api/v1/random"}
-          />
-        </Dropdown>
+      {account && account ? (
+        <>
+          <Dropdown overlay={profile} trigger={["click"]}>
+            <Avatar className="avatar" src={account.profile} />
+          </Dropdown>
+          <span style={{ marginLeft: 5 }}>{account.name}</span>
+        </>
       ) : (
         <>
           <MyButton
