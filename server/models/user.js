@@ -18,10 +18,15 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["MainJuin", "SubJuin", "User"],
-    default: "User",
+    enum: ["host", "user"],
+    default: "user",
   },
-  register_date: {
+  profile: {
+    type: String,
+    default:
+      "https://my-blog1684.s3.ap-northeast-2.amazonaws.com/upload/default.jpg",
+  },
+  registerDate: {
     type: Date,
     default: moment().format("YYYY-MM-DD hh:mm:ss"),
   },
@@ -45,6 +50,6 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
-// const User = mongoose.model("user", UserSchema);
+const User = mongoose.model("user", UserSchema);
 
-// export default User;
+export default User;

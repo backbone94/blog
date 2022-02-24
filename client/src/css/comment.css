@@ -1,0 +1,49 @@
+.commentcontainer {
+  margin-top: auto;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  /* border: 3px solid blue; */
+}
+
+.commentslength {
+  margin-bottom: 5px;
+}
+
+.commentInput {
+  margin-bottom: 30px;
+  /* border: 1px solid violet; */
+}
+
+.commentSubmit {
+  margin-left: auto;
+  margin-bottom: 60px;
+}
+
+.commentList {
+  /* border: 1px solid yellowgreen; */
+}
+
+.commentInfo {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.commentCreator {
+  margin-left: 15px;
+}
+
+.commentDate {
+  color: gray;
+  font-size: 15px;
+}
+
+.commentUpdateOrDelete {
+  margin-left: auto;
+  display: flex;
+}
+
+.commentDelete {
+  cursor: pointer;
+}

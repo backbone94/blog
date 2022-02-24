@@ -1,66 +1,69 @@
 import express from "express";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import auth from "../../middleware/auth";
-import config from "../../config/index";
 
-// Model
+// 몽고 DB 콜렉션
 import User from "../../models/user";
-const { JWT_SECRET } = config;
 
 const router = express.Router();
 
-// 로그인
-router.post("/", (req, res) => {
-  const { email, password } = req.body;
-
-  // Simple Validation
-  if (!email || !password) {
-    return res.status(400).json({ msg: "모든 필드를 채워주세요" });
+// GET api/auth
+router.get("/", async (req, res) => {
+  const { email, password } = req.query;
+  console.log("email: ", email, " password: ", password);
+  const result = await User.findOne({ email, password });
+  if (result === null) {
+    console.log("이메일 또는 비밀번호를 확인하세요.");
+    res.json({ error: "이메일 또는 비밀번호를 확인하세요." });
+  } else {
+    console.log(result, "account Get");
+    res.json(result);
   }
-  // Check for existing user
-  User.findOne({ email }).then((user) => {
-    if (!user) return res.status(400).json({ msg: "유저가 존재하지 않습니다" });
-
-    // Validate password
-    bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch)
-        return res.status(400).json({ msg: "비밀번호가 일치하지 않습니다" });
-      jwt.sign(
-        { id: user.id },
-        JWT_SECRET,
-        { expiresIn: "2 days" },
-        (err, token) => {
-          if (err) throw err;
-          res.json({
-            token,
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              role: user.role,
-            },
-          });
-        }
-      );
-    });
-  });
 });
 
-// 로그아웃
-router.post("/logout", (req, res) => {
-  res.json("로그아웃 성공");
-});
-
-// 유저 정보 조회
-router.get("/user", auth, async (req, res) => {
+// POST api/auth
+router.post("/", async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
-    if (!user) throw Error("유저가 존재하지 않습니다");
-    res.json(user);
+    const { name, email, password } = req.body;
+    console.log("name: ", name, " email: ", email, " password: ", password);
+
+    const result = await User.findOne({ email });
+    if (result !== null) {
+      console.log("이미 존재하는 이메일입니다.");
+      res.json({ error: "이미 존재하는 이메일입니다." });
+    } else {
+      const newAccount = await User.create({
+        name,
+        email,
+        password,
+      });
+      console.log("계정 생성 result: ", newAccount);
+      res.json(newAccount);
+    }
   } catch (e) {
     console.log(e);
-    res.status(400).json({ msg: e.message });
+  }
+});
+
+// POST api/auth/updateAccount
+router.post("/updateAccount", async (req, res, next) => {
+  try {
+    const { name, profileImage, newPassword, email } = req.body;
+    console.log(
+      "name: ",
+      name,
+      " profileImage: ",
+      profileImage,
+      " newPassword: ",
+      newPassword
+    );
+    const newAccount = await User.findOneAndUpdate(
+      { email },
+      { name, profile: profileImage, password: newPassword },
+      { new: true }
+    );
+    console.log("계정 수정 result: ", newAccount);
+    res.json(newAccount);
+  } catch (e) {
+    console.log(e);
   }
 });
 

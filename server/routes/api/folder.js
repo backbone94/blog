@@ -74,11 +74,68 @@ router.post("/", uploadS3.none(), async (req, res, next) => {
   }
 });
 
+// POST api/folder/moveFolder
+router.post("/moveFolder", async (req, res, next) => {
+  try {
+    const { prevCategory, newCategory } = req.body;
+    console.log("prev: ", prevCategory, "new: ", newCategory);
+    const moveFolder = await Folder.updateMany(
+      { category: prevCategory },
+      { category: newCategory },
+      { new: true }
+    );
+    res.json(moveFolder);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// POST api/folder/updateFolder
+router.post("/updateFolder", async (req, res, next) => {
+  try {
+    const { id, newCategory, newTitle } = req.body;
+    console.log(
+      "id: ",
+      id,
+      "newCategory: ",
+      newCategory,
+      "newTitle: ",
+      newTitle
+    );
+    const result = await Folder.findOne({
+      category: newCategory,
+      title: newTitle,
+    });
+    if (result !== null) {
+      console.log("옮길 카테고리에 같은 이름의 폴더가 존재합니다.");
+      res.json({ error: "옮길 카테고리에 같은 이름의 폴더가 존재합니다." });
+    } else {
+      const updateFolder = await Folder.findOneAndUpdate(
+        { id },
+        { category: newCategory, title: newTitle },
+        { new: true }
+      );
+      res.json(updateFolder);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 // DELETE api/folder
 router.delete("/", async (req, res) => {
   console.log("req.body: ", req.body);
   await Folder.deleteOne({
     id: req.body.id,
+  });
+  res.json({ success: true });
+});
+
+// DELETE api/folder/folderList
+router.delete("/folderList", async (req, res) => {
+  console.log("req.body: ", req.body);
+  await Folder.deleteMany({
+    category: req.body.category,
   });
   res.json({ success: true });
 });

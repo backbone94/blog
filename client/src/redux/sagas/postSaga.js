@@ -27,7 +27,6 @@ const WritePostAPI = (data) => {
 function* WritePost({ data }) {
   try {
     const result = yield call(WritePostAPI, data);
-    console.log("result: ", result);
     yield put(writePostSuccess(result.data));
   } catch (e) {
     yield put(writePostFailure(e));
@@ -89,7 +88,7 @@ const LoadDetailPostAPI = (data) => {
 function* LoadDetailPost({ data }) {
   try {
     const result = yield call(LoadDetailPostAPI, data);
-    // console.log("detailPost result: ", result.data[0]);
+    console.log("detail post result: ", result);
     yield put(loadDetailPostSuccess(result.data[0]));
   } catch (e) {
     console.log(e);

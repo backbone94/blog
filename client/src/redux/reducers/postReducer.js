@@ -1,5 +1,5 @@
 // 초기 state
-export const initialState = {
+export const postInitialState = {
   postList: [],
   post: {},
   newPostId: 10,
@@ -224,7 +224,7 @@ export function clearPostListFailure(data) {
 }
 
 // 리듀서
-export default function postReducer(state = initialState, action) {
+export default function postReducer(state = postInitialState, action) {
   switch (action.type) {
     // 게시글 작성하기
     case WRITE_POST_REQUEST:
@@ -265,12 +265,14 @@ export default function postReducer(state = initialState, action) {
     case UPDATE_POST_SUCCESS:
       return {
         ...state,
-        post: {
-          ...state.post,
-          title: action.data.title,
-          content: action.data.content,
-          date: action.data.date,
-        },
+        // post: {
+        //   ...state.post,
+        //   title: action.data.title,
+        //   content: action.data.content,
+        //   date: action.data.date,
+        // },
+        // postList: [...state.postList, action.data],
+        post: action.data,
         loading: false,
       };
     case UPDATE_POST_FAILURE:

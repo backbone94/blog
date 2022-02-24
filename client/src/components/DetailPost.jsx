@@ -7,11 +7,11 @@ import { removePostRequest } from "../redux/reducers/postReducer";
 import Loading from "./loading/CategoryLoading";
 import { message, Popconfirm } from "antd";
 import PostNavi from "./navigation/PostNavi";
+import Comment from "./Comment";
 
 const DetailPost = () => {
   const { post, loading } = useSelector((state) => state.postReducer);
   const account = useSelector((state) => state.authReducer.account);
-  console.log("post.date: ", post.date);
   const date = tz(post.date, "Asia/Seoul").format("YY.MM.DD. HH:mm");
   const history = useHistory();
   const dispatch = useDispatch();
@@ -67,6 +67,8 @@ const DetailPost = () => {
             <div className="detailPostContent">
               {ReactHtmlParser(post.content)}
             </div>
+            <hr style={{ marginBottom: 50 }} />
+            <Comment />
           </div>
         </>
       )}

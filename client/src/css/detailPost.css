@@ -45,7 +45,8 @@
 
 .detailPostContent {
   font-size: 20px;
-  /* min-height: 550px; */
-  margin-top: 150px;
-  /* border: 1px solid blue; */
+  min-height: 200px;
+  margin: 150px 0;
+  /* border-bottom: 1px solid gray; */
+  /* border: 1px solid yellow; */
 }

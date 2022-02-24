@@ -104,7 +104,7 @@
 }
 
 /* 파일 필드 숨기기 */
-input[type="file"] {
+input[id="inputId"] {
   width: 1px;
   height: 1px;
   margin: -1px;

@@ -34,6 +34,28 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// POST api/category/updateCategory
+router.post("/updateCategory", async (req, res, next) => {
+  try {
+    const { id, title } = req.body;
+    console.log("id: ", id, "title: ", title);
+    const result = await Category.findOne({ title });
+    if (result !== null) {
+      console.log("이미 존재하는 카테고리입니다..");
+      res.json({ error: "이미 존재하는 카테고리입니다." });
+    } else {
+      const updateCategory = await Category.findOneAndUpdate(
+        { id },
+        { title },
+        { new: true }
+      );
+      res.json(updateCategory);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 // DELETE api/category
 router.delete("/", async (req, res) => {
   console.log("req.query: ", req.query);

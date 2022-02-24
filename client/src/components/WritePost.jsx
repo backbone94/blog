@@ -7,8 +7,10 @@ import { useHistory, useParams } from "react-router-dom";
 import { writePostRequest } from "../redux/reducers/postReducer";
 import { message } from "antd";
 import MyButton from "./styledComponents/MyButton";
+import { useSelector } from "react-redux";
 
 function WritePost() {
+  const creator = useSelector((state) => state.authReducer.account);
   const history = useHistory();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -19,7 +21,7 @@ function WritePost() {
 
   const onSubmit = () => {
     if (title !== "" && content !== "") {
-      dispatch(writePostRequest({ title, content, category, folder }));
+      dispatch(writePostRequest({ title, content, category, folder, creator }));
       history.replace(`/${category}/${folder}`);
 
       message.success({

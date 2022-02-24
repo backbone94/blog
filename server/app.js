@@ -11,6 +11,7 @@ import folderRoutes from "./routes/api/folder";
 import userRoutes from "./routes/api/user";
 import authRoutes from "./routes/api/auth";
 import postRoutes from "./routes/api/post";
+import commentRoutes from "./routes/api/comment";
 
 import morgan from "morgan";
 
@@ -40,5 +41,6 @@ app.use("/api/folder", folderRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/comment", commentRoutes);
 
 export default app;
