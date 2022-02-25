@@ -4,6 +4,8 @@ import moment from "moment";
 // Model
 import Post from "../../models/post";
 
+import "@babel/polyfill";
+
 const router = express.Router();
 
 // GET api/post/
