@@ -6,7 +6,10 @@ import categorySaga from "./categorySaga";
 import authSaga from "./authSaga";
 import commentSaga from "./commentSaga";
 
-axios.defaults.baseURL = "http://localhost:7000";
+import dotenv from "dotenv";
+dotenv.config();
+
+axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL;
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {

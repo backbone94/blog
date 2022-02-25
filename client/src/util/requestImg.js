@@ -1,4 +1,6 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Folder 이미지를 s3에 저장하고 이미지 경로 가져오기
 const requestImg = async (e) => {
@@ -6,7 +8,7 @@ const requestImg = async (e) => {
   formData.append("upload", e.target.files[0]);
   try {
     const result = await axios.post(
-      "http://localhost:7000/api/folder/image",
+      `${process.env.REACT_APP_BASIC_SERVER_URL}/api/folder/image`,
       formData
     );
 
