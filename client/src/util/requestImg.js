@@ -1,6 +1,6 @@
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 // Folder 이미지를 s3에 저장하고 이미지 경로 가져오기
 const requestImg = async (e) => {

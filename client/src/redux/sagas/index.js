@@ -6,8 +6,8 @@ import categorySaga from "./categorySaga";
 import authSaga from "./authSaga";
 import commentSaga from "./commentSaga";
 
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL;
 axios.defaults.withCredentials = true;
