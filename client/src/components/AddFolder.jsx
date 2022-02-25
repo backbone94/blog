@@ -2,7 +2,7 @@ import { addFolderRequest } from "../redux/reducers/folderReducer";
 import { Modal, Button, Input, message } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import requestImg from "./requestImg";
+import requestImg from "../util/requestImg";
 
 const AddFolder = ({ setIsModalVisible, isModalVisible, category }) => {
   const [title, setTitle] = useState("");

@@ -44,10 +44,9 @@ export default function Comment() {
     setInputValue("");
   };
 
-  const deleteComment = (commentId) => {
-    dispatch(deleteCommentRequest(commentId));
+  const deleteComment = (postId, commentId) => {
+    dispatch(deleteCommentRequest({ postId, commentId }));
   };
-  console.log("post: ", post);
 
   return (
     <div className="commentcontainer">
@@ -90,7 +89,7 @@ export default function Comment() {
                   {/* <div className="commentUpdate">수정</div> */}
                   <Popconfirm
                     title="정말 삭제하시겠습니까?"
-                    onConfirm={() => deleteComment(comment.id)}
+                    onConfirm={() => deleteComment(post.id, comment._id)}
                     okText="네"
                     cancelText="아니오"
                   >

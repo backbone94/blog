@@ -263,15 +263,9 @@ export default function postReducer(state = postInitialState, action) {
         loading: true,
       };
     case UPDATE_POST_SUCCESS:
+      console.log("action.data: ", action.data);
       return {
         ...state,
-        // post: {
-        //   ...state.post,
-        //   title: action.data.title,
-        //   content: action.data.content,
-        //   date: action.data.date,
-        // },
-        // postList: [...state.postList, action.data],
         post: action.data,
         loading: false,
       };
@@ -306,6 +300,7 @@ export default function postReducer(state = postInitialState, action) {
         loading: true,
       };
     case LOAD_DETAIL_POST_SUCCESS:
+      console.log("action.data: ", action.data);
       return {
         ...state,
         post: action.data,

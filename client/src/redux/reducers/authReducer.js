@@ -24,6 +24,10 @@ const CLEAR_ERROR_REQUEST = "CLEAR_ERROR_REQUEST";
 const CLEAR_ERROR_SUCCESS = "CLEAR_ERROR_SUCCESS";
 const CLEAR_ERROR_FAILURE = "CLEAR_ERROR_FAILURE";
 
+const WITHDRAWAL_REQUEST = "WITHDRAWAL_REQUEST";
+const WITHDRAWAL_SUCCESS = "WITHDRAWAL_SUCCESS";
+const WITHDRAWAL_FAILURE = "WITHDRAWAL_FAILURE";
+
 // 계정 생성하기
 export const createAccountRequest = (data) => {
   return {
@@ -104,6 +108,26 @@ export const logOutFailure = (data) => {
   };
 };
 
+// 회원탈퇴
+export const withdrawalRequest = (data) => {
+  return {
+    type: WITHDRAWAL_REQUEST,
+    data,
+  };
+};
+export const withdrawalSuccess = (data) => {
+  return {
+    type: WITHDRAWAL_SUCCESS,
+    data,
+  };
+};
+export const withdrawalFailure = (data) => {
+  return {
+    type: WITHDRAWAL_FAILURE,
+    data,
+  };
+};
+
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
     // 계정 생성하기
@@ -176,6 +200,24 @@ export default function authReducer(state = initialState, action) {
         loading: false,
       };
     case LOG_OUT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.data,
+      };
+
+    // 회원탈퇴
+    case WITHDRAWAL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case WITHDRAWAL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case WITHDRAWAL_FAILURE:
       return {
         ...state,
         loading: false,

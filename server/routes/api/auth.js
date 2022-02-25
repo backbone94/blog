@@ -1,4 +1,5 @@
 import express from "express";
+import Comment from "../../models/comment";
 
 // 몽고 DB 콜렉션
 import User from "../../models/user";
@@ -65,6 +66,16 @@ router.post("/updateAccount", async (req, res, next) => {
   } catch (e) {
     console.log(e);
   }
+});
+
+// DELETE api/auth
+router.delete("/", async (req, res) => {
+  console.log("req.body: ", req.body);
+  await User.deleteOne({
+    _id: req.body._id,
+  });
+
+  await Comment.deleteMany({ creator: req.body._id });
 });
 
 export default router;

@@ -1,12 +1,15 @@
 import MyButton from "./styledComponents/MyButton";
-import { Avatar } from "antd";
+import { Avatar, Popconfirm } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../css/myProfile.css";
-import requestImg from "./requestImg";
+import requestImg from "../util/requestImg";
 import { useSelector } from "react-redux";
-import { updateAccountRequest } from "../redux/reducers/authReducer";
+import {
+  updateAccountRequest,
+  withdrawalRequest,
+} from "../redux/reducers/authReducer";
 import { useDispatch } from "react-redux";
 
 export default function MyProfile() {
@@ -97,6 +100,12 @@ export default function MyProfile() {
     history.push("/myProfile");
   };
 
+  // 회원탈퇴
+  const withdrawal = () => {
+    dispatch(withdrawalRequest(account._id));
+    history.push("/");
+  };
+
   return (
     <div className="myProfileContainer">
       {/* 이미지 수정 */}
@@ -152,12 +161,19 @@ export default function MyProfile() {
 
         {/* 저장 및 탈퇴 */}
         <div className="saveOrDelete">
-          <MyButton
-            className={"deleteAccount"}
-            color={"white"}
-            backgroundColor={"red"}
-            text={"회원 탈퇴"}
-          />
+          <Popconfirm
+            title="정말 탈퇴하시겠습니까?"
+            onConfirm={withdrawal}
+            okText="네"
+            cancelText="아니오"
+          >
+            <MyButton
+              className={"deleteAccount"}
+              color={"white"}
+              backgroundColor={"red"}
+              text={"회원 탈퇴"}
+            />
+          </Popconfirm>
           <MyButton
             className={"saveUpdate"}
             onClick={updateSubmit}

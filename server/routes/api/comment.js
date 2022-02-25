@@ -39,10 +39,21 @@ router.post("/", async (req, res, next) => {
 // DELETE api/comment
 router.delete("/", async (req, res) => {
   console.log("req.body: ", req.body);
+  const { postId, commentId } = req.body;
   await Comment.deleteOne({
-    id: req.body.id,
+    _id: commentId,
   });
-  res.json({ success: true });
+
+  const updatePost = await Post.findOneAndUpdate(
+    { id: postId },
+    { $pull: { comments: commentId } },
+    { new: true }
+  )
+    .populate({
+      path: "comments",
+      populate: { path: "creator" },
+    })
+    .then((updatePost) => res.json(updatePost));
 });
 
 export default router;

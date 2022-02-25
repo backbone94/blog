@@ -18,7 +18,10 @@ function* CreateComment({ data }) {
   try {
     // data == content, post
     const result = yield call(CreateCommentAPI, data);
+    console.log("create comment result: ", result);
     // 에러가 없다면 댓글을 생성했다는 메시지와 함께 액션 dispatch
+    // yield put(createCommentSuccess(result.data.newComment));
+    yield put(updatePostSuccess(result.data.updatePost));
     message.success({
       content: "댓글을 달았습니다.",
       style: {
@@ -27,8 +30,6 @@ function* CreateComment({ data }) {
       },
     });
     console.log("댓글 생성 result: ", result.data);
-    yield put(createCommentSuccess(result.data.newComment));
-    yield put(updatePostSuccess(result.data.updatePost));
   } catch (e) {
     // 데이터 자체를 못 가져왔다면
     yield put(createCommentFailure(e));
@@ -41,12 +42,17 @@ function* watchCreateComment() {
 
 // 댓글 삭제
 const deleteCommentAPI = (data) => {
-  return axios.delete(`/api/comment/`, { data: { id: data } });
+  return axios.delete(`/api/comment/`, {
+    data: {
+      postId: data.postId,
+      commentId: data.commentId,
+    },
+  });
 };
 
 function* deleteComment({ data }) {
   try {
-    // data == comment.id
+    // data == post.id, comment.id
     const result = yield call(deleteCommentAPI, data);
     // 에러가 없다면 댓글을 생성했다는 메시지와 함께 액션 dispatch
     message.success({
@@ -58,7 +64,7 @@ function* deleteComment({ data }) {
     });
     console.log("댓글 삭제 result: ", result.data);
     yield put(deleteCommentSuccess(data));
-    yield put(updatePostSuccess(result.data.updatePost));
+    yield put(updatePostSuccess(result.data));
   } catch (e) {
     // 데이터 자체를 못 가져왔다면
     yield put(deleteCommentFailure(e));
