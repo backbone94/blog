@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "../../config/index";
 
+import "@babel/polyfill";
+
 // Model
 import User from "../../models/user";
 const { JWT_SECRET } = config;

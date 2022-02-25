@@ -6,6 +6,8 @@ import User from "../../models/user";
 
 const router = express.Router();
 
+import "@babel/polyfill";
+
 // GET api/auth
 router.get("/", async (req, res) => {
   const { email, password } = req.query;

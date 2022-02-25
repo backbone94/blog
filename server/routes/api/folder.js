@@ -5,6 +5,8 @@ import Folder from "../../models/folder";
 
 const router = express.Router();
 
+import "@babel/polyfill";
+
 // S3 & AWS 설정
 import multer from "multer";
 import multerS3 from "multer-s3";

@@ -7,6 +7,8 @@ import Post from "../../models/post";
 
 const router = express.Router();
 
+import "@babel/polyfill";
+
 // POST api/comment
 router.post("/", async (req, res, next) => {
   try {

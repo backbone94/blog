@@ -5,6 +5,8 @@ import Category from "../../models/category";
 
 const router = express.Router();
 
+import "@babel/polyfill";
+
 // GET api/category
 router.get("/", async (req, res) => {
   const result = await Category.find();
