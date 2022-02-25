@@ -2,7 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 h1, h2 {
-	color: ${(props) => props.theme.textColor};
+	// color: ${(props) => props.theme.textColor};
+	color: rgb(2, 0, 0);
 }
 .headerContainer {
 	border-bottom-color: ${(props) => props.theme.textColor};

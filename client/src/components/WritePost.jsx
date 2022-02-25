@@ -1,17 +1,18 @@
 import "../css/writePost.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { writePostRequest } from "../redux/reducers/postReducer";
 import { message } from "antd";
 import MyButton from "./styledComponents/MyButton";
 import { useSelector } from "react-redux";
-import UploadAdapter from "../util/uploadAdapter";
+// import { editorConfiguration } from "../util/editor/editorConfig";
+// import MyCustomUploadAdapterPlugin from "../util/editor/uploadAdapter";
 
 function WritePost() {
-  const editorRef = useRef();
   const creator = useSelector((state) => state.authReducer.account);
   const history = useHistory();
   const [title, setTitle] = useState("");
@@ -36,21 +37,6 @@ function WritePost() {
     } else alert("제목 또는 내용을 입력하세요.");
   };
 
-  // CKEditor 이미지 업로더
-  const MyCustomUploadAdapterPlugin = (editor) => {
-    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-      return new UploadAdapter(loader);
-    };
-  };
-
-  // 에디터 생성
-  // ClassicEditor.create(editorRef, {
-  //   extraPlugins: [MyCustomUploadAdapterPlugin],
-  //   toolbar: ["bold", "italic", "bulletedList", "numberedList", "blockQuote"],
-  // }).catch((error) => {
-  //   console.log(error);
-  // });
-
   return (
     <div className="writePostContainer">
       <input
@@ -63,7 +49,6 @@ function WritePost() {
         placeholder="제목"
       />
       <CKEditor
-        // config={{ extraPlugins: [MyCustomUploadAdapterPlugin] }}
         editor={ClassicEditor}
         onBlur={(event, editor) => {
           setContent(editor.getData());

@@ -1,6 +1,6 @@
 import "../css/writePost.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
@@ -51,7 +51,7 @@ export default function UpdatePost() {
             value={title}
             placeholder="제목"
           />
-          <CKEditor
+          {/* <CKEditor
             editor={ClassicEditor}
             onReady={(editor) => {
               editor.setData(post.content);
@@ -59,7 +59,7 @@ export default function UpdatePost() {
             onBlur={(event, editor) => {
               setContent(editor.getData());
             }}
-          />
+          /> */}
           <MyButton
             className="writePostButton"
             text={"수정하기"}
