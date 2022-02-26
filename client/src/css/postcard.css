@@ -5,6 +5,12 @@
   /* border: 3px solid red; */
 }
 
+@media screen and (max-width: 600px) {
+  .postContainer {
+    margin: 0;
+  }
+}
+
 .post {
   width: 50%;
   height: 250px;
@@ -25,7 +31,7 @@
   height: 70%;
   display: flex;
   flex-direction: column;
-  border: 1px solid #808080;
+  /* border: 1px solid #808080; */
 }
 
 .fileUrl {

@@ -1,4 +1,4 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined, MoreOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -14,7 +14,8 @@ import { useSelector } from "react-redux";
 import LogIn from "./auth/LogIn";
 import "../css/avatar.css";
 
-const HeaderRight = () => {
+export default function More() {
+  const [isMore, setIsMore] = useState(false);
   const [isLogIn, setIsLogIn] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const { error, account } = useSelector((state) => state.authReducer);
@@ -59,6 +60,7 @@ const HeaderRight = () => {
       console.log(e);
       dispatch(logOutFailure());
     }
+    history.push("/");
   };
 
   // 프로필로 이동
@@ -78,44 +80,52 @@ const HeaderRight = () => {
     </Menu>
   );
 
-  return (
-    <div className="searchAndLogin">
-      <div onClick={goSearchPage} className="searchIcon">
-        <SearchOutlined />
-      </div>
-      {account && account ? (
-        <div className="logInProfile">
-          <Dropdown overlay={profile} trigger={["click"]}>
-            <Avatar className="avatar" src={account.profile} />
-          </Dropdown>
-          <span>{account.name}</span>
+  const menu = (
+    <Menu
+      style={{
+        textAlign: "center",
+        fontFamily: '"Gamja Flower", cursive',
+      }}
+    >
+      <Menu.Item style={{ marginBottom: 10 }} key="0">
+        <div onClick={goSearchPage}>
+          <SearchOutlined />
         </div>
-      ) : (
-        <>
-          <MyButton
-            className="logInButton"
-            onClick={() => setIsLogIn(true)}
-            text={"로그인"}
-            marginRight={10}
-          />
-          <Button
-            className="logOutButton"
-            onClick={() => setIsSignUp(true)}
-            style={{ borderRadius: "10%" }}
-            type="primary"
-          >
-            회원가입
-          </Button>
-        </>
-      )}
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item style={{ marginBottom: 10 }} key="1">
+        <MyButton onClick={() => setIsLogIn(true)} text={"로그인"} />
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3">
+        <Button
+          onClick={() => setIsSignUp(true)}
+          style={{ borderRadius: "10%" }}
+          type="primary"
+        >
+          회원가입
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
 
+  return (
+    <div className="more">
+      {!account ? (
+        <Dropdown
+          placement="bottomRight"
+          arrow
+          overlay={menu}
+          trigger={["click"]}
+        >
+          <MoreOutlined />
+        </Dropdown>
+      ) : null}
+      {isMore ? <More /> : null}
       {/* 로그인 */}
       <LogIn isLogIn={isLogIn} setIsLogIn={setIsLogIn} />
-
       {/* 회원가입 */}
       <SignUp isSignUp={isSignUp} setIsSignUp={setIsSignUp} />
     </div>
   );
-};
-
-export default HeaderRight;
+}

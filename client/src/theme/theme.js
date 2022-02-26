@@ -5,7 +5,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  bgColor: "black",
+  bgColor: "rgba(0, 0, 0, 0.8)",
   textColor: "white",
   borderColor: "1px solid white",
 };

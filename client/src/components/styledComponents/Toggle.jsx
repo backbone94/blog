@@ -10,7 +10,7 @@ export default function Toggle({ toggle, mode }) {
 
 const ToggleWrapper = styled.span`
   position: fixed;
-  left: 95%;
+  left: 80%;
   top: 12%;
   border-radius: 50%;
   width: 40px;
@@ -24,5 +24,9 @@ const ToggleWrapper = styled.span`
   &:hover {
     background-color: #a0a0a090;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 400px) {
+    left: 60%;
   }
 `;

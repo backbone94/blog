@@ -1,0 +1,50 @@
+.hamburger {
+  font-size: 30px;
+  position: absolute;
+  margin: 20px 0 0 20px;
+  cursor: pointer;
+  display: block;
+}
+
+@media screen and (min-width: 1150px) {
+  .hamburger {
+    display: none;
+  }
+
+  .openMenu,
+  .closeMenu {
+    opacity: 0;
+  }
+}
+
+.openMenu,
+.closeMenu {
+  display: block;
+  top: 100px;
+  width: 150px;
+  transition: 0.2s;
+  padding: 5px 10px;
+  font-size: 25px;
+  border: 1px solid;
+  border-top: 0px;
+  border-left: 0px;
+  position: absolute;
+  z-index: 1;
+}
+
+.openMenu {
+  left: 0px;
+}
+
+.closeMenu {
+  left: -150px;
+}
+
+.listElement {
+  margin-bottom: 20px;
+  transition: all 0.3s;
+}
+.listElement:hover {
+  background-color: #af77a17a;
+  cursor: pointer;
+}

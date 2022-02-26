@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import RightClick from "./RightClick";
 import AddCategory from "./AddCategory";
 import HeaderRight from "./HeaderRight";
+import Hamburger from "./Hamburger";
+import More from "./More";
 
 const Header = () => {
   const [add, setAdd] = useState(false);
@@ -63,48 +65,52 @@ const Header = () => {
       {loading ? (
         <HeaderLoading />
       ) : (
-        <div className="headerContainer">
-          <div className="categoryListContainer">
-            {categoryList.map((category, index) => (
-              <div key={category.id} className="categoryElementContainer">
-                {/* 라디오그룹으로 카테고리 묶음 */}
-                <input
-                  id={`${category.id}`}
-                  type="radio"
-                  name="category"
-                  onClick={() => movePage(category.title)}
-                  className="radioCircle"
-                  value={`${category.title}`}
-                />
-                {/* 우클릭 */}
-                {account && account.role === "host" ? (
-                  <RightClick
-                    tag={categoryLabel(category)}
-                    setTitle={setTitle}
-                    title={title}
-                    category={category}
+        <>
+          <Hamburger />
+          <div className="headerContainer">
+            <div className="categoryListContainer">
+              {categoryList.map((category, index) => (
+                <div key={category.id} className="categoryElementContainer">
+                  {/* 라디오그룹으로 카테고리 묶음 */}
+                  <input
+                    id={`${category.id}`}
+                    type="radio"
+                    name="category"
+                    onClick={() => movePage(category.title)}
+                    className="radioCircle"
+                    value={`${category.title}`}
                   />
-                ) : (
-                  categoryLabel(category)
-                )}
-                {index !== length - 1 ? <div className="divider" /> : null}
-              </div>
-            ))}
+                  {/* 우클릭 */}
+                  {account && account.role === "host" ? (
+                    <RightClick
+                      tag={categoryLabel(category)}
+                      setTitle={setTitle}
+                      title={title}
+                      category={category}
+                    />
+                  ) : (
+                    categoryLabel(category)
+                  )}
+                  {index !== length - 1 ? <div className="divider" /> : null}
+                </div>
+              ))}
 
-            {/* 카테고리 추가 버튼 */}
-            {account && account.role === "host" ? (
-              <AddCategory
-                add={add}
-                setAdd={setAdd}
-                title={title}
-                setTitle={setTitle}
-              />
-            ) : null}
+              {/* 카테고리 추가 버튼 */}
+              {account && account.role === "host" ? (
+                <AddCategory
+                  add={add}
+                  setAdd={setAdd}
+                  title={title}
+                  setTitle={setTitle}
+                />
+              ) : null}
+            </div>
+
+            {/* 검색, 로그인, 회원가입 부분*/}
+            <More />
+            <HeaderRight />
           </div>
-
-          {/* 검색, 로그인, 회원가입 부분*/}
-          <HeaderRight />
-        </div>
+        </>
       )}
     </>
   );

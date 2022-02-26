@@ -4,6 +4,12 @@
   /* border: 3px solid red; */
 }
 
+@media screen and (max-width: 600px) {
+  .categoryContainer {
+    margin: 0;
+  }
+}
+
 .categoryName {
   font-size: 30px;
   height: 250px;
@@ -36,7 +42,7 @@
 }
 
 .folderElement {
-  margin-right: 50px;
+  margin: 0 30px;
 }
 
 .folderText {
