@@ -52,6 +52,7 @@ const DetailPost = () => {
                     수정
                   </span>
                   <Popconfirm
+                    placement="leftTop"
                     title="정말 삭제하시겠습니까?"
                     onConfirm={() => {
                       remove(folder.id, folder.title);

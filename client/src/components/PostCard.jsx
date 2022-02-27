@@ -61,6 +61,7 @@ const PostCard = ({ post }) => {
         </div>
         {account && account.role === "host" ? (
           <Popconfirm
+            placement="leftTop"
             title="정말 삭제하시겠습니까?"
             onConfirm={() => {
               confirm(post.id);

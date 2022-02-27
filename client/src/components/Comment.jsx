@@ -88,6 +88,7 @@ export default function Comment() {
                 <div className="commentUpdateOrDelete">
                   {/* <div className="commentUpdate">수정</div> */}
                   <Popconfirm
+                    placement="leftTop"
                     title="정말 삭제하시겠습니까?"
                     onConfirm={() => deleteComment(post.id, comment._id)}
                     okText="네"
