@@ -27,6 +27,7 @@ export default function Hamburger() {
       dispatch(loadFolderListRequest(categoryTitle));
       history.replace(`/${categoryTitle}`);
     } else if (categoryTitle === "Home") history.replace("/");
+    setIsShow(!isShow);
   };
 
   return (

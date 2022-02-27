@@ -28,6 +28,6 @@ const ToggleWrapper = styled.span`
 
   @media screen and (max-width: 400px) {
     top: 20%;
-    left: 60%;
+    left: 80%;
   }
 `;

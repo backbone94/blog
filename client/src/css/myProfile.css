@@ -9,6 +9,12 @@
   border: 1px solid slategrey;
 }
 
+@media screen and (max-width: 500px) {
+  .myProfileContainer {
+    width: 100%;
+  }
+}
+
 .profileImageContainer {
   margin: 30px 0;
   display: flex;
