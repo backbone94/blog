@@ -13,12 +13,17 @@ const requestImg = async (e) => {
     );
 
     // 이미지 경로에서 정규표현식을 활용하여 카테고리 제목 찾아내기
-    const temp = result.data.url[0]
-      .match(/(?<=upload\/).{1,}(?=.ico)/)[0]
-      .match(/[a-zA-Z]/g)
-      .join("");
-
-    return { url: result.data.url[0], regExp: temp };
+    if (/.{1,}(?=.ico)/.test(result.data.url[0])) {
+      // 이미지 파일이 ico인 경우
+      const temp = result.data.url[0]
+        .match(/(?<=upload\/).{1,}(?=.ico)/)[0]
+        .match(/[a-zA-Z]/g)
+        .join("");
+      return { url: result.data.url[0], regExp: temp };
+    } else {
+      // 이미지 파일이 ico가 아닌 경우
+      return { url: result.data.url[0] };
+    }
   } catch (e) {
     console.log(e);
     alert("server error");

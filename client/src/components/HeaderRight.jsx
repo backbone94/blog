@@ -55,6 +55,7 @@ const HeaderRight = () => {
           fontFamily: '"Gamja Flower", cursive',
         },
       });
+      history.push("/");
     } catch (e) {
       console.log(e);
       dispatch(logOutFailure());

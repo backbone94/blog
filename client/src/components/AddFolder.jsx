@@ -62,7 +62,7 @@ const AddFolder = ({ setIsModalVisible, isModalVisible, category }) => {
       <div className="addFolderForm">
         {/* Modal의 Image 부분 */}
         {fileUrl ? (
-          <img src={fileUrl} alt="img" />
+          <img height="128" width="128" src={fileUrl} alt="img" />
         ) : (
           <div>
             <label className="mb-2">Image</label>

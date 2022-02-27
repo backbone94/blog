@@ -112,7 +112,12 @@ export default function MyProfile() {
       <div className="profileImageContainer">
         <div className="profileImage">
           {profileImage ? (
-            <img src={profileImage} alt="profileImage" />
+            <img
+              height="128"
+              width="128"
+              src={profileImage}
+              alt="profileImage"
+            />
           ) : (
             <Avatar size={128} icon={<UserOutlined />} />
           )}

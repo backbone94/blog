@@ -43,6 +43,8 @@ export default function Category() {
 
   const folderImg = (folder) => (
     <img
+      height="128"
+      width="128"
       onClick={() => goFolder(folder.title)}
       style={{ cursor: "pointer" }}
       alt={`${folder.title}`}
