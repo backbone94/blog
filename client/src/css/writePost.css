@@ -4,6 +4,13 @@
   margin: 50px auto;
   /* border: 3px solid red; */
 }
+
+@media screen and (max-width: 600px) {
+  .writePostContainer {
+    width: 90%;
+  }
+}
+
 .writePostTitle {
   width: 50%;
   display: block;
