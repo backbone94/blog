@@ -46,7 +46,7 @@ export default function Category() {
       height="128"
       width="128"
       onClick={() => goFolder(folder.title)}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", borderRadius: "10%" }}
       alt={`${folder.title}`}
       src={folder.fileUrl}
     />
