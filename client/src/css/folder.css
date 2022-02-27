@@ -1,12 +1,15 @@
 .folderContainer {
   min-height: 733px;
-  margin: 0 150px;
+  margin: 0 auto;
+  width: 40%;
   /* border: 3px solid red; */
 }
 
 @media screen and (max-width: 700px) {
   .folderContainer {
-    margin: 0;
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 30px;
   }
 }
 

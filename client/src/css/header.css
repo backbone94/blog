@@ -3,7 +3,7 @@
   height: 100px;
   display: flex;
   box-sizing: border-box;
-  /* justify-content: center; */
+  /* border: 3px solid yellow; */
 }
 
 @media screen and (max-width: 1150px) {
@@ -25,6 +25,7 @@
   .logInProfile {
     position: absolute;
     right: 10px;
+    /* border: 1px solid red; */
   }
 }
 
@@ -32,6 +33,7 @@
   .searchIcon {
     position: absolute;
     right: 60px;
+    /* border: 1px solid red; */
   }
 }
 

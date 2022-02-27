@@ -7,12 +7,22 @@
 
 @media screen and (max-width: 600px) {
   .postContainer {
-    margin: 0;
+    margin: 15px 0 0 0;
+    width: 100%;
+    /* border: 1px solid red; */
+  }
+  .postTitle {
+    max-width: 200px;
+  }
+  .postContent {
+    max-width: 200px;
+    margin-top: 10px;
+    /* border: 1px solid red; */
   }
 }
 
 .post {
-  width: 50%;
+  width: 100%;
   height: 250px;
   transition: all 0.3s;
   cursor: pointer;
@@ -72,8 +82,10 @@
 .postCloseIcon {
   margin: auto 0;
   font-size: 25px;
+  /* border: 3px solid red; */
 }
 .postCloseIcon:hover {
   cursor: pointer;
   color: #efefef;
+  /* border: 3px solid red; */
 }
