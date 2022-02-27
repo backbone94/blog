@@ -166,13 +166,13 @@ const folderReducer = (state = initialState, action) => {
       return {
         ...state,
         folderList: [
-          ...state.folderList,
           {
             title: action.data.title,
             fileUrl: action.data.fileUrl,
             category: action.data.category,
             id: action.data.id,
           },
+          ...state.folderList,
         ],
         loading: false,
         error: "",
